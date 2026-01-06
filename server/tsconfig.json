@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "esModuleInterop": true,
+      // "strict": true,
+      "target": "ES2020",
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "typeRoots": ["./node_modules/@types", "src/@types"]
+    },
+    "lib": ["ES2020"]
+  }
