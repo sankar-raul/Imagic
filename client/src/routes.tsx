@@ -1,11 +1,12 @@
 import { createRoutesFromElements, Route } from "react-router";
 import { createBrowserRouter } from "react-router";
 import RootLayout from "./components/layouts/rootLayout/RootLayout";
+import Home from "./components/pages/home/Home";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
         <Route element={<RootLayout />} >
-            <Route index element={<div>Home Page</div>} />
+            <Route index element={<Home />} />
             <Route path="about" element={<div>About Page</div>} />
             <Route path="contact" element={<div>Contact Page</div>} />
             <Route path="placements">
