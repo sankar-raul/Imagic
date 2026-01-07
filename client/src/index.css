@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  
+    --color-back: #FFF6E5;
+    --color-brand: #FFC72C;
+    --color-deep-brand: #5A1F24;
+    --color-text-primary: #1C1C1C;
+    --color-important: #D62828;
+    --shadow-nav: 0px 4px 40px 15px #FFC72C66;
 }
