@@ -5,7 +5,7 @@ import Footer from "../../shared/footer/Footer";
 const RootLayout = () => {
     
     return (
-        <section className="bg-yellow-50/5 text-text-primary h-full">
+        <section className="bg-yellow-50/5 text-text-primary h-dvh overflow-y-scroll flex flex-col">
             <Header />
             <main>
                 <Outlet />

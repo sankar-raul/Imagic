@@ -15,6 +15,7 @@ import NewsAndEventDetails from "./components/pages/newsAndEvent/NewsAndEventDet
 import Fanchise from "./components/pages/franchise/Fanchise";
 import StudentWork from "./components/pages/studentwork/StudentWork";
 import Dashbaord from "./components/pages/dashboard/Dashbaord";
+import CourseDetails from "./components/pages/course/CourseDetails";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
@@ -24,6 +25,9 @@ const routes = createBrowserRouter(createRoutesFromElements(
             <Route path="contact" element={<Contact />} />
             <Route path="placements">
                 <Route index element={<Placements />} />
+            </Route>
+            <Route path="courses">
+                <Route path=":id" element={<CourseDetails />} />
             </Route>
             <Route path="news-events">
                 <Route index element={<NewsAndEvent />} />
