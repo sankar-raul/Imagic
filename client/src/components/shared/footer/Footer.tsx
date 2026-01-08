@@ -3,14 +3,13 @@ import type { FC, JSX } from "react";
 import { FaFacebook, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import { IoCallOutline } from "react-icons/io5";
-import { LuLocate } from "react-icons/lu";
 import { SiGooglemaps } from "react-icons/si";
 import { SlLocationPin } from "react-icons/sl";
 import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="relative text-text-primary px-8 py-24 pb-8">
+    <footer className="relative text-text-primary px-8 py-24 pb-8 z-1">
       <div className="absolute inset-0 -z-1">
         <div
           className="w-full absolute inset-0 bg-linear-to-b from-yellow-400/20 to-yellow-300"
@@ -35,10 +34,10 @@ const Footer = () => {
         ></div>
       </div>
 
-      <div className="flex my-4 justify-around gap-8 flex-wrap">
+      <div className="flex my-4 justify-around gap-8 flex-wrap w-[clamp(300px,80%,1600px)] mx-auto">
         <div className="w-full md:w-1/3 lg:w-1/4 flex flex-col gap-4">
           <h3 className="font-semibold">About Us</h3>
-          <p>
+          <p className="text-muted-text">
             IMAGIC LEARNING SOLUTIONS PRIVATE LIMITED has been providing Digital
             Marketing, Graphic & Video Editing training with 100% Job Placement
             since 2010 in Kolkata. Affiliated to Netaji Subhas Open University.
