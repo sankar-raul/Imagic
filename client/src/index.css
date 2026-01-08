@@ -7,4 +7,8 @@
     --color-text-primary: #1C1C1C;
     --color-important: #D62828;
     --shadow-nav: 0px 4px 40px 15px #FFC72C66;
+    --shadow-nav-modal: 0px 0px 900px 0px #0001;
+}
+.link {
+    @apply hover:underline text-sm text-black/80 inline-block w-full
 }
