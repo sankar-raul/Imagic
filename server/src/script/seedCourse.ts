@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import mongoose from "mongoose";
-import Course from "../models/course.model.js"
+import Course from "../models/course/course.model.js"
 
 const connectDB = async () => {
   try {

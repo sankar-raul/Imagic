@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Placement from "../models/placement.model";
+import Placement from "../../models/placement/placement.model";
 
 export const addPlacedStudent = async (req: Request, res: Response) => {
     try {
@@ -13,8 +13,14 @@ export const addPlacedStudent = async (req: Request, res: Response) => {
 
 export const getPlacedStudents = async (req: Request, res: Response) => {
     try {
-        const placedStudents = await Placement.find();
-        res.status(200).json(placedStudents);
+        const page = Math.max(parseInt(req.query.page as string) || 1, 1);
+        const limit = Math.min(parseInt(req.query.limit as string) || 10, 100);
+        const skip = (page - 1) * limit;
+
+            
+            const placedStudents = await Placement.find().skip(skip).limit(limit);
+            const totalPlacedStudents = await Placement.countDocuments();
+            res.status(200).json({ placedStudents, totalPlacedStudents, page, limit });
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
