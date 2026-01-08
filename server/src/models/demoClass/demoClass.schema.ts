@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IdemoClass } from "../Types/demoClass.types";
+import { IdemoClass } from "../../Types/demoClass.types";
 
 const demoClassSchema = new Schema<IdemoClass>({ 
     fullName: {

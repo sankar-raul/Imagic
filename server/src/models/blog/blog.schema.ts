@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { Iblog } from "../Types/blog.types";
+import { Iblog } from "../../Types/blog.types";
 
 const blogSchema = new Schema<Iblog>({
     title: { type: String, required: true },

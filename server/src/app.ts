@@ -3,12 +3,14 @@ import express from 'express';
 import cors from 'cors';
 
 
-import jobRutes from './routes/job.route';
-import placementRoutes from './routes/placement.route';
-import courseRoutes from './routes/course.route';
-import blogRoutes from './routes/blog.route';
-import demoClassRoutes from './routes/demoClass.route';
-import testimonialRoutes from './routes/testimonial.route';
+import jobRutes from './api/routes/job.route';
+import placementRoutes from './api/routes/placement.route';
+import courseRoutes from './api/routes/course.route';
+import blogRoutes from './api/routes/blog.route';
+import demoClassRoutes from './api/routes/demoClass.route';
+import testimonialRoutes from './api/routes/testimonial.route';
+import newsRoutes from './api/routes/news.route';
+import studentWorkRoutes from './api/routes/studentWork.route';
 
 
 const app = express();
@@ -25,6 +27,8 @@ app.use('/api/placements', placementRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/demo-class', demoClassRoutes);
 app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/news', newsRoutes);
+app.use('/api/student-works', studentWorkRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running');

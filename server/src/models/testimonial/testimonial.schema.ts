@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { Itestimonial } from "../Types/testimonials.types";
+import { Itestimonial } from "../../Types/testimonials.types";
 
 const testimonialSchema = new Schema<Itestimonial>({
     studentName: { type: String, required: true },

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import testimonial from "../models/testimonial.model";
+import testimonial from "../../models/testimonial/testimonial.model";
 
 export const addTestimonial = async (req: Request, res: Response) => {
     try {
@@ -16,7 +16,9 @@ export const getAllTestimonials = async (req: Request, res: Response) => {
         const numberOfTestimonials = Math.min(parseInt(req.query.limit as string) || 5, 20);
         const testimonials = await testimonial.find().limit(numberOfTestimonials);
         const totalTestimonials = await testimonial.countDocuments();
-
+        if (testimonials.length === 0) {
+            return res.status(404).json({ message: "No testimonials found" });
+        }
         res.status(200).json({ testimonials, totalTestimonials });
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Course from "../models/course.model";
+import Course from "../../models/course/course.model";
 
 export const createCourse = async (req: Request, res: Response): Promise<Response> => {
     try {
@@ -15,6 +15,9 @@ export const viewCourse = async (req: Request, res: Response): Promise<Response>
     try {
         const {courseId} = req.params;
         const course = await Course.findOne({ slug: courseId });
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
         return res.status(200).json({ data: course });
     } catch (error: any) {
         return res.status(500).json({message: error.message });
@@ -24,6 +27,9 @@ export const viewCourse = async (req: Request, res: Response): Promise<Response>
 export const allCourse = async (req: Request, res: Response): Promise<Response> => {
     try {
         const courses = await Course.find();
+        if (courses.length === 0) {
+            return res.status(404).json({ message: "No courses found" });
+        }
         return res.status(200).json({ data: courses });
     } catch (error: any) {
         return res.status(500).json({message: error.message });
@@ -35,6 +41,9 @@ export const updateCourse = async (req: Request, res: Response): Promise<Respons
         const {courseId} = req.params;
         const updateData = req.body;
         const updatedCourse = await Course.findByIdAndUpdate(courseId, updateData, { new: true });
+        if (!updatedCourse) {
+            return res.status(404).json({ message: "Course not found" });
+        }
         return res.status(200).json({ success: true, data: updatedCourse });
     } catch (error: any) {
         return res.status(500).json({message: error.message });

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Job from "../models/job.model";
+import Job from "../../models/job/job.model";
 
 export const createJob = async (req: Request, res: Response) => {
    try {
@@ -15,6 +15,9 @@ export const getJobsDetails = async (req: Request, res: Response) => {
     try {
         const { jobId } = req.params;
         const job = await Job.findOne({ slug: jobId });
+        if (!job) {
+            return res.status(404).json({ message: "Job not found" });
+        }
         res.status(200).json(job);
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
@@ -29,6 +32,9 @@ export const getAllJobs = async (req: Request, res: Response) => {
         const skip = (page - 1) * limit;
         const jobs = await Job.find().skip(skip).limit(limit);
         const totalJobs = await Job.countDocuments();
+        if (jobs.length === 0) {
+            return res.status(404).json({ message: "No jobs found" });
+        }
         res.status(200).json({ jobs, totalJobs, page, limit });
 
         
@@ -42,6 +48,9 @@ export const updateJob = async (req: Request, res: Response) => {
         const { jobId } = req.params;
         const updateData = req.body;
         const updatedJob = await Job.findByIdAndUpdate(jobId, updateData, { new: true });
+        if (!updatedJob) {
+            return res.status(404).json({ message: "Job not found" });
+        }
         res.status(200).json(updatedJob);
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });

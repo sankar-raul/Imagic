@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Placement from "../models/placement.model";
+import Placement from "../../models/placement/placement.model";
 
 export const addPlacedStudent = async (req: Request, res: Response) => {
     try {
