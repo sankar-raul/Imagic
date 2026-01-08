@@ -23,8 +23,15 @@ export const getJobsDetails = async (req: Request, res: Response) => {
 
 export const getAllJobs = async (req: Request, res: Response) => {
     try {
-        const jobs = await Job.find();
-        res.status(200).json(jobs);
+        const page = Math.max(parseInt(req.query.page as string) || 1, 1);
+        const limit = Math.min(parseInt(req.query.limit as string) || 10, 100);
+
+        const skip = (page - 1) * limit;
+        const jobs = await Job.find().skip(skip).limit(limit);
+        const totalJobs = await Job.countDocuments();
+        res.status(200).json({ jobs, totalJobs, page, limit });
+
+        
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
