@@ -16,6 +16,7 @@ import Fanchise from "./components/pages/franchise/Fanchise";
 import StudentWork from "./components/pages/studentwork/StudentWork";
 import Dashbaord from "./components/pages/dashboard/Dashbaord";
 import CourseDetails from "./components/pages/course/CourseDetails";
+import WhyImagic from "./components/pages/whyImagic/WhyImagic";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
@@ -23,6 +24,9 @@ const routes = createBrowserRouter(createRoutesFromElements(
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="whyimagic">
+                <Route path=":id" element={<WhyImagic />} />
+            </Route>
             <Route path="placements">
                 <Route index element={<Placements />} />
             </Route>
