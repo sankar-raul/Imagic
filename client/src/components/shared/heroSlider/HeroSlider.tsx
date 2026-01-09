@@ -56,7 +56,32 @@ const HeroSlider = () => {
         }
     }, [handleScroll])
   return (
-    <section className="max-w-dvw">
+    <section className="max-w-dvw relative">
+        <div className="absolute top-0 left-0 gap-2 flex mt-8 flex-wrap z-0">
+            {
+                Array.from({length: 4}).map((_, index) => (
+                    <div className="gap-2 flex flex-col" key={index}>
+                       { Array.from({length: 2}).map((_, index) => (
+                            <div key={index} className="w-30 h-30 bg-pink-300/80 border-2 border-white blur-3xl"></div>
+                        ))
+                    }
+                </div>
+                ))
+            }
+        </div>
+
+        <div className="absolute bottom-0 right-0 gap-2 flex mt-8 mr-6 flex-wrap z-0">
+            {
+                Array.from({length: 3}).map((_, index) => (
+                    <div className="gap-2 flex flex-col" key={index}>
+                       { Array.from({length: 2}).map((_, index) => (
+                            <div key={index} className="w-30 h-30 bg-yellow-300/80 border-2 border-white blur-3xl"></div>
+                        ))
+                    }
+                </div>
+                ))
+            }
+        </div>
 
         <div className="relative">
             <SliderButton onClick={handlePrev} varient="left" />

@@ -2,7 +2,7 @@
 const ApplyDemoForm = () => {
   return (
     <div>
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg">
         <h2 className="text-4xl font-bold text-center mb-8 text-[#4a1a1a]">
             Apply for Demo Class
         </h2>

@@ -27,7 +27,7 @@ const TrustCardsProps = [
 ]
 const TrustCards = () => {
   return (
-    <div className="flex flex-col pt-40 pb-20 px-40 gap-16 items-center relative bg-linear-to-b from-yellow-400/40 to-35% to-transparent" style={{
+    <div className="flex flex-col pt-40 pb-20 px-40 gap-16 items-center relative bg-linear-to-b from-white/60 to-95% to-transparent" style={{
             clipPath:
               "polygon(0 15%, 10% 12%, 20% 10%, 30% 9%, 40% 10%, 50% 12%, 60% 14%, 70% 15%, 80% 14%, 90% 12%, 100% 10%, 100% 100%, 0 100%)",
           }}>
