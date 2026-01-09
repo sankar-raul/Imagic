@@ -1,6 +1,7 @@
 import type { FC } from "react"
 import { coursesData } from "../../../constants/nav/courseDetails";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 interface AllCourcesModalProps {
     className?: string;
 }
@@ -30,7 +31,7 @@ const AllCourcesModal:FC<AllCourcesModalProps> = ({
                     <ul className="flex flex-col gap-1">
                         {courses.map(({ name, link }, cIndex) => (
                             <li key={cIndex} className="rounded-lg pr-2 py-0.5">
-                                <a href={link} className="inline-block text-black/60 text-sm capitalize hover:underline hover:decoration-black/50">{name}</a>
+                                <Link to={link} className="inline-block text-black/60 text-sm capitalize hover:underline hover:decoration-black/50">{name}</Link>
                             </li>
                         ))}
                     </ul>

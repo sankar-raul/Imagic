@@ -12,6 +12,7 @@
     --shadow-nav: 0px 2px 24px 10px #FFC72C66;
     --shadow-nav-modal: 0px 0px 900px 0px #0001;
     --font-poppins: "Poppins", sans-serif;
+    --shadow-card: 0px 1px 10px 0px #0001;
 }
 .link {
     @apply hover:underline text-sm text-black/80 inline-block w-full

@@ -15,7 +15,6 @@ const HeroSlider = () => {
     }, []);
     const scrollToIndex = useCallback((index: number) => {
         if (!sliderRef.current) return;
-        console.log(index)
         const slider = sliderRef.current;
         const slideWidth = slider.clientWidth;
         const newScrollPosition = index * slideWidth;
