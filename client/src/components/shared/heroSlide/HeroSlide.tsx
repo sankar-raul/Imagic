@@ -14,7 +14,7 @@ const HeroSlide = () => {
       x: 0,
     }} transition={{
       duration: 0.8,
-    }} className="h-[calc(100dvh-140px)] flex min-w-dvw max-w-dvw shrink-0 snap-start will-change-transform">
+    }} className="h-150 lg:h-[calc(100dvh-140px)] flex min-w-dvw max-w-dvw shrink-0 snap-start will-change-transform">
     <motion.div
           whileInView={{
             opacity: 1,

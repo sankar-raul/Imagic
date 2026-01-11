@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
 import CourseCard from "../courseCard/CourseCard";
+import NewCourseCard from "../courseCard/NewCourseCard";
 
 
 // const categories = [
@@ -54,7 +54,7 @@ const courses = [
     price: "₹36,000",
     category: "Video Editing",
     id:"professional-video-editing-in-kolkata",
-    rating: "4.9",
+    rating: "4.4",
     reviews: "245",
   },
   {
@@ -72,7 +72,7 @@ const courses = [
     price: "₹40,000.00",
     category: "Video Editing",
     id:"certificate-course-in-after-effects",
-    rating: "4.9",
+    rating: "4.8",
     reviews: "245",
   },
   {
@@ -81,7 +81,7 @@ const courses = [
     price: "₹54,000.00",
     category: "Digital Marketing",
     id:"digital-marketing-course-in-kolkata",
-    rating: "4.9",
+    rating: "4.5",
     reviews: "245",
   },
   {
@@ -90,8 +90,8 @@ const courses = [
     price: "₹60,500",
     category: "Video Editing",
     id:"video-editing-diploma-course",
-    rating: "4.9",
-    reviews: "245",
+    rating: "4.3",
+    reviews: "145",
   },
   {
     title: "Digital Media & Marketing 1 Yr. Diploma Course In Kolkata",
@@ -99,7 +99,7 @@ const courses = [
     price: "₹60,500",
     category: "Digital Marketing",
     id:"digital-marketing-diploma-course",
-    rating: "4.9",
+    rating: "4.5",
     reviews: "245",
   },
   {
@@ -128,9 +128,9 @@ export default function CoursesSection() {
 
   return (
     <section className="flex justify-center overflow-hidden">
-      <div className="px-10 md:px-20  gap-6 flex flex-col">
+      <div className="gap-6 flex flex-col w-full">
       {/* Heading */}
-      <div className="text-center mb-10 ">
+      <div className="text-center mb-10 font-biennale-black">
         <span className="uppercase text-gray-400 tracking-wider text-sm border rounded-2xl border-gray-200 px-4 py-2">
           Our Courses
         </span>
@@ -141,9 +141,10 @@ export default function CoursesSection() {
 
       {/* Courses Grid */}
       <div
-      className="transition-all pb-10 duration-2000 transform opacity-100 translate-y-0 w-full gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4">
+      className="pb-10 flex flex-wrap gap-8 justify-center w-[95%] md:w-[90%] mx-auto">
         {courses.map((course, index) => (
-            <CourseCard key={index} course={course} index={index} />
+            // <CourseCard key={index} course={course} index={index} />
+            <NewCourseCard course={course} index={index} key={index} />
         ))}
       </div>
     </div>
