@@ -23,7 +23,7 @@ const AllCourcesModal:FC<AllCourcesModalProps> = ({
         opacity: 1,
         height: 'auto',
     }}
-    className={"absolute overflow-hidden z-10 top-full shadow-nav-modal w-full left-0 p-4 hidden opacity-0 transition-opacity duration-500 rounded-md bg-white/40 backdrop-blur-xl "+className}>
+    className={"lg:absolute overflow-hidden lg:z-10 top-full shadow-nav-modal lg:w-full left-0 p-4  opacity-0 transition-opacity duration-500 rounded-md bg-white/40 backdrop-blur-xl "+className}>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {coursesData.map(({ title, courses }, index) => (
                 <div key={index}>

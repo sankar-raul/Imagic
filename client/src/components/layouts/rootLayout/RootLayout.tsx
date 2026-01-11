@@ -5,7 +5,8 @@ import Footer from "../../shared/footer/Footer";
 const RootLayout = () => {
     
     return (
-        <section className="bg-linear-10 from-pink-200 via-fuchsia-100 via-100% to-transparent scroll-smooth text-text-primary h-dvh overflow-y-scroll flex flex-col [&::-webkit-scrollbar]:hidden">
+        // <section className="bg-linear-10 from-pink-200 via-fuchsia-100 via-100% to-transparent scroll-smooth text-text-primary h-dvh overflow-y-scroll flex flex-col [&::-webkit-scrollbar]:hidden">
+        <section className="bg-linear-10 from-orange-200 via-fuchsia-100 via-100% to-transparent scroll-smooth text-text-primary h-dvh overflow-y-scroll flex flex-col [&::-webkit-scrollbar]:hidden">
             <Header />
             <main>
                 <Outlet />

@@ -12,64 +12,69 @@ const HeroSlide = () => {
     }} whileInView={{
       opacity: 1,
       x: 0,
-    }} transition={{
+    }} 
+    viewport={{
+      once: true
+    }}
+    transition={{
       duration: 0.8,
-    }} className="h-150 lg:h-[calc(100dvh-140px)] flex min-w-dvw max-w-dvw shrink-0 snap-start will-change-transform">
+    }} className="h-max lg:min-h-[calc(100dvh-140px)] flex flex-auto flex-wrap min-w-dvw max-w-dvw shrink-0 snap-start will-change-transform">
     <motion.div
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          initial={{
-            opacity: 0,
-            x: -50,
-          }}
-          transition={{
-            duration: 0.8,
-          }} 
-          className="my-46 md:ml-30 lg:ml-50 flex flex-col gap-4 w-max justify-center">
-            <p className="text-xl mt-20 border-l-4 pl-4 border-yellow-400 tracking-wider">
-              Wellcome To Our School
-            </p>
-            <div className="flex flex-col gap-6">
-              <h1 className="text-6xl font-bold text-deep-brand tracking-wide">
-                Start Your Dream Career
-              </h1>
-              <h2 className="font-medium text-2xl text-muted-text">
-                Industry-ready <b>Graphics Design courses with job support</b>
-              </h2>
+        whileInView={{
+        opacity: 1,
+        x: 0,
+        }}
+        initial={{
+        opacity: 0,
+        x: -50,
+        }}
+        transition={{
+        duration: 0.8,
+        }}
+        viewport={{ once: true }}
+        className="my-46 md:ml-30 lg:ml-50 flex flex-col gap-4 w-max justify-center">
+        <p className="text-xl mt-20 border-l-4 pl-4 border-yellow-400 tracking-wider">
+          Wellcome To Our School
+        </p>
+        <div className="flex flex-col gap-6">
+          <h1 className="text-6xl font-bold text-deep-brand tracking-wide">
+          Start Your Dream Career
+          </h1>
+          <h2 className="font-medium text-2xl text-muted-text">
+          Industry-ready <b>Graphics Design courses with job support</b>
+          </h2>
+        </div>
+        <div className="mt-6 flex gap-4">
+          <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-shadow duration-300 hover:shadow-xl">
+          Explore Courses
+          </button>
+          <button className="bg-white/30 backdrop-blur-md border-white border-2 hover:bg-white/90 text-deep-brand px-6 py-3 rounded-full font-semibold shadow-xs transition-shadow duration-300 hover:shadow-lg">
+          Apply For Demo Class
+          </button>
+        </div>
+        <div className="bg-white/40 border-2 border-white w-max rounded-2xl px-6 py-4 flex items-center gap-6 mt-8">
+          <div className="flex items-center gap-2">
+          <div className="flex -space-x-2">
+            <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
+            <img src={student1} className="rounded-full object-cover" alt="Student Image" />
             </div>
-            <div className="mt-6 flex gap-4">
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-shadow duration-300 hover:shadow-xl">
-                Explore Courses
-              </button>
-              <button className="bg-white/30 backdrop-blur-md border-white border-2 hover:bg-white/90 text-deep-brand px-6 py-3 rounded-full font-semibold shadow-xs transition-shadow duration-300 hover:shadow-lg">
-                Apply For Demo Class
-              </button>
+            <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
+            <img src={student2} className="rounded-full object-cover" alt="Student Image" />
             </div>
-            <div className="bg-white/40 border-2 border-white w-max rounded-2xl px-6 py-4 flex items-center gap-6 mt-8">
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-2">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
-                    <img src={student1} className="rounded-full object-cover" alt="Student Image" />
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
-                    <img src={student2} className="rounded-full object-cover" alt="Student Image" />
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
-                    <img src={student3} className="rounded-full object-cover" alt="Student Image" />
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
-                    <img src={student4} className="rounded-full object-cover" alt="Student Image" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                  <p className="text-lg font-semibold text-gray-800">1 Thousand+</p>
-                  <p className="text-xs text-gray-500">Successfull Student</p>
-              </div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
+            <img src={student3} className="rounded-full object-cover" alt="Student Image" />
             </div>
-          </motion.div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white p-0.5">
+            <img src={student4} className="rounded-full object-cover" alt="Student Image" />
+            </div>
+          </div>
+          </div>
+          <div>
+            <p className="text-lg font-semibold text-gray-800">1 Thousand+</p>
+            <p className="text-xs text-gray-500">Successfull Student</p>
+          </div>
+        </div>
+        </motion.div>
           <div className="relative flex items-center justify-center grow">
             <img
               src={girltWithLaptop}

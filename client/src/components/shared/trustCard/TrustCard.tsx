@@ -17,6 +17,7 @@ const TrustCard:FC<TrustCardProps> = ({
         opacity: 0,
         y: 50,
     }}
+    viewport={{ once: true }}
     whileInView={{
         opacity: 1,
         y: 0,
