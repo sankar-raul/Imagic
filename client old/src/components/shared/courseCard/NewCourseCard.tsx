@@ -56,7 +56,7 @@ const NewCourseCard:FC<CourseCardProps> = ({
                 origin-[50%_90%]
                 group-hover/card:transform-[perspective(1200px)_scale(1.3)_rotate(3deg)_translateY(1%)]' draggable={false} src={boyImage} alt="Boy Image" />
             </div>
-        <div className="bg-white/90 z-1 backdrop-blur-4xl rounded-4xl h-1/2 text-xs p-6 flex flex-col justify-between">
+        <div className="bg-white/90 z-1 backdrop-blur-4xl rounded-4xl min-h-max h-1/2 text-xs p-6 flex flex-col justify-between">
           <div className="flex flex-col gap-4">
               <div className="flex items-center">
                   <div className="px-2 py-1 bg-orange-400/10 tracking-wider flex rounded-2xl text-orange-600 text-xs border border-orange-400/10 font-semibold">{course.category || 'Course'}</div>
