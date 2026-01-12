@@ -14,8 +14,19 @@ import NewsAndEvent from "./components/pages/newsAndEvent/NewsAndEvent";
 import NewsAndEventDetails from "./components/pages/newsAndEvent/NewsAndEventDetails";
 import Fanchise from "./components/pages/franchise/Fanchise";
 import StudentWork from "./components/pages/studentwork/StudentWork";
-import Dashbaord from "./components/pages/dashboard/Dashbaord";
 import CourseDetails from "./components/pages/course/CourseDetails";
+import Dashboard from "./components/pages/dashboard/Dashbaord";
+import AddCourse from "./components/pages/dashboard/course/AddCourse";
+import AddTestimonial from "./components/pages/dashboard/testimonial/AddTestimonial";
+import AddPlacement from "./components/pages/dashboard/placement/AddPlacement";
+import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
+import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentWork";
+import AddBlog from "./components/pages/dashboard/blog/AddBlog";
+import AllCourse from "./components/pages/dashboard/course/AllCourse";
+import AllEntries from "./components/pages/dashboard/demoClass/AllEntries";
+import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
+import AllPlacements from "./components/pages/dashboard/placement/AllPlacements";
+import AllTestimonial from "./components/pages/dashboard/testimonial/AllTestimonial";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
@@ -56,8 +67,32 @@ const routes = createBrowserRouter(createRoutesFromElements(
                 <Route index element={<StudentWork />} />
             </Route>
         </Route>
-        <Route path="dashboard">
-            <Route index element={<Dashbaord />} />
+        <Route path="dashboard" element={<Dashboard />} >
+                <Route path="course">
+                    <Route index element={<AllCourse />} />
+                    <Route path="add" element={<AddCourse />} />
+                </Route>
+                <Route path="testimonial">
+                    <Route index element={<AllTestimonial />} />
+                    <Route path="add" element={<AddTestimonial />} />
+                </Route>
+                <Route path="placements">
+                    <Route index element={<AllPlacements />} />
+                    <Route path="add" element={<AddPlacement />} />
+                </Route>
+                <Route path="job-vacancy">
+                    <Route index element={<AllJobVacancy />} />
+                    <Route path="add" element={<AddJobVacancy />} />
+                </Route>
+                <Route path="student-work">
+                    <Route path="add" element={<AddStudentWork />} />
+                </Route>
+                <Route path="blog">
+                    <Route path="add" element={<AddBlog />} />
+                </Route>
+                <Route path="demo-class">
+                    <Route index element={<AllEntries />} />
+                </Route>
         </Route>
     </Route>
 ))

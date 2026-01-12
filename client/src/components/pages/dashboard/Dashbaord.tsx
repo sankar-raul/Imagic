@@ -1,10 +1,15 @@
+import { Outlet } from "react-router";
+import Sidebar from "./Sidebar";
 
-const Dashbaord = () => {
+const Dashboard = () => {
   return (
-    <div>
-      
+    <div className="h-100vh max-h-dvh flex">
+      <Sidebar />
+      <div className="content overflow-y-auto grow">
+        <Outlet />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashbaord
+export default Dashboard;

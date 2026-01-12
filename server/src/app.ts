@@ -11,6 +11,7 @@ import demoClassRoutes from './api/routes/demoClass.route';
 import testimonialRoutes from './api/routes/testimonial.route';
 import newsRoutes from './api/routes/news.route';
 import studentWorkRoutes from './api/routes/studentWork.route';
+import uploadRoutes from './api/routes/upload.route';
 
 
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/demo-class', demoClassRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/student-works', studentWorkRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server is running');
