@@ -16,50 +16,57 @@ import Fanchise from "./components/pages/franchise/Fanchise";
 import StudentWork from "./components/pages/studentwork/StudentWork";
 import Dashbaord from "./components/pages/dashboard/Dashbaord";
 import CourseDetails from "./components/pages/course/CourseDetails";
+// New architecture components - can also be imported directly
+import CoursePage from "./components/CoursePage";
+import JobVacancy from "./components/JobVacancy";
+import PlacementPage from "./components/PlacementPage";
+import ContactPage from "./components/ContactPage";
+import JobsPage from "./components/JobsPage";
 
 const routes = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path="/" element={<RootLayout/>}>
-            <Route index element={<Home/>}/>
-            <Route path="/course/:courseId" element={<CoursePage/>}/>
-            <Route path="/jobvacancy" element={<JobVacancy/>}/>
-            <Route path="jobs/:jobId" element={<JobListingPage/>}/>
-            <Route path="placement" element={<PlacementPage/>}/>
-             <Route path="contact" element={<ContactPage/>}/>
-            </Route>
-            <Route path="courses">
-                <Route path=":id" element={<CourseDetails />} />
-            </Route>
-            <Route path="news-events">
-                <Route index element={<NewsAndEvent />} />
-                {/* <Route path="page/:pageNumber" element={<div>News and Events Pagination Page</div>} /> */}
-                <Route path=":newsDetails" element={<BlogDetails />} />
-            </Route>
-            <Route path="vacancies">
-                <Route index element={<Vacancies />} />
-                {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
-                <Route path=":vacancyId" element={<Vacancies />} />
-            </Route>
-            <Route path="testimonial">
-                <Route index element={<Testimonial />} />
-            </Route>
-            <Route path="showcase">
-                <Route index element={<ShowCase />} />
-            </Route>
-            <Route path="blogs" >
-                <Route index element={<Blogs />} />
-                <Route path=":blogId" element={<NewsAndEventDetails />} />
-            </Route>
-            <Route path="animation-institute-franchise">
-                <Route index element={<Fanchise />} />
-            </Route>
-            <Route path="student-work">
-                <Route index element={<StudentWork />} />
-            </Route>
-        </Route>
-        <Route path="dashboard">
-            <Route index element={<Dashbaord />} />
-        </Route>
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="course/:courseId" element={<CoursePage />} />
+      <Route path="jobvacancy" element={<JobVacancy />} />
+      <Route path="jobs/:jobId" element={<JobsPage />} />
+      <Route path="placement" element={<PlacementPage />} />
+      <Route path="courses">
+        <Route path=":id" element={<CourseDetails />} />
+      </Route>
+      <Route path="news-events">
+        <Route index element={<NewsAndEvent />} />
+        {/* <Route path="page/:pageNumber" element={<div>News and Events Pagination Page</div>} /> */}
+        <Route path=":newsDetails" element={<BlogDetails />} />
+      </Route>
+      <Route path="vacancies">
+        <Route index element={<Vacancies />} />
+        {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
+        <Route path=":vacancyId" element={<Vacancies />} />
+      </Route>
+      <Route path="testimonial">
+        <Route index element={<Testimonial />} />
+      </Route>
+      <Route path="showcase">
+        <Route index element={<ShowCase />} />
+      </Route>
+      <Route path="blogs">
+        <Route index element={<Blogs />} />
+        <Route path=":blogId" element={<NewsAndEventDetails />} />
+      </Route>
+      <Route path="animation-institute-franchise">
+        <Route index element={<Fanchise />} />
+      </Route>
+      <Route path="student-work">
+        <Route index element={<StudentWork />} />
+      </Route>
+      <Route path="dashboard">
+        <Route index element={<Dashbaord />} />
+      </Route>
     </Route>
-))
+  )
+);
+
 export default routes;
