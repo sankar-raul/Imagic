@@ -5,15 +5,15 @@ import DemoClassSection from './DemoClassSection';
 import TestimonialSection from './TestimonialSection';
 import { useParams } from 'react-router';
 
-let dataStorage = null
+let dataStorage: Map<string, any> | null = null
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState('overview');
   const [courseData, setCourseData] = useState(null);
   const { courseId } = useParams();
 
-  const handleData = useCallback((data) => {
+  const handleData = useCallback((data:any) => {
     dataStorage = new Map(
-      data.map(info => ([info?.id, info]))
+      data.map((info: { id: any; }) => ([info?.id, info]))
     )
     setCourseData(dataStorage)
   }, [])
@@ -27,6 +27,9 @@ export default function CoursePage() {
         }
       })()
   }, []);
+  useEffect(() => {
+    console.log(courseData)
+  }, [])
 
   if (!courseData) return <h2>Loading...</h2>;
 
