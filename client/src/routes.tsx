@@ -17,6 +17,17 @@ import StudentWork from "./components/pages/studentwork/StudentWork";
 import Dashbaord from "./components/pages/dashboard/Dashbaord";
 import CourseDetails from "./components/pages/course/CourseDetails";
 import WhyImagic from "./components/pages/whyImagic/WhyImagic";
+import AllCourse from "./components/pages/dashboard/course/AllCourse";
+import AddCourse from "./components/pages/dashboard/course/AddCourse";
+import AllTestimonial from "./components/pages/dashboard/testimonial/AllTestimonial";
+import AddTestimonial from "./components/pages/dashboard/testimonial/AddTestimonial";
+import AllEntries from "./components/pages/dashboard/demoClass/AllEntries";
+import AllPlacements from "./components/pages/dashboard/placement/AllPlacements";
+import AddPlacement from "./components/pages/dashboard/placement/AddPlacement";
+import AddBlog from "./components/pages/dashboard/blog/AddBlog";
+import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentWork";
+import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
+import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
@@ -60,9 +71,36 @@ const routes = createBrowserRouter(createRoutesFromElements(
                 <Route index element={<StudentWork />} />
             </Route>
         </Route>
-        <Route path="dashboard">
-            <Route index element={<Dashbaord />} />
+        <Route path="dashboard" element={<Dashbaord />} >
+        <Route path="course">
+            <Route index element={<AllCourse />} />
+            <Route path="add" element={<AddCourse />} />
         </Route>
+
+        <Route path="testimonial">
+            <Route index element={<AllTestimonial />} />
+            <Route path="add" element={<AddTestimonial />} />
+        </Route>
+        <Route path="demo-class">
+            <Route index element={<AllEntries />} />
+        </Route>
+        <Route path="Placement">
+            <Route index element={<AllPlacements />} />
+            <Route path="add" element={<AddPlacement />} />
+        </Route>
+        <Route path="blog">
+            <Route path="add" element={<AddBlog />} />
+        </Route>
+        <Route path="student-work">
+            <Route path="add" element={<AddStudentWork />} />
+        </Route>
+        <Route path="job-vacancy">
+            <Route index element={<AllJobVacancy />} />
+            <Route path="add" element={<AddJobVacancy />} />
+        </Route>
+        
+        </Route>
+
     </Route>
 ))
 export default routes;
