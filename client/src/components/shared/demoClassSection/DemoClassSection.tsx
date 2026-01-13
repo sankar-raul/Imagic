@@ -3,15 +3,17 @@ import { BookOpen, CheckCircle } from 'lucide-react';
 import FormImg from '@/assets/formImg.png'
 import formImage from '@/assets/images/form-image.jpg'
 import { motion } from 'framer-motion';
+import useSubmitDemoClass from '@/hooks/demoClass/useDemoClass';
 
 export default function DemoClassSection() {
+  const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
     course: ''
   });
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -21,21 +23,27 @@ export default function DemoClassSection() {
     });
   };
 
-  const handleSubmit = () => {
-    if (formData.firstName && formData.lastName && formData.email && formData.phone && formData.course) {
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          course: ''
-        });
-      }, 3000);
-    }
-  };
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      if (formData.name && formData.email && formData.phone && formData.course) {
+          const response = await submitDemoClassForm(formData);
+          console.log(response)
+          setSubmitted(true);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            course: ''
+          });
+          setIsSubmitting(false);
+        }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        } finally {
+          setIsSubmitting(false);
+        }
+    };
 
   return (
     <div className="flex items-center justify-center p-4 sm:p-6 lg:p-8" id='demoClass'>
@@ -64,8 +72,8 @@ export default function DemoClassSection() {
                   </label>
                   <input
                     type="text"
-                    name="firstName"
-                    value={formData.firstName}
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     placeholder="John"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
@@ -118,19 +126,22 @@ export default function DemoClassSection() {
                   <option value="digital-marketing">Digital Marketing</option>
                 </select>
               </div>
-              <button
+                <button
                 onClick={handleSubmit}
-                className="w-full bg-black text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
-              >
-                {submitted ? (
+                disabled={isSubmitting}
+                className="w-full bg-black text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-90 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                {isSubmitting ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-3 border-x-white border-y-transparent"></div>
+                ) : submitted ? (
                   <>
-                    <CheckCircle size={20} />
-                    Application Submitted!
+                  <CheckCircle size={20} />
+                  Application Submitted!
                   </>
                 ) : (
                   <>
-                    <BookOpen size={20} />
-                    Apply for Demo Class
+                  <BookOpen size={20} />
+                  Apply for Demo Class
                   </>
                 )}
               </button>
