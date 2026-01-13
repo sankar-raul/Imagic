@@ -118,7 +118,7 @@ export default function AllJobVacancy() {
           </div>
           <Link
             to="/dashboard/job-vacancies/add"
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
+            className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Post New Job
           </Link>

@@ -1,13 +1,13 @@
-import Navbar from '../../Navbar'
 import Footer from '../../Footer'
 import { Outlet } from 'react-router'
 import Topbar from '../../ui/navbar/Topbar'
+import Header from '@/components/shared/header/Header'
 
 function RootLayout() {
   return (
     <>
     <Topbar/>
-   <Navbar/>
+   <Header/>
    <Outlet/>
    <Footer/>
    </>

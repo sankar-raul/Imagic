@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, CheckCircle } from 'lucide-react';
-import FormImg from '../assets/formImg.png'
+import FormImg from '@/assets/formImg.png'
 
 export default function DemoClassSection() {
   const [formData, setFormData] = useState({
@@ -66,7 +66,7 @@ export default function DemoClassSection() {
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="John"
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
                   />
                 </div>
 
@@ -80,7 +80,7 @@ export default function DemoClassSection() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="john.doe@example.com"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
                 />
               </div>
 
@@ -94,7 +94,7 @@ export default function DemoClassSection() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 00000-00000"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
                 />
               </div>
 
@@ -106,7 +106,7 @@ export default function DemoClassSection() {
                   name="course"
                   value={formData.course}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-gray-900 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 appearance-none cursor-pointer"
                 >
                   <option value="">Select a course</option>
                   <option value="web-dev">Web Development</option>
@@ -140,16 +140,16 @@ export default function DemoClassSection() {
           </div>
 
           {/* Illustration Section */}
-          <div className="w-full lg:w-1/2 bg-linear-to-br from-purple-400 via-pink-400 to-orange-300 p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
+          <div className="w-full lg:w-1/2 bg-linear-to-br from-yellow-400 from-20% to-yellow-400 p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
            <div className="flex-col">
             <img src={FormImg} alt="" />
            
               
               <div className="mt-8 space-y-2 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">
+                <h2 className="text-2xl sm:text-3xl font-bold drop-shadow-lg">
                   Start Learning Today!
                 </h2>
-                <p className="text-white/90 text-sm sm:text-base max-w-xs mx-auto">
+                <p className="opacity-60 text-sm sm:text-base max-w-xs mx-auto">
                   Join thousands of students on their journey to success
                 </p>
               </div>
