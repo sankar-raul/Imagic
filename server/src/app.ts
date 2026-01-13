@@ -15,7 +15,19 @@ import uploadRoutes from './api/routes/upload.route';
 
 
 const app = express();
-app.use(cors())
+const DEV_MODE = 'true'
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (DEV_MODE || !origin) {
+            callback(null, true)
+        }
+        else {
+            callback(new Error('Origin not allowed'))
+        }
+    },
+    credentials: true
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
