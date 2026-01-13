@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BookOpen, CheckCircle } from 'lucide-react';
 import FormImg from '@/assets/formImg.png'
+import formImage from '@/assets/images/form-image.jpg'
+import { motion } from 'framer-motion';
 
 export default function DemoClassSection() {
   const [formData, setFormData] = useState({
@@ -36,8 +38,8 @@ export default function DemoClassSection() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-8" id='demoClass'>
-      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <div className="flex items-center justify-center p-4 sm:p-6 lg:p-8" id='demoClass'>
+      <div className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden group/form">
         <div className="flex flex-col lg:flex-row">
           {/* Form Section */}
           <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12">
@@ -140,16 +142,17 @@ export default function DemoClassSection() {
           </div>
 
           {/* Illustration Section */}
-          <div className="w-full lg:w-1/2 bg-linear-to-br from-yellow-400 from-20% to-yellow-400 p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
-           <div className="flex-col">
-            <img src={FormImg} alt="" />
-           
-              
-              <div className="mt-8 space-y-2 text-center">
-                <h2 className="text-2xl sm:text-3xl font-bold drop-shadow-lg">
+          <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
+          <div className='absolute inset-0'>
+            <img src={formImage} alt="form image" className='bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-center' />
+            <div className='absolute inset-0 bg-linear-to-b from-transparent via-yellow-500/40 to-yellow-300'></div>
+          </div>
+           <div className="flex-col z-1">
+              <div className="space-y-4 text-center text-white">
+                <h2 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
                   Start Learning Today!
                 </h2>
-                <p className="opacity-60 text-sm sm:text-base max-w-xs mx-auto">
+                <p className="text-md drop-shadow-lg">
                   Join thousands of students on their journey to success
                 </p>
               </div>
