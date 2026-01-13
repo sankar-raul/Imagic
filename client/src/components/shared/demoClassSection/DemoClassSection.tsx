@@ -8,10 +8,10 @@ import useSubmitDemoClass from '@/hooks/demoClass/useDemoClass';
 export default function DemoClassSection() {
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
-    phone: '',
-    course: ''
+    phoneNumber: '',
+    courseInterested: ''
   });
   const [ isSubmitting, setIsSubmitting ] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -26,15 +26,15 @@ export default function DemoClassSection() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      if (formData.name && formData.email && formData.phone && formData.course) {
+      if (formData.fullName && formData.email && formData.phoneNumber && formData.courseInterested) {
           const response = await submitDemoClassForm(formData);
           console.log(response)
           setSubmitted(true);
           setFormData({
-            name: '',
+            fullName: '',
             email: '',
-            phone: '',
-            course: ''
+            phoneNumber: '',
+            courseInterested: ''
           });
           setIsSubmitting(false);
         }
@@ -72,8 +72,8 @@ export default function DemoClassSection() {
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleChange}
                     placeholder="John"
                     className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
@@ -100,8 +100,8 @@ export default function DemoClassSection() {
                 </label>
                 <input
                   type="tel"
-                  name="phone"
-                  value={formData.phone}
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="+91 00000-00000"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
@@ -113,8 +113,8 @@ export default function DemoClassSection() {
                   Course interested in
                 </label>
                 <select
-                  name="course"
-                  value={formData.course}
+                  name="courseInterested"
+                  value={formData.courseInterested}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 appearance-none cursor-pointer"
                 >
