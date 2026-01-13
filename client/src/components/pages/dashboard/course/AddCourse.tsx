@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
 import DynamicForm from '../../../shared/form/DynamicForm';
+import RichTextEditor from '../../../shared/RichTextEditor';
+import axios from 'axios';
 import {
   basicInfoFields,
   courseDetailsFields,
@@ -9,6 +11,8 @@ import {
   reviewFields,
   testimonialFields
 } from '../../../../constants/forms/courseFormFields';
+import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails, IcourseTestimonial, IstudentWork } from '@/types/course.types';
+
 
 type SectionKey =
   | 'basic'
@@ -34,18 +38,30 @@ export default function CourseForm() {
   });
 
   // Form state management
-  const [basicInfo, setBasicInfo] = useState({});
-  const [courseDetails, setCourseDetails] = useState({});
-  const [syllabusModules, setSyllabusModules] = useState<any[]>([]);
-  const [studentWorks, setStudentWorks] = useState<any[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [testimonials, setTestimonials] = useState<any[]>([]);
+  interface BasicInfo {
+    title: string;
+    slug: string;
+    short_description: string;
+  }
+
+  const [basicInfo, setBasicInfo] = useState<BasicInfo>({
+    title: '',
+    slug: '',
+    short_description: ''
+  });
+  const [overview, setOverview] = useState('');
+
+  const [courseDetails, setCourseDetails] = useState<IcourseDetails>({} as IcourseDetails);
+  const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>([]);
+  const [studentWorks, setStudentWorks] = useState<IstudentWork[]>([]);
+  const [reviews, setReviews] = useState<IcourseReview[]>([]);
+  const [testimonials, setTestimonials] = useState<IcourseTestimonial[]>([]);
 
   // Temporary state for adding new items
-  const [currentSyllabus, setCurrentSyllabus] = useState({});
-  const [currentWork, setCurrentWork] = useState({});
-  const [currentReview, setCurrentReview] = useState({});
-  const [currentTestimonial, setCurrentTestimonial] = useState({});
+  const [currentSyllabus, setCurrentSyllabus] = useState<Partial<ISyllabusSection>>({});
+  const [currentWork, setCurrentWork] = useState<Partial<IstudentWork>>({});
+  const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>({});
+  const [currentTestimonial, setCurrentTestimonial] = useState<Partial<IcourseTestimonial>>({});
 
   const toggleSection = (section: SectionKey) => {
     setExpandedSections(prev => ({
@@ -55,58 +71,84 @@ export default function CourseForm() {
   };
 
   const handleSubmit = () => {
-    const courseData = {
-      ...basicInfo,
-      ...courseDetails,
-      syllabus: syllabusModules,
-      studentWork: studentWorks,
-      reviews,
-      testimonials
+    const courseData: Icourse = {
+      title: basicInfo.title,
+      slug: basicInfo.slug,
+      short_description: basicInfo.short_description,
+      courseDetails: courseDetails,
+      course_overview: overview,
+      courseSyllabus: syllabusModules,
+      students_work: studentWorks,
+      reviews: reviews,
+      students_testimonials: testimonials,
     };
     console.log('Course created:', courseData);
+    axios.post('/api/courses', courseData)
+      .then(response => {
+        console.log('Course successfully created:', response.data);
+      })
+      .catch(error => {
+        console.error('Error creating course:', error);
+      });
   };
 
   const handleFieldChange = (section: string) => (name: string, value: any) => {
-    switch (section) {
-      case 'basic':
-        setBasicInfo(prev => ({ ...prev, [name]: value }));
-        break;
-      case 'details':
-        setCourseDetails(prev => ({ ...prev, [name]: value }));
-        break;
-      case 'syllabus':
-        setCurrentSyllabus(prev => ({ ...prev, [name]: value }));
-        break;
-      case 'work':
-        setCurrentWork(prev => ({ ...prev, [name]: value }));
-        break;
-      case 'review':
-        setCurrentReview(prev => ({ ...prev, [name]: value }));
-        break;
-      case 'testimonial':
-        setCurrentTestimonial(prev => ({ ...prev, [name]: value }));
-        break;
+    // Handle nested field names (e.g., 'courseDetails.price')
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      if (parent === 'courseDetails') {
+        setCourseDetails(prev => ({ ...prev, [child]: value }));
+      }
+    } else {
+      switch (section) {
+        case 'basic':
+          setBasicInfo(prev => ({ ...prev, [name]: value }));
+          break;
+        case 'details':
+          setCourseDetails(prev => ({ ...prev, [name]: value }));
+          break;
+        case 'syllabus':
+          setCurrentSyllabus(prev => ({ ...prev, [name]: value }));
+          break;
+        case 'review':
+          setCurrentReview(prev => ({ ...prev, [name]: value }));
+          break;
+        case 'work':
+          setCurrentWork(prev => ({ ...prev, [name]: value }));
+          break;
+        case 'testimonial':
+          setCurrentTestimonial(prev => ({ ...prev, [name]: value }));
+          break;
+      }
     }
   };
 
   const addModule = () => {
-    setSyllabusModules(prev => [...prev, currentSyllabus]);
-    setCurrentSyllabus({});
+    if (currentSyllabus.title && currentSyllabus.description) {
+      setSyllabusModules(prev => [...prev, currentSyllabus as ISyllabusSection]);
+      setCurrentSyllabus({});
+    }
   };
 
   const addStudentWork = () => {
-    setStudentWorks(prev => [...prev, currentWork]);
-    setCurrentWork({});
+    if (currentWork.name && currentWork.tool) {
+      setStudentWorks(prev => [...prev, currentWork as IstudentWork]);
+      setCurrentWork({});
+    }
   };
 
   const addReview = () => {
-    setReviews(prev => [...prev, currentReview]);
-    setCurrentReview({});
+    if (currentReview.name && currentReview.rating) {
+      setReviews(prev => [...prev, currentReview as IcourseReview]);
+      setCurrentReview({});
+    }
   };
 
   const addTestimonial = () => {
-    setTestimonials(prev => [...prev, currentTestimonial]);
-    setCurrentTestimonial({});
+    if (currentTestimonial.name && currentTestimonial.designation) {
+      setTestimonials(prev => [...prev, currentTestimonial as IcourseTestimonial]);
+      setCurrentTestimonial({});
+    }
   };
 
   const SectionHeader = ({ title, section }: SectionHeaderProps) => (
@@ -133,11 +175,20 @@ export default function CourseForm() {
             <div className="space-y-4">
               <SectionHeader title="Basic Information" section="basic" />
               {expandedSections.basic && (
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <DynamicForm
-                    fields={basicInfoFields}
-                    values={basicInfo}
-                    onChange={handleFieldChange('basic')}
+                <div className="p-4 bg-gray-50 rounded-lg space-y-6">
+                  <div className="bg-white p-4 rounded-lg border border-gray-200">
+                    <DynamicForm
+                      fields={basicInfoFields.filter(f => f.name !== 'course_overview')}
+                      values={basicInfo}
+                      onChange={handleFieldChange('basic')}
+                    />
+                  </div>
+                  
+                  {/* Rich text editor for course overview */}
+                  <RichTextEditor
+                    value={overview}
+                    onChange={setOverview}
+                    label="Course Overview"
                   />
                 </div>
               )}
@@ -147,8 +198,9 @@ export default function CourseForm() {
             <div className="space-y-4">
               <SectionHeader title="Course Details" section="details" />
               {expandedSections.details && (
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 bg-gray-50 rounded-lg space-y-6">
+                  <div className="bg-white p-4 rounded-lg border border-gray-200">
+                    <h3 className="text-md font-semibold text-gray-800 mb-4">Basic Course Information</h3>
                     <DynamicForm
                       fields={courseDetailsFields}
                       values={courseDetails}
@@ -169,15 +221,15 @@ export default function CourseForm() {
                       <h3 className="font-medium text-gray-700">Added Modules: {syllabusModules.length}</h3>
                       {syllabusModules.map((module, index) => (
                         <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{module.moduleTitle}</p>
-                          <p className="text-sm text-gray-600">{module.moduleDescription}</p>
+                          <p className="font-medium">{module.title}</p>
+                          <p className="text-sm text-gray-600">{module.description}</p>
                         </div>
                       ))}
                     </div>
                   )}
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
                     <DynamicForm
-                      fields={syllabusFields}
+                      fields={syllabusFields[0].fields || []}
                       values={currentSyllabus}
                       onChange={handleFieldChange('syllabus')}
                     />
@@ -204,19 +256,17 @@ export default function CourseForm() {
                       <h3 className="font-medium text-gray-700">Added Works: {studentWorks.length}</h3>
                       {studentWorks.map((work, index) => (
                         <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{work.studentName} - {work.tool}</p>
+                          <p className="font-medium">{work.name} - {work.tool}</p>
                         </div>
                       ))}
                     </div>
                   )}
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <DynamicForm
-                        fields={studentWorkFields}
-                        values={currentWork}
-                        onChange={handleFieldChange('work')}
-                      />
-                    </div>
+                    <DynamicForm
+                      fields={studentWorkFields[0].fields || []}
+                      values={currentWork}
+                      onChange={handleFieldChange('work')}
+                    />
                   </div>
                   <button
                     type="button"
@@ -240,19 +290,17 @@ export default function CourseForm() {
                       <h3 className="font-medium text-gray-700">Added Reviews: {reviews.length}</h3>
                       {reviews.map((review, index) => (
                         <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{review.reviewerName} - {review.rating}★</p>
+                          <p className="font-medium">{review.name} - {review.rating}★</p>
                         </div>
                       ))}
                     </div>
                   )}
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <DynamicForm
-                        fields={reviewFields}
-                        values={currentReview}
-                        onChange={handleFieldChange('review')}
-                      />
-                    </div>
+                    <DynamicForm
+                      fields={reviewFields[0].fields || []}
+                      values={currentReview}
+                      onChange={handleFieldChange('review')}
+                    />
                   </div>
                   <button
                     type="button"
@@ -276,20 +324,18 @@ export default function CourseForm() {
                       <h3 className="font-medium text-gray-700">Added Testimonials: {testimonials.length}</h3>
                       {testimonials.map((testimonial, index) => (
                         <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{testimonial.studentName}</p>
+                          <p className="font-medium">{testimonial.name}</p>
                           <p className="text-sm text-gray-600">{testimonial.designation}</p>
                         </div>
                       ))}
                     </div>
                   )}
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <DynamicForm
-                        fields={testimonialFields}
-                        values={currentTestimonial}
-                        onChange={handleFieldChange('testimonial')}
-                      />
-                    </div>
+                    <DynamicForm
+                      fields={testimonialFields[0].fields || []}
+                      values={currentTestimonial}
+                      onChange={handleFieldChange('testimonial')}
+                    />
                   </div>
                   <button
                     type="button"
@@ -307,7 +353,7 @@ export default function CourseForm() {
             <div className="flex gap-4 pt-6 border-t border-gray-200">
               <button
                 onClick={handleSubmit}
-                className="flex-1 px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
               >
                 Create Course
               </button>
