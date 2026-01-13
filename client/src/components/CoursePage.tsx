@@ -1,42 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Star, Clock, Award, FileText, Download, CheckCircle, User, MapPin , BookOpen,Calendar , Users } from 'lucide-react';
 import AccordionItem from './ui/coursePage/Accordian';
-import DemoClassSection from './DemoClassSection';
 import TestimonialSection from './TestimonialSection';
 import { useParams } from 'react-router';
+import useGetAllCourse from '@/hooks/course/useGetAllCourse';
+import DemoClassSection from './shared/demoClassSection/DemoClassSection';
 
 let dataStorage: Map<string, any> | null = null
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [courseData, setCourseData] = useState(null);
-  const { courseId } = useParams();
+  const { id:courseId } = useParams();
+  const { courses } = useGetAllCourse();
+  const course = useMemo(() => {
+    if (courses && courseId) {
+      return courses?.find((c: { id: string; }) => c.id === courseId);
+    }
+  }, [courses, courseId]);
 
-  const handleData = useCallback((data:any) => {
-    dataStorage = new Map(
-      data.map((info: { id: any; }) => ([info?.id, info]))
-    )
-    setCourseData(dataStorage)
-  }, [])
 
-  useEffect(() => {
-      (async () => {
-        if (!dataStorage) {
-        let data = await fetch("/data/courseData.json")
-        data = await data.json()
-        handleData(data)
-        }
-      })()
-  }, []);
-  useEffect(() => {
-    console.log(courseData)
-  }, [])
-
-  if (!courseData) return <h2>Loading...</h2>;
+  if (!courses) return <h2>Loading...</h2>;
 
 
 
 
-  const course = courseData.get(courseId);
   if (!course) return <h2>Course not found</h2>;
   console.log(course)
 
@@ -239,7 +225,7 @@ export default function CoursePage() {
 
             </div>
 
-            <DemoClassSection/>
+            <DemoClassSection />
             
           </div>
 

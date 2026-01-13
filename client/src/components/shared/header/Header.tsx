@@ -3,6 +3,7 @@ import logo from '@/assets/logo.jpg';
 import _ from 'lodash';
 import { NavMenuItem } from "@/types";
 import { motion } from "framer-motion";
+import { NavLink } from "react-router";
 
 // Navigation data structure
 const initialCourseRoute = '/courses';
@@ -113,7 +114,7 @@ export default function Header() {
           width: isScrolled ? '100%' : 'max-content',
         }}
         transition={{ duration: 0.5}}
-        className={`sticky top-0 flex justify-between min-w-full lg:w-max lg:min-w-auto lg:mx-auto items-center will-change-auto py-3 px-6 md:px-12 lg:px-16 gap-4 z-50 shadow-sm ${
+        className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-3 px-6 md:px-12 lg:px-16 gap-4 z-50 shadow-sm ${
           !isScrolled 
             ? 'lg:bg-white/80 lg:backdrop-blur-2xl lg:rounded-full md:translate-y-2' 
             : ''
@@ -152,12 +153,12 @@ export default function Header() {
             {navData.menuItems.map((item, index) => (
               <li className="relative group" key={index}>
                 {item.type === "link" ? (
-                  <a
-                    href={item.href}
-                    className="block lg:inline-block px-4 py-3 lg:py-4 text-gray-800 hover:text-gray-900 font-medium text-base transition-colors relative lg:after:content-[''] lg:after:absolute lg:after:bottom-0 lg:after:left-1/2 lg:after:-translate-x-1/2 lg:after:w-0 lg:after:h-0.5 lg:after:bg-black lg:hover:after:w-3/4 lg:after:transition-all lg:after:duration-300"
+                  <NavLink
+                    to={item.href || '/'}
+                    className="block whitespace-nowrap lg:inline-block px-4 py-3 lg:py-4 text-gray-800 hover:text-gray-900 font-medium text-base transition-colors relative lg:after:content-[''] lg:after:absolute lg:after:bottom-0 lg:after:left-1/2 lg:after:-translate-x-1/2 lg:after:w-0 lg:after:h-0.5 lg:after:bg-black lg:hover:after:w-3/4 lg:after:transition-all lg:after:duration-300"
                   >
                     {item.label}
-                  </a>
+                  </NavLink>
                 ) : (
                   <>
                     <button
