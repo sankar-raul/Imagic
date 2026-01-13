@@ -1,80 +1,3 @@
-// import React from 'react';
-// import { Award, Target, Trophy, Building2 } from 'lucide-react';
-
-// export default function LearnerSupportSection() {
-//   const achievements = [
-//     {
-//       icon: Award,
-//       title: "Netaji Subhas Open University",
-//       description: "IMAGIC is the only NSOU (Netaji Subhas Open University) Affiliated Multimedia Animation Institute in entire West Bengal.",
-//       color: "bg-pink-100 text-pink-600"
-//     },
-//     {
-//       icon: Target,
-//       title: "CorelDRAW Certificate",
-//       description: "IMAGIC is the First and Only CorelDRAW Authorized institute in Kolkata as well as in West Bengal. Our faculties are also Corel certified.",
-//       color: "bg-teal-100 text-teal-600"
-//     },
-//     {
-//       icon: Trophy,
-//       title: "Adobe Certified Institute in Kolkata",
-//       description: "It's Certiport Authorized training center in Kolkata. We provide this internationally industry approved certificate to our students.",
-//       color: "bg-yellow-100 text-yellow-600"
-//     }
-//   ];
-
-//   return (
-//     <section className="w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-//       <div className="max-w-6xl mx-auto">
-//         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-//           {/* Left Column - Main Content */}
-//           <div className="order-2 lg:order-1">
-//             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-pink-600 mb-6 leading-tight">
-//               Why Imagic?
-//             </h2>
-//             <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-8">
-//  Imagic has been teaching Graphics Design, Video Editing and Digital Marketing since 2010 in Kolkata. Lifetime 100% Job Placement is provided to Imagic students.
-//              </p>
-            
-//             {/* Image for mobile/tablet */}
-//             <div className="lg:hidden mb-8 rounded-2xl overflow-hidden shadow-lg">
-//               <img 
-//                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop" 
-//                 alt="Students collaborating" 
-//                 className="w-full h-64 sm:h-80 object-cover"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Right Column - Achievement Cards */}
-//           <div className="order-1 lg:order-2 space-y-6">
-//             {achievements.map((item, index) => (
-//               <div 
-//                 key={index}
-//                 className="flex items-start gap-4 p-4 sm:p-6 bg-white rounded-xl hover:shadow-xl border border-gray-200 transition-shadow duration-300"
-//               >
-//                 <div className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg ${item.color} flex items-center justify-center`}>
-//                   <item.icon className="w-6 h-6 sm:w-7 sm:h-7" />
-//                 </div>
-//                 <div className="flex-1 min-w-0">
-//                   <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-//                     {item.title}
-//                   </h3>
-//                   <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-//                     {item.description}
-//                   </p>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// }
-// 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -137,7 +60,8 @@ export default function FeatureSection() {
   }, [progress]);
 
   return (
-    <div className={'p-8 md:p-12'}>
+    <div 
+     className={'p-8 md:p-12'}>
       <div className="mx-auto w-full max-w-7xl">
         <div className="relative mx-auto mb-12 max-w-2xl sm:text-center">
           <div className="relative z-10">
