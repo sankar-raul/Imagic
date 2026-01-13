@@ -1,7 +1,15 @@
-// Compatibility shim: Placeholder for Dashboard page
-// TODO: Create actual Dashbaord component in new architecture
-const Dashbaord = () => {
-  return <div>Dashboard - To be implemented</div>;
+import { Outlet } from "react-router";
+import Sidebar from "./Sidebar";
+
+const Dashboard = () => {
+  return (
+    <div className="h-100vh max-h-dvh flex">
+      <Sidebar />
+      <div className="content overflow-y-auto grow">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
-export default Dashbaord;
+export default Dashboard;
