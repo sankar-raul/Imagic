@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import RichTextEditor from '../../../shared/RichTextEditor';
-import axios from 'axios';
 import {
   basicInfoFields,
   courseDetailsFields,
@@ -12,6 +11,7 @@ import {
   testimonialFields
 } from '../../../../constants/forms/courseFormFields';
 import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails, IcourseTestimonial, IstudentWork } from '@/types/course.types';
+import useCreateCourse from '@/hooks/course/useCreateCourse';
 
 
 type SectionKey =
@@ -63,6 +63,8 @@ export default function CourseForm() {
   const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>({});
   const [currentTestimonial, setCurrentTestimonial] = useState<Partial<IcourseTestimonial>>({});
 
+  const { createCourse, isLoading } = useCreateCourse();
+
   const toggleSection = (section: SectionKey) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -83,9 +85,9 @@ export default function CourseForm() {
       students_testimonials: testimonials,
     };
     console.log('Course created:', courseData);
-    axios.post('/api/courses', courseData)
+    createCourse(courseData)
       .then(response => {
-        console.log('Course successfully created:', response.data);
+        console.log('Course successfully created:', response);
       })
       .catch(error => {
         console.error('Error creating course:', error);
