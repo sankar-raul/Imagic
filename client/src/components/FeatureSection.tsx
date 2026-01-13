@@ -119,7 +119,7 @@ const features = [
   },
 ];
 
-export default function FeatureSteps() {
+export default function FeatureSection() {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
 
