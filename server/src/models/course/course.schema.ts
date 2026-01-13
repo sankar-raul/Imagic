@@ -13,13 +13,13 @@ const courseDetailsSchema = new Schema(
 { _id: false }
 );
 
-const courseToolsSchema = new Schema(
-{
-    name: { type: String, required: true },
-    description: { type: String }
-},
-{ _id: false }
-);
+// const courseToolsSchema = new Schema(
+// {
+//     name: { type: String, required: true },
+//     description: { type: String }
+// },
+// { _id: false }
+// );
 
 const CourseSchema = new Schema({
     title: {
@@ -43,7 +43,7 @@ const CourseSchema = new Schema({
     courseSyllabus: [{
         title: { type: String, required: true },
         description: { type: String },
-        tools: [courseToolsSchema]
+        // tools: [courseToolsSchema]
     }],
     students_work: [{
         tool: { type: String, required: true },

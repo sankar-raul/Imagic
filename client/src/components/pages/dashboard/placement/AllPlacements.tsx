@@ -106,7 +106,7 @@ export default function AllPlacements() {
           </div>
           <Link
             to="/dashboard/placements/add"
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
+            className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Add Placement
           </Link>
@@ -163,7 +163,7 @@ export default function AllPlacements() {
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 {/* Student Photo */}
-                <div className="relative h-64 overflow-hidden bg-gradient-to-br from-blue-100 to-indigo-100">
+                <div className="relative h-64 overflow-hidden bg-linear-to-br from-blue-100 to-indigo-100">
                   <img
                     src={placement.studentPhoto}
                     alt={placement.studentName}
@@ -172,7 +172,7 @@ export default function AllPlacements() {
                       e.currentTarget.src = 'https://via.placeholder.com/400x400?text=Student+Photo';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3 className="text-xl font-bold text-white mb-1">
                       {placement.studentName}
@@ -185,7 +185,7 @@ export default function AllPlacements() {
                   {/* Job Title */}
                   <div className="mb-4">
                     <div className="flex items-start gap-2 mb-2">
-                      <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                       <h4 className="text-base font-semibold text-gray-900 line-clamp-2">

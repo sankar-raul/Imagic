@@ -220,7 +220,7 @@ export default function FeatureSection() {
                         width={1000}
                         height={500}
                       />
-                      <div className="from-background via-background/50 absolute right-0 bottom-0 left-0 h-2/3 bg-gradient-to-t to-transparent" />
+                      <div className="from-background via-background/50 absolute right-0 bottom-0 left-0 h-2/3 bg-linear-to-t to-transparent" />
 
                       <div className="bg-background/80 absolute bottom-4 left-4 rounded-lg p-2 backdrop-blur-sm">
                         <span className="text-primary text-xs font-medium">
