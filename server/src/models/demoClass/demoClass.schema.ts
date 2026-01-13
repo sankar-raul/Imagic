@@ -9,12 +9,10 @@ const demoClassSchema = new Schema<IdemoClass>({
     email: {
         type: String,
         required: true,
-        unique: true
     },
     phoneNumber: {
         type: String,
         required: true,
-        unique: true
     },
     courseInterested: {
         type: String,
