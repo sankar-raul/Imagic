@@ -20,7 +20,7 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label: string;
-  type: FieldType;
+  type: FieldType |  'group';
   placeholder?: string;
   required?: boolean;
   rows?: number; // for textarea
@@ -29,6 +29,9 @@ export interface FieldConfig {
   options?: FieldOption[]; // for radio, checkbox, select
   className?: string; // custom styling
   defaultValue?: string | number | boolean;
+
+   fields?: FieldConfig[];
+  repeatable?: boolean; 
 }
 
 export interface DynamicFormProps {

@@ -1,225 +1,249 @@
 import type { FieldConfig } from '../../components/shared/form/DynamicForm';
 
+/* =====================================================
+   BASIC COURSE INFO
+   Maps to:
+   - title
+   - slug
+   - short_description
+   - course_overview
+===================================================== */
+
 export const basicInfoFields: FieldConfig[] = [
   {
     name: 'title',
     label: 'Course Title',
     type: 'text',
-    placeholder: 'e.g., Full Stack Web Development',
-    required: true
+    required: true,
   },
   {
     name: 'slug',
     label: 'Slug',
     type: 'text',
-    placeholder: 'e.g., full-stack-web-development',
-    required: true
+    required: true,
   },
   {
-    name: 'shortDescription',
+    name: 'short_description',
     label: 'Short Description',
     type: 'textarea',
     rows: 3,
-    placeholder: 'Brief description of the course...',
-    required: true
+    required: true,
   },
   {
-    name: 'overview',
+    name: 'course_overview',
     label: 'Course Overview',
     type: 'textarea',
     rows: 5,
-    placeholder: 'Detailed overview of what students will learn...',
-    required: true
-  }
+    required: true,
+  },
 ];
+
+/* =====================================================
+   COURSE DETAILS
+   Maps to: courseDetails (IcourseDetails)
+===================================================== */
 
 export const courseDetailsFields: FieldConfig[] = [
   {
     name: 'price',
-    label: 'Price ($)',
+    label: 'Price',
     type: 'number',
-    placeholder: '999',
     min: 0,
     required: true,
-    className: 'md:col-span-1'
   },
   {
     name: 'category',
     label: 'Category',
     type: 'text',
-    placeholder: 'e.g., Development, Design',
     required: true,
-    className: 'md:col-span-1'
   },
   {
-    name: 'startDate',
+    name: 'start_on',
     label: 'Start Date',
     type: 'date',
     required: true,
-    className: 'md:col-span-1'
   },
   {
     name: 'duration',
     label: 'Duration',
     type: 'text',
-    placeholder: 'e.g., 12 weeks',
     required: true,
-    className: 'md:col-span-1'
-  },
-  {
-    name: 'branch',
-    label: 'Branch',
-    type: 'text',
-    placeholder: 'e.g., Computer Science',
-    className: 'md:col-span-1'
   },
   {
     name: 'eligibility',
     label: 'Eligibility',
     type: 'text',
-    placeholder: 'e.g., Basic programming knowledge',
-    className: 'md:col-span-1'
+    required: true,
   },
   {
-    name: 'imageUrl',
-    label: 'Course Image URL',
-    type: 'image-upload',
-    placeholder: 'Upload course image',
+    name: 'branch',
+    label: 'Branch',
+    type: 'text',
     required: true,
-    className: 'md:col-span-2'
-  }
+  },
+  {
+    name: 'image',
+    label: 'Course Image',
+    type: 'image-upload',
+    required: true,
+  },
 ];
+
+/* =====================================================
+   COURSE SYLLABUS
+   Maps to: courseSyllabus: ISyllabusSection[]
+===================================================== */
 
 export const syllabusFields: FieldConfig[] = [
   {
-    name: 'moduleTitle',
-    label: 'Module Title',
-    type: 'text',
-    placeholder: 'e.g., Introduction to JavaScript',
-    required: true
+    name: 'courseSyllabus',
+    label: 'Syllabus Modules',
+    type: 'group',
+    repeatable: true,
+    fields: [
+      {
+        name: 'title',
+        label: 'Module Title',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'description',
+        label: 'Module Description',
+        type: 'textarea',
+        rows: 2,
+        required: true,
+      },
+    ],
   },
-  {
-    name: 'moduleDescription',
-    label: 'Module Description',
-    type: 'textarea',
-    rows: 2,
-    placeholder: 'Description of this module...',
-    required: true
-  }
 ];
+
+/* =====================================================
+   STUDENT WORK
+   Maps to: students_work: IstudentWork[]
+===================================================== */
 
 export const studentWorkFields: FieldConfig[] = [
   {
-    name: 'tool',
-    label: 'Tool',
-    type: 'text',
-    placeholder: 'e.g., React',
-    required: true,
-    className: 'md:col-span-1'
+    name: 'students_work',
+    label: 'Student Work',
+    type: 'group',
+    repeatable: true,
+    fields: [
+      {
+        name: 'tool',
+        label: 'Tool',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'name',
+        label: 'Student Name',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'description',
+        label: 'Work Description',
+        type: 'textarea',
+        rows: 2,
+        required: true,
+      },
+      {
+        name: 'image',
+        label: 'Work Image',
+        type: 'image-upload',
+        required: true,
+      },
+    ],
   },
-  {
-    name: 'studentName',
-    label: 'Student Name',
-    type: 'text',
-    placeholder: 'Student name',
-    required: true,
-    className: 'md:col-span-1'
-  },
-  {
-    name: 'description',
-    label: 'Description',
-    type: 'textarea',
-    rows: 2,
-    placeholder: 'Description of the work...',
-    required: true,
-    className: 'md:col-span-2'
-  },
-  {
-    name: 'imageUrl',
-    label: 'Image URL',
-    type: 'image-upload',
-    placeholder: 'Upload work image',
-    required: true,
-    className: 'md:col-span-2'
-  }
 ];
+
+/* =====================================================
+   COURSE REVIEWS
+   Maps to: reviews: IcourseReview[]
+===================================================== */
 
 export const reviewFields: FieldConfig[] = [
   {
-    name: 'reviewerName',
-    label: 'Reviewer Name',
-    type: 'text',
-    placeholder: 'Reviewer name',
-    required: true,
-    className: 'md:col-span-1'
+    name: 'reviews',
+    label: 'Course Reviews',
+    type: 'group',
+    repeatable: true,
+    fields: [
+      {
+        name: 'name',
+        label: 'Reviewer Name',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'rating',
+        label: 'Rating (1–5)',
+        type: 'number',
+        min: 1,
+        max: 5,
+        required: true,
+      },
+      {
+        name: 'comment',
+        label: 'Comment',
+        type: 'textarea',
+        rows: 3,
+        required: true,
+      },
+      {
+        name: 'date',
+        label: 'Review Date',
+        type: 'date',
+        required: true,
+      },
+    ],
   },
-  {
-    name: 'rating',
-    label: 'Rating (1-5)',
-    type: 'number',
-    min: 1,
-    max: 5,
-    placeholder: '5',
-    required: true,
-    className: 'md:col-span-1'
-  },
-  {
-    name: 'comment',
-    label: 'Comment',
-    type: 'textarea',
-    rows: 3,
-    placeholder: 'Review comment...',
-    required: true,
-    className: 'md:col-span-2'
-  },
-  {
-    name: 'reviewDate',
-    label: 'Review Date',
-    type: 'date',
-    required: true,
-    className: 'md:col-span-1'
-  }
 ];
+
+/* =====================================================
+   STUDENT TESTIMONIALS
+   Maps to: students_testimonials: IcourseTestimonial[]
+===================================================== */
 
 export const testimonialFields: FieldConfig[] = [
   {
-    name: 'studentName',
-    label: 'Student Name',
-    type: 'text',
-    placeholder: 'Student name',
-    required: true,
-    className: 'md:col-span-1'
+    name: 'students_testimonials',
+    label: 'Student Testimonials',
+    type: 'group',
+    repeatable: true,
+    fields: [
+      {
+        name: 'name',
+        label: 'Student Name',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'designation',
+        label: 'Designation',
+        type: 'text',
+        required: true,
+      },
+      {
+        name: 'testimonial',
+        label: 'Testimonial',
+        type: 'textarea',
+        rows: 3,
+        required: true,
+      },
+      {
+        name: 'image',
+        label: 'Student Image',
+        type: 'image-upload',
+        required: true,
+      },
+      {
+        name: 'video',
+        label: 'Video URL (optional)',
+        type: 'url',
+      },
+    ],
   },
-  {
-    name: 'designation',
-    label: 'Designation',
-    type: 'text',
-    placeholder: 'e.g., Software Engineer at Google',
-    required: true,
-    className: 'md:col-span-1'
-  },
-  {
-    name: 'testimonial',
-    label: 'Testimonial',
-    type: 'textarea',
-    rows: 3,
-    placeholder: "Student's testimonial...",
-    required: true,
-    className: 'md:col-span-2'
-  },
-  {
-    name: 'imageUrl',
-    label: 'Image URL',
-    type: 'image-upload',
-    placeholder: 'Upload student image',
-    required: true,
-    className: 'md:col-span-1'
-  },
-  {
-    name: 'videoUrl',
-    label: 'Video URL (optional)',
-    type: 'url',
-    placeholder: 'https://youtube.com/...',
-    className: 'md:col-span-1'
-  }
 ];
