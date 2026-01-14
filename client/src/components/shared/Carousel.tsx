@@ -7,7 +7,11 @@ interface CarouselProps<T> {
   children: (slide: T, index: number) => ReactNode;
 }
 
-export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: CarouselProps<T>) {
+export default function Carousel<T>({
+  slides,
+  autoPlayDelay = 6000,
+  children,
+}: CarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
@@ -20,7 +24,9 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
   }, [slides.length]);
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+    );
   }, [slides.length]);
 
   // Auto-play functionality
@@ -59,18 +65,18 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
+        className="absolute hidden lg:block left-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition" />
+        <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-yellow-600 transition" />
       </button>
 
       <button
         onClick={goToNext}
-        className="absolute right-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
+        className="absolute hidden lg:block right-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
         aria-label="Next slide"
       >
-        <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition" />
+        <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-yellow-400 text-shadow-pink-200 transition" />
       </button>
 
       {/* Dot Indicators */}
@@ -81,9 +87,9 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
             onClick={() => goToSlide(index)}
             className={`transition-all ${
               index === currentIndex
-                ? "w-8 h-3 bg-purple-600"
-                : "w-3 h-3"
-            } rounded-full shadow-md`}
+                ? "w-8 h-3 bg-yellow-400"
+                : "bg-white w-3 h-3"
+            } rounded-full shadow-xl`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

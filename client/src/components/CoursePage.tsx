@@ -1,139 +1,111 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Star, Clock, Award, FileText, Download, CheckCircle, User, MapPin , BookOpen,Calendar , Users } from 'lucide-react';
-import AccordionItem from './ui/coursePage/Accordian';
-import TestimonialSection from './TestimonialSection';
-import { useParams } from 'react-router';
-import useGetAllCourse from '@/hooks/course/useGetAllCourse';
-import DemoClassSection from './shared/demoClassSection/DemoClassSection';
+import { useState, useEffect } from "react";
+import {
+  Star,
+  Clock,
+  Award,
+  MapPin,
+  BookOpen,
+  Calendar,
+  Users,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import AccordionItem from "./ui/coursePage/Accordian";
+import TestimonialSection from "./TestimonialSection";
+import { useParams } from "react-router";
+import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
+import useGetCourseById from "../hooks/course/useGetCourseById";
+import { CoursePageSkeleton } from "./shared/skeletons";
 
-let dataStorage: Map<string, any> | null = null
 export default function CoursePage() {
-  const [activeTab, setActiveTab] = useState('overview');
-  const { id:courseId } = useParams();
-  const { courses } = useGetAllCourse();
-  const course = useMemo(() => {
-    if (courses && courseId) {
-      return courses?.find((c: { id: string; }) => c.id === courseId);
-    }
-  }, [courses, courseId]);
+  const [activeTab, setActiveTab] = useState("overview");
+  const { id: slug } = useParams();
+  const { courseData, isLoading } = useGetCourseById(slug);
 
+  useEffect(() => {
+    console.log(slug);
+  }, [slug]);
+  // if (!courseData) return <h2>Loading...</h2>;
+  if (!courseData && isLoading) {
+    return <CoursePageSkeleton />;
+  }
 
-  if (!courses) return <h2>Loading...</h2>;
+  if (!courseData) return <h2>Course not found</h2>;
 
+  const tabs = ["Overview", "Syllabus"];
 
+  const accordionData = courseData.courseSyllabus.map((item, index) => ({
+    id: index + 1,
+    title: item.title,
+    content: item.description ?? "No description available",
+  }));
+  const formateDate = (dateString: Date | string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  };
 
-
-  if (!course) return <h2>Course not found</h2>;
-  console.log(course)
-
-  const tabs = ['Overview', 'Syllabus'];
-
-//  const accordionData = [
-//     {
-//       id: 1,
-//       heading: 'What is Flowbite?',
-//       content: (
-//         <>
-//           <p className="mb-2 text-body">
-//             Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.
-//           </p>
-//           <p className="text-body">
-//             Check out this guide to learn how to{' '}
-//             <a href="/docs/getting-started/introduction/" className="text-fg-brand hover:underline">
-//               get started
-//             </a>{' '}
-//             and start developing websites even faster with components on top of Tailwind CSS.
-//           </p>
-//         </>
-//       ),
-//     },
-//     {
-//       id: 2,
-//       heading: 'Is there a Figma file available?',
-//       content: (
-//         <>
-//           <p className="mb-2 text-body">
-//             Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.
-//           </p>
-//           <p className="text-body">
-//             Check out the{' '}
-//             <a href="https://flowbite.com/figma/" className="text-fg-brand hover:underline">
-//               Figma design system
-//             </a>{' '}
-//             based on the utility classes from Tailwind CSS and components from Flowbite.
-//           </p>
-//         </>
-//       ),
-//     },
-//     {
-//       id: 3,
-//       heading: 'What are the differences between Flowbite and Tailwind UI?',
-//       content: (
-//         <>
-//           <p className="mb-2 text-body">
-//             The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.
-//           </p>
-//           <p className="mb-2 text-body">
-//             However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.
-//           </p>
-//           <p className="mb-2 text-body">Learn more about these technologies:</p>
-//           <ul className="ps-5 text-body list-disc">
-//             <li>
-//               <a href="https://flowbite.com/pro/" className="text-fg-brand hover:underline">
-//                 Flowbite Pro
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://tailwindui.com/" rel="nofollow" className="text-fg-brand hover:underline">
-//                 Tailwind UI
-//               </a>
-//             </li>
-//           </ul>
-//         </>
-//       ),
-//     },
-//   ];
-
-  const accordionData = course.modules.map((item, index) => ({
-  id: index + 1,
-  title: item.title,
-  content: item.description ?? "No description available"
-}));
-
-
-  const learningPoints = course.overview || [];
+  const learningPoints = courseData || [];
 
   const courseIncludes = [
-    { icon: <Calendar   className="w-5 h-5" />, text: "Starts on : " + course.details.start_on },
-    { icon: <Clock className="w-5 h-5" />, text: course.details.duration },
-    { icon: <Award className="w-5 h-5" />, text: "Eligibility: " +course.details.eligibility },
-    { icon: <MapPin  className="w-5 h-5" />, text: "Branch: " + course.details.branch },
-    { icon: <Users className="w-5 h-5" />, text: "Seat Available: " + course.details.seat_available }
+    {
+      icon: <Calendar className="w-5 h-5" />,
+      text: "Starts on : " + formateDate(courseData.courseDetails.start_on),
+    },
+    {
+      icon: <Clock className="w-5 h-5" />,
+      text: courseData.courseDetails.duration,
+    },
+    {
+      icon: <Award className="w-5 h-5" />,
+      text: "Eligibility: " + courseData.courseDetails.eligibility,
+    },
+    {
+      icon: <MapPin className="w-5 h-5" />,
+      text: "Branch: " + courseData.courseDetails.branch,
+    },
+    {
+      icon: <Users className="w-5 h-5" />,
+      text: "Seat Available: " + 4,
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 my-5">
-      
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen my-5">
+      <motion.div
+        initial={{ opacity: 0, y: 100, rotate: -3 }}
+        whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+          rotate: { duration: 0.7 },
+        }}
+        viewport={{
+          once: true,
+        }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Header */}
             <div className="mb-6">
               <div className="flex gap-2 mb-4 flex-wrap">
-                <span className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-neutral-100 text-neutral-800 rounded-full text-sm font-medium">
                   Intermediate
                 </span>
                 {/* <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
                   Advanced
                 </span> */}
               </div>
-              
+
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              {course.title}
+                {courseData.title}
               </h1>
-              
+
               <div className="flex items-center gap-6 flex-wrap text-sm text-gray-600">
                 <div className="flex items-center gap-1">
                   <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -146,36 +118,22 @@ export default function CoursePage() {
 
             {/* Description */}
             <p className="text-gray-700 mb-6 leading-relaxed">
-              {course.short_description}
+              {courseData.short_description}
             </p>
 
-            {/* Instructor */}
-            <div className="flex items-center gap-4 mb-8 p-4 bg-white rounded-lg border border-gray-300">
-              <img 
-                src="https://imagic.net.in/wp-content/uploads/2024/03/logo.jpg" 
-                alt="Instructor"
-                className="w-12 h-12 rounded-full object-cover"
-              />
-              <div>
-                <p className="text-sm text-gray-600">Created by</p>
-                <p className="font-semibold text-gray-900">{course.creator.institute}</p>
-              </div>
-              <div className="ml-auto text-sm text-gray-500 hidden sm:block">
-                Last updated 07.2024
-              </div>
-            </div>
-
             {/* Tabs */}
-            <div className="bg-white rounded-lg border border-gray-300 mb-8">
-              <div className="flex border-b border-gray-300 overflow-x-auto">
+            <div className="rounded-lg mb-8">
+              <div className="flex overflow-x-auto">
                 {tabs.map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setActiveTab(tab.toLowerCase().replace(' ', '-'))}
-                    className={`px-6 py-4 font-medium whitespace-nowrap transition-colors ${
-                      activeTab === tab.toLowerCase().replace(' ', '-')
-                        ? 'text-pink-600 border-b-2 border-pink-600'
-                        : 'text-gray-600 hover:text-gray-900'
+                    onClick={() =>
+                      setActiveTab(tab.toLowerCase().replace(" ", "-"))
+                    }
+                    className={`px-6 md:cursor-pointer py-4 font-medium whitespace-nowrap transition-colors border-b-2 ${
+                      activeTab === tab.toLowerCase().replace(" ", "-")
+                        ? "text-pink-600 border-b-2 border-pink-600"
+                        : "text-neutral-500 hover:text-neutral-800"
                     }`}
                   >
                     {tab}
@@ -184,62 +142,51 @@ export default function CoursePage() {
               </div>
 
               {/* Tab Content */}
-              {activeTab === 'overview' && (
+              {activeTab === "overview" && (
                 <div className="p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <BookOpen className="w-6 h-6 text-pink-600" />
-                    <h2 className="text-2xl font-bold text-gray-900">{course.title} Overview</h2>
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      {courseData.title} Overview
+                    </h2>
                   </div>
-                  
+
                   <div className="grid  gap-4">
-                    {learningPoints.map((point, index) => (
+                    {learningPoints.courseSyllabus?.map((point, index) => (
                       <div key={index}>
-                       <h2 className='text-2xl font-bold text-black mb-3 border-l-4 border-black pl-3'>{point.title}</h2>
-                       <ul className='list-disc ml-6 space-y-2 text-gray-700'>
-                       {point.points.map((point,index)=>(
-                        
-                          <li key={index}>{point}</li>
-                        
-                       ))}
-                       </ul>
+                        <h2 className="text-2xl font-bold text-black mb-3 border-l-4 border-black pl-3">
+                          {point.title}
+                        </h2>
+                        {/* <ul className="list-disc ml-6 space-y-2 text-gray-700">
+                          {point.points.map((point, index) => (
+                            <li key={index}>{point}</li>
+                          ))}
+                        </ul> */}
                       </div>
                     ))}
-
-
-
-
-
                   </div>
                 </div>
               )}
 
-
-
-    {activeTab === 'syllabus' && (
+              {activeTab === "syllabus" && (
                 <div className="p-6 sm:p-8">
                   <h2 className="text-2xl font-semibold">Course Syllabus</h2>
-                  <p className='my-10'>{course.syllabus_intro}</p>
-                  <AccordionItem accordionData={accordionData}/>
+                  <p className="my-10">{"ok test"}</p>
+                  <AccordionItem accordionData={accordionData} />
                 </div>
               )}
-
             </div>
 
-            <DemoClassSection />
-            
+            <DemoClassSection minimal={true} />
           </div>
-
-
-
-          
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border border-gray-300 p-6 sticky top-4">
+            <div className="bg-white rounded-lg p-6 sticky top-4">
               {/* Preview Image */}
               <div className="relative mb-6 rounded-lg overflow-hidden bg-gray-100">
-                <img 
-                  src={course.thumbnail}
+                <img
+                  src={courseData.courseDetails.image}
                   alt="Course preview"
                   className="w-full h-48 object-cover"
                 />
@@ -255,18 +202,28 @@ export default function CoursePage() {
 
               {/* Pricing */}
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-4xl font-bold text-gray-900">₹{course.price.final_price}</span>
-                <span className="text-xl text-gray-400 line-through">₹{course.price.original}</span>
+                <span className="text-4xl font-bold text-gray-900">
+                  ₹{courseData.courseDetails.price}
+                </span>
+                <span className="text-xl text-neutral-500 line-through">
+                  ₹{courseData.courseDetails.price * 1.5}
+                </span>
                 <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-sm font-semibold">
-                  {course.price.discount_percent}% off
+                  {(
+                    100 -
+                    (courseData.courseDetails.price /
+                      (courseData.courseDetails.price * 1.42)) *
+                      100
+                  ).toFixed(0)}
+                  % OFF
                 </span>
               </div>
 
               {/* CTA Buttons */}
-              <button className="w-full bg-yellow-500 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg mb-3 transition-colors">
+              <button className="w-full bg-black/90 md:cursor-pointer hover:bg-black text-white font-semibold py-3 rounded-lg mb-3 transition-colors">
                 Enroll Now
               </button>
-              
+
               {/* <button 
                 onClick={() => setIsFavorite(!isFavorite)}
                 className="w-full border-2 border-gray-300 hover:border-pink-600 text-gray-700 font-semibold py-3 rounded-lg mb-4 flex items-center justify-center gap-2 transition-colors"
@@ -280,24 +237,32 @@ export default function CoursePage() {
               </p> */}
 
               {/* Course Includes */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Course Details:</h3>
-                <div className="space-y-3">
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                  <div className="w-1 h-6 bg-yellow-400 rounded-full"></div>
+                  Course Details
+                </h3>
+                <div className="space-y-2">
                   {courseIncludes.map((item, index) => (
-                    <div key={index} className="flex items-start gap-3 text-sm text-gray-700">
-                      <span className="text-gray-400 shrink-0">{item.icon}</span>
-                      <span>{item.text}</span>
+                    <div
+                      key={index}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all duration-200 group"
+                    >
+                      <span className="text-neutral-500 shrink-0 group-hover:scale-110 transition-transform duration-200">
+                        {item.icon}
+                      </span>
+                      <span className="text-sm font-medium text-gray-800 group-hover:text-gray-900">
+                        {item.text}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-
-          
         </div>
-        <TestimonialSection/>
-      </div>
+        <TestimonialSection />
+      </motion.div>
     </div>
   );
 }
