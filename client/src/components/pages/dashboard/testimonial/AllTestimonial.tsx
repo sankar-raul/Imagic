@@ -1,98 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-
-interface Testimonial {
-  id: number;
-  studentName: string;
-  studentPhoto: string;
-  feedback: string;
-  jobTitle: string;
-  videoUrl: string;
-  companyName: string;
-}
-
-// Demo data
-const DEMO_TESTIMONIALS: Testimonial[] = [
-  {
-    id: 1,
-    studentName: "Aditya Sharma",
-    studentPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    feedback: "The Advanced 3D Animation course completely transformed my career. The instructors were incredibly knowledgeable and the hands-on projects gave me real industry experience. I landed my dream job within weeks of graduation!",
-    jobTitle: "3D Animator",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Pixar Animation Studios"
-  },
-  {
-    id: 2,
-    studentName: "Meera Nair",
-    studentPhoto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
-    feedback: "Best decision I ever made! The VFX Mastery program gave me the skills and confidence to work on Hollywood blockbusters. The portfolio I built here was instrumental in getting hired.",
-    jobTitle: "VFX Compositor",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Industrial Light & Magic"
-  },
-  {
-    id: 3,
-    studentName: "Rohan Gupta",
-    studentPhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
-    feedback: "The Game Design course exceeded all my expectations. Learning from industry veterans and working on real projects prepared me perfectly for my role at Ubisoft. Highly recommend!",
-    jobTitle: "Game Designer",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Ubisoft"
-  },
-  {
-    id: 4,
-    studentName: "Sanya Kapoor",
-    studentPhoto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    feedback: "Amazing learning environment with state-of-the-art facilities. The Motion Graphics program taught me everything I needed to know. The instructors genuinely care about your success.",
-    jobTitle: "Motion Graphics Lead",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Red Chillies VFX"
-  },
-  {
-    id: 5,
-    studentName: "Kartik Mehta",
-    studentPhoto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-    feedback: "From zero knowledge to character artist at Rockstar Games - this institute made it possible. The curriculum is industry-aligned and the mentorship was invaluable. Forever grateful!",
-    jobTitle: "Character Artist",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Rockstar Games"
-  },
-  {
-    id: 6,
-    studentName: "Priya Reddy",
-    studentPhoto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
-    feedback: "The Digital Sculpting Masterclass was phenomenal! World-class training with personalized attention. My portfolio got me interviews at top studios. Thank you for changing my life!",
-    jobTitle: "3D Modeler",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "DreamWorks Animation"
-  },
-  {
-    id: 7,
-    studentName: "Arjun Malhotra",
-    studentPhoto: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
-    feedback: "Outstanding institute! The lighting and rendering techniques I learned here are used daily in my work. The placement support was excellent and helped me secure my current position.",
-    jobTitle: "Lighting Artist",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "MPC"
-  },
-  {
-    id: 8,
-    studentName: "Anjali Desai",
-    studentPhoto: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
-    feedback: "The concept art program opened doors I never thought possible. Working on PlayStation exclusives was always my dream, and this institute helped me achieve it. Top-notch education!",
-    jobTitle: "Concept Artist",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    companyName: "Sony Interactive Entertainment"
-  }
-];
+import useGetAllTestimonial from '@/hooks/testimonial/useGetAllTestimonial';
 
 export default function AllTestimonial() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(DEMO_TESTIMONIALS);
+  const { testimonials, isLoading, refetchTestimonials } = useGetAllTestimonial();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCompany, setFilterCompany] = useState('All');
 
-  const companies = ['All', ...Array.from(new Set(DEMO_TESTIMONIALS.map(t => t.companyName)))];
+  const companies = ['All', ...Array.from(new Set(testimonials.map(t => t.companyName)))];
 
   const filteredTestimonials = testimonials.filter(testimonial => {
     const matchesSearch = 
@@ -104,14 +19,14 @@ export default function AllTestimonial() {
     return matchesSearch && matchesCompany;
   });
 
-  const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this testimonial?')) {
-      setTestimonials(testimonials.filter(testimonial => testimonial.id !== id));
-      // TODO: Replace with actual API call
-      // await fetch(`/api/testimonials/${id}`, { method: 'DELETE' });
-      alert('Testimonial deleted successfully!');
-    }
-  };
+  // const handleDelete = async (id: string) => {
+  //   if (window.confirm('Are you sure you want to delete this testimonial?')) {
+  //     // TODO: Call delete API
+  //     // await api.testimonial.deleteTestimonial(id);
+  //     refetchTestimonials();
+  //     alert('Testimonial deleted successfully!');
+  //   }
+  // };
 
   const extractVideoId = (url: string) => {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
@@ -179,8 +94,12 @@ export default function AllTestimonial() {
           )}
         </div>
 
-        {/* Testimonials Grid */}
-        {filteredTestimonials.length === 0 ? (
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        ) : filteredTestimonials.length === 0 ? (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
             <div className="text-gray-400 mb-4">
               <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +221,7 @@ export default function AllTestimonial() {
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(testimonial.id)}
+                      // onClick={() => handleDelete(testimonial.id)}
                       className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm"
                     >
                       Delete

@@ -1,33 +1,37 @@
-import { createRoutesFromElements, Route } from "react-router";
-import { createBrowserRouter } from "react-router";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router";
 import RootLayout from "./components/layouts/rootLayout/RootLayout";
-import Home from "./components/pages/home/Home";
 import About from "./components/pages/about/About";
-import Contact from "./components/pages/contact/Contact";
-import Placements from "./components/pages/placements/Placements";
-import Blogs from "./components/pages/blogs/Blogs";
 import BlogDetails from "./components/pages/blogs/BlogDetails";
-import Vacancies from "./components/pages/vacancies/Vacancies";
-import Testimonial from "./components/pages/testimonial/Testimonial";
-import ShowCase from "./components/pages/showcase/ShowCase";
+import Blogs from "./components/pages/blogs/Blogs";
+import Contact from "./components/pages/contact/Contact";
+import CourseDetails from "./components/pages/course/CourseDetails";
+import AddBlog from "./components/pages/dashboard/blog/AddBlog";
+import AllBlog from "./components/pages/dashboard/blog/AllBlog";
+import AddCourse from "./components/pages/dashboard/course/AddCourse";
+import AllCourse from "./components/pages/dashboard/course/AllCourse";
+import Dashbaord from "./components/pages/dashboard/Dashbaord";
+import AllEntries from "./components/pages/dashboard/demoClass/AllEntries";
+import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
+import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
+import AddPlacement from "./components/pages/dashboard/placement/AddPlacement";
+import AllPlacements from "./components/pages/dashboard/placement/AllPlacements";
+import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentWork";
+import AddTestimonial from "./components/pages/dashboard/testimonial/AddTestimonial";
+import AllTestimonial from "./components/pages/dashboard/testimonial/AllTestimonial";
+import Fanchise from "./components/pages/franchise/Fanchise";
+import Home from "./components/pages/home/Home";
 import NewsAndEvent from "./components/pages/newsAndEvent/NewsAndEvent";
 import NewsAndEventDetails from "./components/pages/newsAndEvent/NewsAndEventDetails";
-import Fanchise from "./components/pages/franchise/Fanchise";
+import Placements from "./components/pages/placements/Placements";
+import ShowCase from "./components/pages/showcase/ShowCase";
 import StudentWork from "./components/pages/studentwork/StudentWork";
-import Dashbaord from "./components/pages/dashboard/Dashbaord";
-import CourseDetails from "./components/pages/course/CourseDetails";
+import Testimonial from "./components/pages/testimonial/Testimonial";
+import Vacancies from "./components/pages/vacancies/Vacancies";
 import WhyImagic from "./components/pages/whyImagic/WhyImagic";
-import AllCourse from "./components/pages/dashboard/course/AllCourse";
-import AddCourse from "./components/pages/dashboard/course/AddCourse";
-import AllTestimonial from "./components/pages/dashboard/testimonial/AllTestimonial";
-import AddTestimonial from "./components/pages/dashboard/testimonial/AddTestimonial";
-import AllEntries from "./components/pages/dashboard/demoClass/AllEntries";
-import AllPlacements from "./components/pages/dashboard/placement/AllPlacements";
-import AddPlacement from "./components/pages/dashboard/placement/AddPlacement";
-import AddBlog from "./components/pages/dashboard/blog/AddBlog";
-import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentWork";
-import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
-import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -90,6 +94,7 @@ const routes = createBrowserRouter(
           <Route path="add" element={<AddPlacement />} />
         </Route>
         <Route path="blog">
+          <Route index element={<AllBlog />} />
           <Route path="add" element={<AddBlog />} />
         </Route>
         <Route path="student-work">

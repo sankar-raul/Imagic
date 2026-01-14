@@ -38,7 +38,7 @@ const CourseSchema = new Schema({
     courseDetails: courseDetailsSchema ,
     course_overview: {
         type: String,
-        required: true
+        // required: true
     },
     courseSyllabus: [{
         title: { type: String, required: true },
