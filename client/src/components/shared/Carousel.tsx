@@ -59,18 +59,18 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
       {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
+        className="absolute hidden lg:block left-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition" />
+        <ChevronLeft className="w-6 h-6 text-gray-700 group-hover:text-yellow-600 transition" />
       </button>
 
       <button
         onClick={goToNext}
-        className="absolute right-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
+        className="absolute hidden lg:block right-4 top-[40%] md:top-[45%] -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-xl transition-all z-20 group"
         aria-label="Next slide"
       >
-        <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition" />
+        <ChevronRight className="w-6 h-6 text-gray-700 group-hover:text-yellow-400 text-shadow-pink-200 transition" />
       </button>
 
       {/* Dot Indicators */}

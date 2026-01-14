@@ -1,5 +1,5 @@
 import type { Slide } from '../../types';
-
+import { motion } from 'framer-motion';
 interface HeroSlideProps {
   slide: Slide;
   onExploreClick: () => void;
@@ -10,7 +10,7 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
   return (
     <div className="relative w-full">
       {/* Background Image Section */}
-      <div className="relative h-150 md:h-175 lg:h-240">
+      <div className="relative h-150 md:h-175 lg:max-h-240 lg:h-[90dvh]">
         <img
           src={slide.backgroundImage}
           alt={slide.imageAlt}
@@ -26,9 +26,13 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
               {/* LEFT CONTENT */}
               <div className="flex-1 text-white z-10">
                 {/* Heading */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-lg">
+                <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-lg">
                   {slide.heading}
-                </h1>
+                </motion.h1>
 
                 {/* Description */}
                 {slide.description && (

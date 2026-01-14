@@ -1,10 +1,10 @@
 import CompanySlider from "@/components/CompanySlider"
 import CoursesSection from "@/components/CourseSection"
 import FeatureSection from "@/components/FeatureSection"
-import HeroSection from "@/components/Hero"
 import JobsSection from "@/components/JobsSection"
 import ReviewsSection from "@/components/ReviewsSection"
 import DemoClassSection from "@/components/shared/demoClassSection/DemoClassSection"
+import HeroSection from "@/components/shared/Hero/Hero"
 import { TestimonialsSection } from "@/components/Testimonial"
 import TestimonialSlider from "@/components/TestimonialSection"
 
@@ -13,7 +13,7 @@ function Home() {
   return (
     <>
     {/* <Hero/> */}
-    <HeroSection/>
+    <HeroSection />
     <CompanySlider />
     <FeatureSection />
     <CoursesSection />

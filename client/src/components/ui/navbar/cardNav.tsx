@@ -4,6 +4,31 @@ import { gsap } from 'gsap';
 import { GoArrowUpRight } from 'react-icons/go';
 import './CardNav.css';
 
+interface NavLink {
+  label: string;
+  href: string;
+  ariaLabel?: string;
+}
+
+interface NavItem {
+  label: string;
+  bgColor?: string;
+  textColor?: string;
+  links?: NavLink[];
+}
+
+interface CardNavProps {
+  logo: string;
+  logoAlt?: string;
+  items?: NavItem[];
+  className?: string;
+  ease?: string;
+  baseColor?: string;
+  menuColor?: string;
+  buttonBgColor?: string;
+  buttonTextColor?: string;
+}
+
 const CardNav = ({
   logo,
   logoAlt = 'Logo',
@@ -14,20 +39,20 @@ const CardNav = ({
   menuColor,
   buttonBgColor,
   buttonTextColor
-}) => {
-  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const navRef = useRef(null);
-  const cardsRef = useRef([]);
-  const tlRef = useRef(null);
+}: CardNavProps) => {
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const navRef = useRef<HTMLElement | null>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  const calculateHeight = () => {
+  const calculateHeight = (): number => {
     const navEl = navRef.current;
     if (!navEl) return 260;
 
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (isMobile) {
-      const contentEl = navEl.querySelector('.card-nav-content');
+      const contentEl = navEl.querySelector('.card-nav-content') as HTMLElement;
       if (contentEl) {
         const wasVisible = contentEl.style.visibility;
         const wasPointerEvents = contentEl.style.pointerEvents;
@@ -56,7 +81,7 @@ const CardNav = ({
     return 260;
   };
 
-  const createTimeline = () => {
+  const createTimeline = (): gsap.core.Timeline | null => {
     const navEl = navRef.current;
     if (!navEl) return null;
 
@@ -88,7 +113,7 @@ const CardNav = ({
   }, [ease, items]);
 
   useLayoutEffect(() => {
-    const handleResize = () => {
+    const handleResize = (): void => {
       if (!tlRef.current) return;
 
       if (isExpanded) {
@@ -115,7 +140,7 @@ const CardNav = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded]);
 
-  const toggleMenu = () => {
+  const toggleMenu = (): void => {
     const tl = tlRef.current;
     if (!tl) return;
     if (!isExpanded) {
@@ -129,7 +154,7 @@ const CardNav = ({
     }
   };
 
-  const setCardRef = i => el => {
+  const setCardRef = (i: number) => (el: HTMLDivElement | null): void => {
     if (el) cardsRef.current[i] = el;
   };
 

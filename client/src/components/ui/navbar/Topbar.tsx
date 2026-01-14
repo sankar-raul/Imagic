@@ -1,10 +1,9 @@
-import React from 'react';
 import { MapPin, Phone } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
 export default function Topbar() {
     return (
-        <div className="bg-yellow-400 text-gray-800 py-3 px-4 md:flex justify-center hidden">
+        <div className="bg-yellow-400 text-gray-800 py-3 px-4 lg:flex justify-center hidden">
             <div className="container max-w-6xl  mx-auto block md:flex justify-between items-center text-sm">
                 <div className="flex items-center  gap-6">
                     <div className="flex items-center  gap-2 hover:text-white">
