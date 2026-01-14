@@ -28,6 +28,7 @@ import AddBlog from "./components/pages/dashboard/blog/AddBlog";
 import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentWork";
 import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
 import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
+import AllBlog from "./components/pages/dashboard/blog/AllBlog";
 
 const routes = createBrowserRouter(createRoutesFromElements(
     <Route path="/" >
@@ -89,6 +90,7 @@ const routes = createBrowserRouter(createRoutesFromElements(
             <Route path="add" element={<AddPlacement />} />
         </Route>
         <Route path="blog">
+            <Route index element={<AllBlog />} />
             <Route path="add" element={<AddBlog />} />
         </Route>
         <Route path="student-work">

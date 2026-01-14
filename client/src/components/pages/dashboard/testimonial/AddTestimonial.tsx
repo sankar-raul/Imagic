@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import { testimonialFormFields } from '../../../../constants/forms/testimonialFormFields';
+import useAddTestimonial from '@/hooks/testimonial/useAddTestimonial';
 
 interface TestimonialFormData {
   studentName: string;
@@ -12,6 +13,7 @@ interface TestimonialFormData {
 }
 
 export default function AddTestimonial() {
+  const { addTestimonial, isLoading: isAdding } = useAddTestimonial();
   const [formData, setFormData] = useState<Partial<TestimonialFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,19 +36,8 @@ export default function AddTestimonial() {
     setIsSubmitting(true);
     
     try {
-      // TODO: Replace with actual API call
-      console.log('Submitting testimonial:', formData);
-      
-      // Example API call:
-      // const response = await fetch('/api/testimonials', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
-      // const result = await response.json();
-      
-      alert('Testimonial added successfully!');
-      // Reset form
+      const res = await addTestimonial(formData);
+      console.log('Testimonial added:', res);
       setFormData({});
     } catch (error) {
       console.error('Error submitting testimonial:', error);

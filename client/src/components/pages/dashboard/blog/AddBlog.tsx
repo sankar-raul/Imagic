@@ -3,6 +3,8 @@ import './tiptap.css';
 import { blogFormFields } from '@/constants/forms/blogFormFields';
 import DynamicForm from '@/components/shared/form/DynamicForm';
 import RichTextEditor from '@/components/shared/RichTextEditor';
+import usePostBlog from '@/hooks/blog/usePostBlog';
+
 
 interface BlogFormData {
   title: string;
@@ -14,6 +16,7 @@ interface BlogFormData {
 }
 
 export default function AddBlog() {
+  const { postBlog, isLoading: isPosting } = usePostBlog();
   const [formData, setFormData] = useState<Partial<BlogFormData>>({
     posted_date: new Date().toISOString().split('T')[0]
   });
@@ -57,7 +60,9 @@ export default function AddBlog() {
     try {
       const blogData = { ...formData, content: blogContent };
       console.log('Submitting blog:', blogData);
-      
+      const response = await postBlog(blogData);
+      console.log('Blog post response:', response);
+
       // TODO: Replace with actual API call
       // const response = await fetch('/api/blogs', {
       //   method: 'POST',

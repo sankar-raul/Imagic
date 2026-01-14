@@ -56,3 +56,22 @@ export const patch = async (
     throw new Error(error.response?.data?.message || "Something Went Wrong");
   }
 };
+
+export const deleteRequest = async (
+  endPoint: string,
+  token?: string
+): Promise<any> => {
+  try {
+    if (!token) {
+      const response = await API.delete<any>(endPoint);
+      return response.data;
+    } else {
+      const response = await API.delete<any>(endPoint, {
+        headers: { ...headers, Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    }
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Something Went Wrong");
+  }
+};
