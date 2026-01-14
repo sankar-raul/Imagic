@@ -7,7 +7,11 @@ interface CarouselProps<T> {
   children: (slide: T, index: number) => ReactNode;
 }
 
-export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: CarouselProps<T>) {
+export default function Carousel<T>({
+  slides,
+  autoPlayDelay = 6000,
+  children,
+}: CarouselProps<T>) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
 
@@ -20,7 +24,9 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
   }, [slides.length]);
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + slides.length) % slides.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+    );
   }, [slides.length]);
 
   // Auto-play functionality
@@ -81,9 +87,9 @@ export default function Carousel<T>({ slides, autoPlayDelay = 6000, children }: 
             onClick={() => goToSlide(index)}
             className={`transition-all ${
               index === currentIndex
-                ? "w-8 h-3 bg-purple-600"
-                : "w-3 h-3"
-            } rounded-full shadow-md`}
+                ? "w-8 h-3 bg-yellow-400"
+                : "bg-white w-3 h-3"
+            } rounded-full shadow-xl`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

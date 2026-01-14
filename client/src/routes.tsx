@@ -29,78 +29,78 @@ import AddStudentWork from "./components/pages/dashboard/studentWork/AddStudentW
 import AllJobVacancy from "./components/pages/dashboard/jobVacancy/AllJobVacancy";
 import AddJobVacancy from "./components/pages/dashboard/jobVacancy/AddJobVacancy";
 
-const routes = createBrowserRouter(createRoutesFromElements(
-    <Route path="/" >
-        <Route element={<RootLayout />} >
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="whyimagic">
-                <Route path=":id" element={<WhyImagic />} />
-            </Route>
-            <Route path="placements">
-                <Route index element={<Placements />} />
-            </Route>
-            <Route path="courses">
-                <Route path=":id" element={<CourseDetails />} />
-            </Route>
-            <Route path="news-events">
-                <Route index element={<NewsAndEvent />} />
-                {/* <Route path="page/:pageNumber" element={<div>News and Events Pagination Page</div>} /> */}
-                <Route path=":newsDetails" element={<BlogDetails />} />
-            </Route>
-            <Route path="vacancies">
-                <Route index element={<Vacancies />} />
-                {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
-                <Route path=":vacancyId" element={<Vacancies />} />
-            </Route>
-            <Route path="testimonial">
-                <Route index element={<Testimonial />} />
-            </Route>
-            <Route path="showcase">
-                <Route index element={<ShowCase />} />
-            </Route>
-            <Route path="blogs" >
-                <Route index element={<Blogs />} />
-                <Route path=":blogId" element={<NewsAndEventDetails />} />
-            </Route>
-            <Route path="animation-institute-franchise">
-                <Route index element={<Fanchise />} />
-            </Route>
-            <Route path="student-work">
-                <Route index element={<StudentWork />} />
-            </Route>
+const routes = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/">
+      <Route element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="whyimagic">
+          <Route path=":id" element={<WhyImagic />} />
         </Route>
-        <Route path="dashboard" element={<Dashbaord />} >
+        <Route path="placements">
+          <Route index element={<Placements />} />
+        </Route>
         <Route path="course">
-            <Route index element={<AllCourse />} />
-            <Route path="add" element={<AddCourse />} />
+          <Route path=":id" element={<CourseDetails />} />
+        </Route>
+        <Route path="news-events">
+          <Route index element={<NewsAndEvent />} />
+          {/* <Route path="page/:pageNumber" element={<div>News and Events Pagination Page</div>} /> */}
+          <Route path=":newsDetails" element={<BlogDetails />} />
+        </Route>
+        <Route path="vacancies">
+          <Route index element={<Vacancies />} />
+          {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
+          <Route path=":vacancyId" element={<Vacancies />} />
+        </Route>
+        <Route path="testimonial">
+          <Route index element={<Testimonial />} />
+        </Route>
+        <Route path="showcase">
+          <Route index element={<ShowCase />} />
+        </Route>
+        <Route path="blogs">
+          <Route index element={<Blogs />} />
+          <Route path=":blogId" element={<NewsAndEventDetails />} />
+        </Route>
+        <Route path="animation-institute-franchise">
+          <Route index element={<Fanchise />} />
+        </Route>
+        <Route path="student-work">
+          <Route index element={<StudentWork />} />
+        </Route>
+      </Route>
+      <Route path="dashboard" element={<Dashbaord />}>
+        <Route path="course">
+          <Route index element={<AllCourse />} />
+          <Route path="add" element={<AddCourse />} />
         </Route>
 
         <Route path="testimonial">
-            <Route index element={<AllTestimonial />} />
-            <Route path="add" element={<AddTestimonial />} />
+          <Route index element={<AllTestimonial />} />
+          <Route path="add" element={<AddTestimonial />} />
         </Route>
         <Route path="demo-class">
-            <Route index element={<AllEntries />} />
+          <Route index element={<AllEntries />} />
         </Route>
         <Route path="Placement">
-            <Route index element={<AllPlacements />} />
-            <Route path="add" element={<AddPlacement />} />
+          <Route index element={<AllPlacements />} />
+          <Route path="add" element={<AddPlacement />} />
         </Route>
         <Route path="blog">
-            <Route path="add" element={<AddBlog />} />
+          <Route path="add" element={<AddBlog />} />
         </Route>
         <Route path="student-work">
-            <Route path="add" element={<AddStudentWork />} />
+          <Route path="add" element={<AddStudentWork />} />
         </Route>
         <Route path="job-vacancy">
-            <Route index element={<AllJobVacancy />} />
-            <Route path="add" element={<AddJobVacancy />} />
+          <Route index element={<AllJobVacancy />} />
+          <Route path="add" element={<AddJobVacancy />} />
         </Route>
-        
-        </Route>
-
+      </Route>
     </Route>
-))
+  )
+);
 export default routes;

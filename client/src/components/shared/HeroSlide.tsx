@@ -1,12 +1,16 @@
-import type { Slide } from '../../types';
-import { motion } from 'framer-motion';
+import type { Slide } from "../../types";
+import { motion } from "framer-motion";
 interface HeroSlideProps {
   slide: Slide;
   onExploreClick: () => void;
   onDemoClick: () => void;
 }
 
-export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSlideProps) {
+export default function HeroSlide({
+  slide,
+  onExploreClick,
+  onDemoClick,
+}: HeroSlideProps) {
   return (
     <div className="relative w-full">
       {/* Background Image Section */}
@@ -27,10 +31,11 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
               <div className="flex-1 text-white z-10">
                 {/* Heading */}
                 <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-lg">
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-lg"
+                >
                   {slide.heading}
                 </motion.h1>
 
@@ -45,7 +50,7 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
                 <div className="mt-8 flex flex-wrap gap-4">
                   <button
                     onClick={onExploreClick}
-                    className="px-8 py-4 rounded-full bg-purple-600 text-white font-semibold text-base md:text-lg cursor-pointer hover:bg-purple-700 transition shadow-xl hover:shadow-2xl transform hover:scale-105"
+                    className="px-8 py-4 rounded-full bg-yellow-400 text-neutral-900 font-semibold text-base md:text-lg cursor-pointer will-change-auto hover:bg-yellow-500 transition shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     {slide.primaryButtonText}
                   </button>
@@ -53,7 +58,7 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
                   {slide.secondaryButtonText && (
                     <button
                       onClick={onDemoClick}
-                      className="px-8 py-4 rounded-full border-2 border-white text-white font-semibold text-base md:text-lg hover:bg-white hover:text-purple-600 transition shadow-xl cursor-pointer"
+                      className="px-8 py-4 rounded-full border-2 border-white text-white font-semibold text-base md:text-lg hover:bg-neutral-900 hover:border-black hover:text-yellow-400 transition shadow-xl cursor-pointer"
                     >
                       {slide.secondaryButtonText}
                     </button>
@@ -68,14 +73,24 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
                     {/* Circular Badge */}
                     <div className="absolute inset-0 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center p-8 border-8 border-dashed border-purple-300 animate-spin-slow">
                       <div className="animate-spin-reverse">
-                        <p className="text-yellow-500 font-black text-3xl xl:text-4xl uppercase text-center">Learn</p>
-                        <p className="text-purple-600 font-black text-3xl xl:text-4xl uppercase text-center">With Us!</p>
+                        <p className="text-yellow-500 font-black text-3xl xl:text-4xl uppercase text-center">
+                          Learn
+                        </p>
+                        <p className="text-purple-600 font-black text-3xl xl:text-4xl uppercase text-center">
+                          With Us!
+                        </p>
                       </div>
                     </div>
                     {/* Decorative elements */}
-                    <div className="absolute -top-4 -right-4 text-5xl xl:text-6xl">⭐</div>
-                    <div className="absolute -bottom-6 -right-6 text-4xl xl:text-5xl">🎨</div>
-                    <div className="absolute -bottom-4 -left-6 text-4xl xl:text-5xl">✏️</div>
+                    <div className="absolute -top-4 -right-4 text-5xl xl:text-6xl">
+                      ⭐
+                    </div>
+                    <div className="absolute -bottom-6 -right-6 text-4xl xl:text-5xl">
+                      🎨
+                    </div>
+                    <div className="absolute -bottom-4 -left-6 text-4xl xl:text-5xl">
+                      ✏️
+                    </div>
                   </div>
                 </div>
               )}
@@ -85,13 +100,19 @@ export default function HeroSlide({ slide, onExploreClick, onDemoClick }: HeroSl
 
         {/* Wave SVG */}
         <div className="absolute -bottom-2 left-0 right-0 z-5">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-            <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white"/>
+          <svg
+            viewBox="0 0 1440 120"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-auto"
+          >
+            <path
+              d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z"
+              fill="white"
+            />
           </svg>
         </div>
       </div>
-
-
     </div>
   );
 }

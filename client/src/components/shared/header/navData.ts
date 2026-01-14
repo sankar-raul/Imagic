@@ -1,7 +1,7 @@
 import logo from "@/assets/logo.jpg";
 import { NavMenuItem } from "@/types";
 
-const initialCourseRoute = "/courses";
+const initialCourseRoute = "/course";
 
 export const navData: {
   logo: string;

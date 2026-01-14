@@ -1,12 +1,17 @@
 import { Router } from "express";
-import { addTestimonial, deleteTestimonial, getAllTestimonials, updateTestimonial } from "../controllers/testimonail.controller";
+import {
+  addTestimonial,
+  deleteTestimonial,
+  getAllTestimonials,
+  updateTestimonial,
+} from "../controllers/testimonail.controller";
+import adminAuth from "../middlewares/adminAuth";
 
 const router = Router();
 
-router.post("/add", addTestimonial);
+router.post("/add", adminAuth, addTestimonial);
 router.get("/", getAllTestimonials);
-router.put("/:testimonialId", updateTestimonial);
-router.delete("/:testimonialId", deleteTestimonial);
+router.put("/:testimonialId", adminAuth, updateTestimonial);
+router.delete("/:testimonialId", adminAuth, deleteTestimonial);
 
-
-export default router
+export default router;
