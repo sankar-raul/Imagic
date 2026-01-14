@@ -76,12 +76,21 @@
     animation-play-state: paused;
   }
 
+    .animate-scroll-left-fast {
+    animation: scroll-left 10s linear infinite;
+  }
+
+  .animate-scroll-left-fast:hover {
+    animation-play-state: paused;
+  }
+
+
   @keyframes scroll-left {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-100%);
     }
   }
 }

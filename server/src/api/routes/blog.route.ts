@@ -1,12 +1,19 @@
 import { Router } from "express";
-import { postBlog, getBlogDetails, getAllBlogs, updateBlog, deleteBlog } from "../controllers/blog.controller";
+import {
+  deleteBlog,
+  getAllBlogs,
+  getBlogDetails,
+  postBlog,
+  updateBlog,
+} from "../controllers/blog.controller";
+import adminAuth from "../middlewares/adminAuth";
 
 const router = Router();
 
-router.post("/", postBlog);
+router.post("/", adminAuth, postBlog);
 router.get("/:blogId", getBlogDetails);
 router.get("/", getAllBlogs);
-router.put("/:blogId", updateBlog);
-router.delete("/:blogId", deleteBlog);
+router.put("/:blogId", adminAuth, updateBlog);
+router.delete("/:blogId", adminAuth, deleteBlog);
 
-export default router
+export default router;
