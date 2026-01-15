@@ -68,7 +68,7 @@ export default function ChatAssistant() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200"
+            className="fixed bottom-6 right-6 z-50 bg-linear-to-r from-yellow-600 to-yellow-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200"
             aria-label="Open chat"
           >
             <MessageCircle className="w-6 h-6" />
@@ -84,10 +84,10 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-6rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-95 max-w-[calc(100vw-3rem)] h-125 max-h-[calc(100vh-6rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white p-4 flex items-center justify-between">
+            <div className="bg-linear-to-r from-yellow-600 to-yellow-700 text-white p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <MessageCircle className="w-5 h-5" />
