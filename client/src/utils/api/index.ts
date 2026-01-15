@@ -6,12 +6,12 @@ import {
   getAllCourses,
   getCourseById,
 } from "./course/course";
+import { createJob, deleteJob, getAllJobs } from "./jobVacancy/jobVacancy";
 import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonial,
 } from "./testimonial/testimonial";
-import { createJob, deleteJob, getAllJobs } from "./jobVacancy/jobVacancy";
 
 export const api = {
   course: {
@@ -31,5 +31,10 @@ export const api = {
     getAllTestimonial,
     addTestimonial,
     deleteTestimonial
+  },
+  jobVacancy:{
+    getAllJobs,
+    createJob,
+    deleteJob
   }
 };
