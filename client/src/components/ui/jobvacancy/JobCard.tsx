@@ -1,37 +1,39 @@
-import React from 'react';
-import { Briefcase, MapPin, Calendar, Star, Bookmark } from 'lucide-react';
+import React from "react";
+import { Briefcase, MapPin, Calendar, Star, Bookmark } from "lucide-react";
+import { Ijob } from "@/types/job.types";
 
 export default function JobCard({
-  key,
-    date,
-    title,
-    image,
-    company,
-    location,
-    jobTitle,
-    type,
-    timing,
-}) {
+  posted_date,
+  title,
+  image,
+  description,
+  jobDetails,
+  slug,
+  company,
+  location,
+  type,
+  timing,
+}: Ijob) {
   return (
-    <div className="max-w-4xl p-4">
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+    <div className="max-w-5xl p-4">
+      <div className="rounded-4xl p-6 hover:bg-neutral-50 transition-shadow">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
           <div className="flex-1">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">
-             {title}
+            <h2 className="text-xl sm:text-2xl font-bold text-neutral-900 mb-2">
+              {title}
             </h2>
-            <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-              <span className="font-medium text-gray-900">{company}</span>
+            <div className="flex flex-wrap items-center gap-2 text-sm text-neutral-600 font-semibold">
+              <span className="">{company}</span>
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 <span className="font-medium">{location}</span>
               </div>
-              <span className="text-gray-400">•</span>
-              <span>{jobTitle}</span>
+              <span className="">•</span>
+              <span>{title}</span>
             </div>
           </div>
-          
+
           {/* Company Logo */}
           {/* <div className="shrink-0">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white border border-gray-200 rounded-lg flex items-center justify-center p-2">
@@ -45,24 +47,24 @@ export default function JobCard({
         </div>
 
         {/* Job Details */}
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 text-sm sm:text-base text-gray-700">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 text-sm sm:text-base text-neutral-600">
           <div className="flex items-center gap-2">
-            <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+            <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>0-5 Yrs</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-gray-500">₹</span>
+            <span className="">₹</span>
             <span>1.75-2 Lacs PA</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>{type}</span>
           </div>
         </div>
 
         {/* Requirements */}
-        <div className="flex items-start gap-2 mb-4 text-sm text-gray-700 bg-gray-50 p-3 rounded">
-          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 shrink-0 mt-0.5" />
+        <div className="flex items-center gap-2 mb-4 text-sm rounded text-neutral-600">
+          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           <span>{timing}</span>
         </div>
 
@@ -90,8 +92,6 @@ export default function JobCard({
             </button>
           </div>
         </div> */}
-
-
       </div>
     </div>
   );

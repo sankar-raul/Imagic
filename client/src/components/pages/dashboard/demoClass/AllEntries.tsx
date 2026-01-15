@@ -1,97 +1,19 @@
 import { useState } from 'react';
 import * as XLSX from 'xlsx';
+import useDemoClassEntries from '@/hooks/demoClass/useDemoClassEntries';
 
-interface DemoClassEntry {
-  id: number;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  courseInterested: string;
-  submittedAt: string;
-}
 
-// Demo data
-const DEMO_ENTRIES: DemoClassEntry[] = [
-  {
-    id: 1,
-    fullName: "Rajesh Kumar",
-    email: "rajesh.kumar@example.com",
-    phoneNumber: "+91 98765 43210",
-    courseInterested: "Advanced 3D Animation",
-    submittedAt: "2026-01-10 10:30 AM"
-  },
-  {
-    id: 2,
-    fullName: "Priya Sharma",
-    email: "priya.sharma@example.com",
-    phoneNumber: "+91 98765 43211",
-    courseInterested: "Visual Effects Mastery",
-    submittedAt: "2026-01-10 02:45 PM"
-  },
-  {
-    id: 3,
-    fullName: "Amit Patel",
-    email: "amit.patel@example.com",
-    phoneNumber: "+91 98765 43212",
-    courseInterested: "Game Design Fundamentals",
-    submittedAt: "2026-01-11 09:15 AM"
-  },
-  {
-    id: 4,
-    fullName: "Sneha Reddy",
-    email: "sneha.reddy@example.com",
-    phoneNumber: "+91 98765 43213",
-    courseInterested: "Motion Graphics Pro",
-    submittedAt: "2026-01-11 11:20 AM"
-  },
-  {
-    id: 5,
-    fullName: "Vikram Singh",
-    email: "vikram.singh@example.com",
-    phoneNumber: "+91 98765 43214",
-    courseInterested: "Character Design Workshop",
-    submittedAt: "2026-01-11 03:30 PM"
-  },
-  {
-    id: 6,
-    fullName: "Ananya Iyer",
-    email: "ananya.iyer@example.com",
-    phoneNumber: "+91 98765 43215",
-    courseInterested: "Digital Sculpting Masterclass",
-    submittedAt: "2026-01-12 10:00 AM"
-  },
-  {
-    id: 7,
-    fullName: "Karthik Menon",
-    email: "karthik.menon@example.com",
-    phoneNumber: "+91 98765 43216",
-    courseInterested: "Advanced 3D Animation",
-    submittedAt: "2026-01-12 01:15 PM"
-  },
-  {
-    id: 8,
-    fullName: "Divya Joshi",
-    email: "divya.joshi@example.com",
-    phoneNumber: "+91 98765 43217",
-    courseInterested: "Visual Effects Mastery",
-    submittedAt: "2026-01-12 04:25 PM"
-  }
-];
 
 export default function AllEntries() {
-  const [entries, setEntries] = useState<DemoClassEntry[]>(DEMO_ENTRIES);
+  const { demoClassEntries, isLoading, refetchDemoClassEntries } = useDemoClassEntries();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterCourse, setFilterCourse] = useState('All');
 
-  const courses = ['All', ...Array.from(new Set(DEMO_ENTRIES.map(e => e.courseInterested)))];
-
-  const filteredEntries = entries.filter(entry => {
+  const filteredEntries = (demoClassEntries || []).filter(entry => {
     const matchesSearch = 
       entry.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       entry.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       entry.phoneNumber.includes(searchQuery);
-    const matchesCourse = filterCourse === 'All' || entry.courseInterested === filterCourse;
-    return matchesSearch && matchesCourse;
+    return matchesSearch;
   });
 
   const handleDownloadExcel = () => {
@@ -128,11 +50,11 @@ export default function AllEntries() {
     XLSX.writeFile(wb, filename);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (_id: string) => {
     if (window.confirm('Are you sure you want to delete this entry?')) {
-      setEntries(entries.filter(entry => entry.id !== id));
       // TODO: Replace with actual API call
       // await fetch(`/api/demo-class/${id}`, { method: 'DELETE' });
+      refetchDemoClassEntries();
       alert('Entry deleted successfully!');
     }
   };
@@ -158,46 +80,38 @@ export default function AllEntries() {
           </button>
         </div>
 
-        {/* Search and Filter Bar */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search by name, email, or phone number..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div className="md:w-64">
-              <select
-                value={filterCourse}
-                onChange={(e) => setFilterCourse(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                {courses.map(course => (
-                  <option key={course} value={course}>{course}</option>
-                ))}
-              </select>
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading demo class entries...</p>
             </div>
           </div>
+        ) : (
+          <>
+        {/* Search Bar */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+          <input
+            type="text"
+            placeholder="Search by name, email, or phone number..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
         </div>
 
         {/* Results Count */}
         <div className="mb-4 flex items-center justify-between">
           <p className="text-gray-600">
-            Showing <span className="font-semibold text-gray-900">{filteredEntries.length}</span> of <span className="font-semibold text-gray-900">{entries.length}</span> entries
+            Showing <span className="font-semibold text-gray-900">{filteredEntries.length}</span> of <span className="font-semibold text-gray-900">{(demoClassEntries || []).length}</span> entries
           </p>
-          {(searchQuery || filterCourse !== 'All') && (
+          {searchQuery && (
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setFilterCourse('All');
-              }}
+              onClick={() => setSearchQuery('')}
               className="text-sm text-blue-600 hover:text-blue-700 font-medium"
             >
-              Clear Filters
+              Clear Search
             </button>
           )}
         </div>
@@ -244,7 +158,7 @@ export default function AllEntries() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredEntries.map((entry, index) => (
-                    <tr key={entry.id} className="hover:bg-gray-50 transition">
+                    <tr key={entry._id} className="hover:bg-gray-50 transition">
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {index + 1}
                       </td>
@@ -267,7 +181,7 @@ export default function AllEntries() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-center">
                         <button
-                          onClick={() => handleDelete(entry.id)}
+                          onClick={() => handleDelete(entry._id)}
                           className="inline-flex items-center px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition text-sm font-medium"
                         >
                           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -282,6 +196,8 @@ export default function AllEntries() {
               </table>
             </div>
           </div>
+        )}
+          </>
         )}
       </div>
     </div>

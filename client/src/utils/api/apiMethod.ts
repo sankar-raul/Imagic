@@ -25,15 +25,22 @@ export const get = async (
 export const post = async (
   endPoint: string,
   payload: object,
-  token?: string
+  token?: string,
+  customHeaders?: object
 ): Promise<any> => {
   try {
-    if (!token) {
+    const requestHeaders = {
+      ...headers,
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...customHeaders,
+    };
+
+    if (!token && !customHeaders) {
       const response = await API.post<any>(endPoint, payload);
       return response.data;
     } else {
       const response = await API.post<any>(endPoint, payload, {
-        headers: { ...headers, Authorization: `Bearer ${token}` },
+        headers: requestHeaders,
       });
       return response.data;
     }

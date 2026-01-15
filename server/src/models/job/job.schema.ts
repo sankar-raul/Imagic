@@ -5,16 +5,40 @@ export const jobSchema = new Schema({
         type: String,
         required: true
     },
+    company: {
+        type: String,
+        required: true
+    },
     slug: {
         type: String,
         required: true,
         unique: true
     },
-    description: {
+    location: {
+        type: String,
+        required: true
+    },
+    jobTitle: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    timing: {
         type: String,
         required: true
     },
     jobDetails: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        // required: true
+    },
+    description: {
         type: String,
         required: true
     },

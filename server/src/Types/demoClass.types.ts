@@ -3,4 +3,5 @@ export interface IdemoClass{
     email: string;
     phoneNumber: string;
     courseInterested: string;
+    submittedAt: Date;
 }

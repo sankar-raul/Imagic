@@ -14,7 +14,8 @@ import TestimonialSection from "./TestimonialSection";
 import { useParams } from "react-router";
 import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import useGetCourseById from "../hooks/course/useGetCourseById";
-import { CoursePageSkeleton } from "./shared/skeletons";
+import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
+import HtmlRenderer from "./shared/ui/HtmlRenderer";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -25,11 +26,11 @@ export default function CoursePage() {
     console.log(slug);
   }, [slug]);
   // if (!courseData) return <h2>Loading...</h2>;
-  if (!courseData && isLoading) {
+  if (isLoading) {
     return <CoursePageSkeleton />;
   }
 
-  if (!courseData) return <h2>Course not found</h2>;
+  if (!courseData) return <CourseNotFound />;
 
   const tabs = ["Overview", "Syllabus"];
 
@@ -152,18 +153,7 @@ export default function CoursePage() {
                   </div>
 
                   <div className="grid  gap-4">
-                    {learningPoints.courseSyllabus?.map((point, index) => (
-                      <div key={index}>
-                        <h2 className="text-2xl font-bold text-black mb-3 border-l-4 border-black pl-3">
-                          {point.title}
-                        </h2>
-                        {/* <ul className="list-disc ml-6 space-y-2 text-gray-700">
-                          {point.points.map((point, index) => (
-                            <li key={index}>{point}</li>
-                          ))}
-                        </ul> */}
-                      </div>
-                    ))}
+                    <HtmlRenderer content={courseData.course_overview} />
                   </div>
                 </div>
               )}

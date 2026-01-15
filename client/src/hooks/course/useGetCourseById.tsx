@@ -22,7 +22,7 @@ const useGetCourseById = (id?: string) => {
   };
   useEffect(() => {
     fetchCourseData();
-  }, []);
+  }, [id]);
   return {
     courseData,
     refetchCourseData: fetchCourseData,

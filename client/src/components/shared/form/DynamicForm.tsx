@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import RichTextEditor from '../RichTextEditor';
+import { post } from '@/utils/api/apiMethod';
 
 export type FieldType = 
   | 'text' 
@@ -10,7 +12,8 @@ export type FieldType =
   | 'radio' 
   | 'checkbox'
   | 'select'
-  | 'image-upload';
+  | 'image-upload'
+  | 'richtext';
 
 export interface FieldOption {
   label: string;
@@ -57,16 +60,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
       formData.append('image', file);
       
       // TODO: Replace with your actual API endpoint
-      const response = await fetch('http://localhost:8080/api/upload', {
-        method: 'POST',
-        body: formData,
+      const response = await post('/upload', formData, undefined, {
+        'Content-Type': 'multipart/form-data',
       });
-      
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-      
-      const data = await response.json();
+      const data = response.data;
       // Assuming API returns { url: 'https://...' }
       onChange(fieldName, data.url);
     } catch (error) {
@@ -282,6 +279,16 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               />
             )}
           </div>
+        );
+
+      case 'richtext':
+        return (
+          <RichTextEditor
+            value={value}
+            onChange={(html: string) => onChange(field.name, html)}
+            label=""
+            minHeight="300px"
+          />
         );
 
       case 'text':
