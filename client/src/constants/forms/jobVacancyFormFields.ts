@@ -26,8 +26,7 @@ export const jobVacancyFormFields: FieldConfig[] = [
   {
     name: 'jobDetails',
     label: 'Job Details',
-    type: 'textarea',
-    rows: 8,
+    type: 'richtext',
     placeholder: 'Detailed job requirements, responsibilities, qualifications...',
     required: true
   },

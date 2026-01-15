@@ -77,7 +77,7 @@ export default function RichTextEditor({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div className="border-b border-gray-200 p-4">
+      {/* <div className="border-b border-gray-900 p-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">{label}</h3>
           <div className="flex gap-2">
@@ -105,7 +105,7 @@ export default function RichTextEditor({
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="p-6">
         {activeTab === 'write' ? (

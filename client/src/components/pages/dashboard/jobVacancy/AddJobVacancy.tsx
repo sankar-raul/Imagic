@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import { jobVacancyFormFields } from '../../../../constants/forms/jobVacancyFormFields';
+import useAddJobVacancy from '@/hooks/jobVacancy/useAddJobVacancy';
 
 interface JobVacancyFormData {
   title: string;
@@ -11,6 +12,8 @@ interface JobVacancyFormData {
 }
 
 export default function AddJobVacancy() {
+  const { addJobVacancy } = useAddJobVacancy();
+
   const [formData, setFormData] = useState<Partial<JobVacancyFormData>>({
     posted_date: new Date().toISOString().split('T')[0] // Set today's date as default
   });
@@ -46,16 +49,9 @@ export default function AddJobVacancy() {
     setIsSubmitting(true);
     
     try {
-      // TODO: Replace with actual API call
-      console.log('Submitting job vacancy:', formData);
-      
-      // Example API call:
-      // const response = await fetch('/api/job-vacancies', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
-      // const result = await response.json();
+      const response = await addJobVacancy(formData);
+      console.log('Submitting job vacancy:', response);
+
       
       alert('Job vacancy added successfully!');
       // Reset form with default date
@@ -92,7 +88,16 @@ export default function AddJobVacancy() {
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <DynamicForm
-                fields={jobVacancyFormFields}
+                fields={jobVacancyFormFields.filter(f => f.name !== 'jobDetails')}
+                values={formData}
+                onChange={handleFieldChange}
+              />
+            </div>
+            
+            {/* Rich Text Editor for Job Details - Full Width */}
+            <div className="mt-6">
+              <DynamicForm
+                fields={jobVacancyFormFields.filter(f => f.name === 'jobDetails')}
                 values={formData}
                 onChange={handleFieldChange}
               />
@@ -137,7 +142,7 @@ export default function AddJobVacancy() {
                 {formData.jobDetails && (
                   <div>
                     <span className="text-sm font-medium text-gray-600">Job Details: </span>
-                    <p className="text-sm text-gray-900 mt-1 whitespace-pre-wrap">{formData.jobDetails}</p>
+                    <div className="text-sm text-gray-900 mt-1 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: formData.jobDetails }} />
                   </div>
                 )}
               </div>

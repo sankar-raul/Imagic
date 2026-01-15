@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import RichTextEditor from '../RichTextEditor';
 
 export type FieldType = 
   | 'text' 
@@ -10,7 +11,8 @@ export type FieldType =
   | 'radio' 
   | 'checkbox'
   | 'select'
-  | 'image-upload';
+  | 'image-upload'
+  | 'richtext';
 
 export interface FieldOption {
   label: string;
@@ -282,6 +284,16 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               />
             )}
           </div>
+        );
+
+      case 'richtext':
+        return (
+          <RichTextEditor
+            value={value}
+            onChange={(html: string) => onChange(field.name, html)}
+            label=""
+            minHeight="300px"
+          />
         );
 
       case 'text':

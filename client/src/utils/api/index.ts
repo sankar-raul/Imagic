@@ -11,6 +11,7 @@ import {
   deleteTestimonial,
   getAllTestimonial,
 } from "./testimonial/testimonial";
+import { createJob, deleteJob, getAllJobs } from "./jobVacancy/jobVacancy";
 
 export const api = {
   course: {
@@ -29,6 +30,6 @@ export const api = {
   testimonial: {
     getAllTestimonial,
     addTestimonial,
-    deleteTestimonial,
-  },
+    deleteTestimonial
+  }
 };
