@@ -43,7 +43,7 @@ export default function AllTestimonial() {
             <p className="text-gray-600">Manage student feedback and success stories</p>
           </div>
           <Link
-            to="/dashboard/testimonials/add"
+            to="/dashboard/testimonial/add"
             className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Add Testimonial

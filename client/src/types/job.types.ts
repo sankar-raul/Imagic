@@ -1,5 +1,6 @@
 export interface Ijob {
     _id: string,
+    slug: string,
     title: string,
     company: string,
     location: string,

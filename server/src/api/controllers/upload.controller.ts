@@ -8,10 +8,10 @@ export const uploadController = async (req: Request, res: Response) => {
     }
     
     const result = await uploadToCloudinary(req.file.buffer) as { secure_url: string; public_id: string };
-    res.json({
+    res.json({ data: {
       url: result.secure_url,
       public_id: result.public_id,
-    });
+    }});
 
   } catch (err) {
     res.status(500).json({ error: err.message });
