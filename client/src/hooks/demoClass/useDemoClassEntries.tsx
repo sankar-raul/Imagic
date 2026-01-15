@@ -10,7 +10,7 @@ const useDemoClassEntries = () => {
     try {
       setIsLoading(true);
       const response = await api.demoClass.demoClassEntries();
-      setDemoClassEntries(response?.entries || []);
+      setDemoClassEntries(response || []);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {
