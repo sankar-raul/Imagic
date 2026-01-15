@@ -7,3 +7,4 @@ export {
   SkeletonCard,
 } from "./Skeleton";
 export { CoursePageSkeleton } from "./CoursePageSkeleton";
+export { JobPageSkeleton, JobNotFound } from "./JobPageSkeleton";

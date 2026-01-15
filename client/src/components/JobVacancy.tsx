@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import JobCard from "./ui/jobvacancy/JobCard";
-import data from "../assets/jobs.json";
 import { Link } from "react-router";
-export type IJob = (typeof data)[0];
+import useGetAllJobVacancy from "@/hooks/jobVacancy/useGetAllJobVacancy";
 function JobVacancy() {
+  const { isLoading, jobVacancy } = useGetAllJobVacancy();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = useMemo(
+    () => Math.ceil(jobVacancy.length / itemsPerPage),
+    [itemsPerPage, jobVacancy]
+  );
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+  const startIndex = useMemo(
+    () => (currentPage - 1) * itemsPerPage,
+    [currentPage, itemsPerPage]
+  );
+  const currentData = jobVacancy.slice(startIndex, startIndex + itemsPerPage);
 
   console.log(currentData);
   return (
@@ -33,18 +39,17 @@ function JobVacancy() {
         <div className="flex justify-center ">
           <div className="max-w-7xl">
             {currentData.map((job, index) => (
-              <Link to={`/vacancies/${job.id}`}>
+              <Link to={`/vacancies/${job.slug}`} key={index}>
                 <JobCard
+                  jobDetails={job.jobDetails}
+                  slug={job.slug}
                   description={job.description}
-                  details={job.details}
-                  id={job.id}
                   key={index}
                   image={job.image}
-                  date={job.date}
+                  posted_date={job.posted_date}
                   title={job.title}
                   company={job.company}
                   location={job.location}
-                  jobTitle={job.jobTitle}
                   type={job.type}
                   timing={job.timing}
                 />
