@@ -9,10 +9,38 @@ export const jobVacancyFormFields: FieldConfig[] = [
     required: true
   },
   {
-    name: 'slug',
-    label: 'Slug',
+    name: 'company',
+    label: 'Company',
     type: 'text',
-    placeholder: 'e.g., senior-software-engineer',
+    placeholder: 'e.g., Tech Corp Inc.',
+    required: true
+  },
+  {
+    name: 'location',
+    label: 'Location',
+    type: 'text',
+    placeholder: 'e.g., New York, NY',
+    required: true
+  },
+  {
+    name: 'jobTitle',
+    label: 'Job Title Category',
+    type: 'text',
+    placeholder: 'e.g., Software Development',
+    required: true
+  },
+  {
+    name: 'type',
+    label: 'Job Type',
+    type: 'text',
+    placeholder: 'e.g., Full-time, Part-time, Contract',
+    required: true
+  },
+  {
+    name: 'timing',
+    label: 'Work Timing',
+    type: 'text',
+    placeholder: 'e.g., 9:00 AM - 5:00 PM',
     required: true
   },
   {
@@ -29,6 +57,13 @@ export const jobVacancyFormFields: FieldConfig[] = [
     type: 'richtext',
     placeholder: 'Detailed job requirements, responsibilities, qualifications...',
     required: true
+  },
+  {
+    name: 'image',
+    label: 'Job Image',
+    type: 'text',
+    placeholder: 'Image URL (optional)',
+    required: false
   },
   {
     name: 'posted_date',

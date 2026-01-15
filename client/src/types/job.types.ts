@@ -1,8 +1,13 @@
-export interface Ijob{
-    _id: string;
-    title: string;
-    slug: string;
-    description: string;
-    jobDetails: string;
-    posted_date: Date;
-}
+export interface Ijob {
+    _id: string,
+    title: string,
+    company: string,
+    location: string,
+    jobTitle: string,
+    type: string,
+    timing: string,
+    jobDetails: string,
+    image: string,
+    description: string,
+    posted_date: Date
+  }
