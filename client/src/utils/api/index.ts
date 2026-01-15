@@ -1,14 +1,23 @@
 import { applyDemoClass } from "./applyDemoClass/appplyDemoClass";
 import { getAllBlogs, postBlog } from "./blog/blog";
-import { createCourse, deleteCourse, getAllCourses } from "./course/course";
-import { addTestimonial, deleteTestimonial, getAllTestimonial } from "./testimonial/testimonial";
+import {
+  createCourse,
+  deleteCourse,
+  getAllCourses,
+  getCourseById,
+} from "./course/course";
+import {
+  addTestimonial,
+  deleteTestimonial,
+  getAllTestimonial,
+} from "./testimonial/testimonial";
 import { createJob, deleteJob, getAllJobs } from "./jobVacancy/jobVacancy";
-
 
 export const api = {
   course: {
     getAllCourses,
     createCourse,
+    getCourseById,
     deleteCourse,
   },
   demoClass: {
@@ -16,16 +25,11 @@ export const api = {
   },
   blog: {
     getAllBlogs,
-    postBlog
+    postBlog,
   },
   testimonial: {
     getAllTestimonial,
     addTestimonial,
     deleteTestimonial
-  },
-  jobVacancy:{
-    getAllJobs,
-    createJob,
-    deleteJob
   }
 };

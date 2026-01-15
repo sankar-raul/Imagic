@@ -2,7 +2,6 @@ import Carousel from "../Carousel";
 import HeroSlide from "../HeroSlide";
 import { heroSlidesData } from "@/constants/heroSlides";
 
-
 export default function HeroSection() {
   const handleScroll = () => {
     const coursesElement = document.getElementById("course");

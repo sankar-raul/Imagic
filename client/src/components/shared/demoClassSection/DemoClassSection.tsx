@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { BookOpen, CheckCircle } from "lucide-react";
 import FormImg from "@/assets/formImg.png";
 import formImage from "@/assets/images/form-image.jpg";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
 
-export default function DemoClassSection() {
+interface DemoClassFormProps {
+  minimal?: boolean;
+}
+const DemoClassSection: FC<DemoClassFormProps> = ({ minimal = false }) => {
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -61,7 +64,6 @@ export default function DemoClassSection() {
           y: 200,
         }}
         whileInView={{
-          
           opacity: 1,
           y: 0,
         }}
@@ -70,14 +72,14 @@ export default function DemoClassSection() {
           stiffness: 100,
           duration: 1,
         }}
-        // viewport={{
-        //   once: true
-        // }}
-        className="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden group/form"
+        viewport={{
+          once: true,
+        }}
+        className="w-full max-w-6xl bg-white border border-neutral-100 rounded-3xl overflow-hidden group/form"
       >
         <div className="flex flex-col lg:flex-row">
           {/* Form Section */}
-          <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12">
+          <div className="w-full lg:grow p-6 sm:p-8 lg:p-12">
             <div className="mb-6">
               <p className="text-sm font-semibold text-yellow-600 uppercase tracking-wide mb-2">
                 Start Your Journey
@@ -180,28 +182,32 @@ export default function DemoClassSection() {
           </div>
 
           {/* Illustration Section */}
-          <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0">
-              <img
-                src={formImage}
-                alt="form image"
-                className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-linear-to-b from-transparent via-yellow-500/40 to-yellow-300"></div>
-            </div>
-            <div className="flex-col z-1">
-              <div className="space-y-4 text-center text-white">
-                <h2 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
-                  Start Learning Today!
-                </h2>
-                <p className="text-md drop-shadow-lg">
-                  Join thousands of students on their journey to success
-                </p>
+          {!minimal && (
+            <div className="w-full lg:grow p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0">
+                <img
+                  src={formImage}
+                  alt="form image"
+                  className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent via-yellow-500/40 to-yellow-300"></div>
+              </div>
+              <div className="flex-col z-1">
+                <div className="space-y-4 text-center text-white">
+                  <h2 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
+                    Start Learning Today!
+                  </h2>
+                  <p className="text-md drop-shadow-lg">
+                    Join thousands of students on their journey to success
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </motion.div>
     </div>
   );
-}
+};
+
+export default DemoClassSection;
