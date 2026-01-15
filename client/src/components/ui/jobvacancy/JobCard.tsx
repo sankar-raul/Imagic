@@ -1,17 +1,19 @@
 import React from "react";
 import { Briefcase, MapPin, Calendar, Star, Bookmark } from "lucide-react";
-import { IJob } from "@/components/JobVacancy";
+import { Ijob } from "@/types/job.types";
 
 export default function JobCard({
-  date,
+  posted_date,
   title,
   image,
+  description,
+  jobDetails,
+  slug,
   company,
   location,
-  jobTitle,
   type,
   timing,
-}: IJob) {
+}: Ijob) {
   return (
     <div className="max-w-5xl p-4">
       <div className="rounded-4xl p-6 hover:bg-neutral-50 transition-shadow">
@@ -28,7 +30,7 @@ export default function JobCard({
                 <span className="font-medium">{location}</span>
               </div>
               <span className="">•</span>
-              <span>{jobTitle}</span>
+              <span>{title}</span>
             </div>
           </div>
 

@@ -10,7 +10,7 @@ const useGetAllJobVacancy = () => {
     try {
       setIsLoading(true);
       const response = await api.jobVacancy.getAllJobs();
-      setJobVacancy(response?.jobs || []);
+      setJobVacancy(response?.data || []);
     } catch (error) {
       console.error("Error fetching job vacancies:", error);
     } finally {

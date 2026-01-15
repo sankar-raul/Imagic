@@ -58,7 +58,7 @@ const routes = createBrowserRouter(
         <Route path="vacancies">
           <Route index element={<Vacancies />} />
           {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
-          <Route path=":vacancyId" element={<JobListingPage />} />
+          <Route path=":slug" element={<JobListingPage />} />
         </Route>
         <Route path="testimonial">
           <Route index element={<Testimonial />} />

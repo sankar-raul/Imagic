@@ -14,7 +14,7 @@ import TestimonialSection from "./TestimonialSection";
 import { useParams } from "react-router";
 import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import useGetCourseById from "../hooks/course/useGetCourseById";
-import { CoursePageSkeleton } from "./shared/skeletons";
+import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -29,7 +29,7 @@ export default function CoursePage() {
     return <CoursePageSkeleton />;
   }
 
-  if (!courseData) return <h2>Course not found</h2>;
+  if (!courseData) return <CourseNotFound />;
 
   const tabs = ["Overview", "Syllabus"];
 
