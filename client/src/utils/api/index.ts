@@ -1,4 +1,4 @@
-import { applyDemoClass } from "./applyDemoClass/appplyDemoClass";
+import { applyDemoClass, demoClassEntries } from "./applyDemoClass/appplyDemoClass";
 import { getAllBlogs, postBlog } from "./blog/blog";
 import {
   createCourse,
@@ -22,6 +22,7 @@ export const api = {
   },
   demoClass: {
     applyDemoClass,
+    demoClassEntries
   },
   blog: {
     getAllBlogs,

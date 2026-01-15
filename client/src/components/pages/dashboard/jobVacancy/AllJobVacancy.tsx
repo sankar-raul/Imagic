@@ -20,7 +20,7 @@ export default function AllJobVacancy() {
       return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
     });
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (_id: string) => {
     if (window.confirm('Are you sure you want to delete this job vacancy? This action cannot be undone.')) {
       refetchJobVacancy();
       alert('Job vacancy deleted successfully!');
@@ -135,7 +135,7 @@ export default function AllJobVacancy() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAndSortedJobs.map(job => (
               <div
-                key={job.id}
+                key={job._id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
               >
                 {/* Job Header */}
