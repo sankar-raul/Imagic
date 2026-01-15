@@ -30,6 +30,6 @@ export const api = {
   testimonial: {
     getAllTestimonial,
     addTestimonial,
-    deleteTestimonial
-  }
+    deleteTestimonial,
+  },
 };
