@@ -2,44 +2,26 @@ import { useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import { jobVacancyFormFields } from '../../../../constants/forms/jobVacancyFormFields';
 import useAddJobVacancy from '@/hooks/jobVacancy/useAddJobVacancy';
+import { Ijob } from '@/types/job.types';
 
-interface JobVacancyFormData {
-  title: string;
-  slug: string;
-  description: string;
-  jobDetails: string;
-  posted_date: string;
-}
+
 
 export default function AddJobVacancy() {
   const { addJobVacancy } = useAddJobVacancy();
 
-  const [formData, setFormData] = useState<Partial<JobVacancyFormData>>({
-    posted_date: new Date().toISOString().split('T')[0] // Set today's date as default
-  });
+  const [formData, setFormData] = useState<Partial<Ijob>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFieldChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Auto-generate slug from title
-    if (name === 'title' && value) {
-      const slug = value
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim();
-      setFormData(prev => ({ ...prev, slug }));
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate all required fields
-    const requiredFields = ['title', 'slug', 'description', 'jobDetails', 'posted_date'];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof JobVacancyFormData]);
+    const requiredFields: (keyof Ijob)[] = ['title', 'company', 'location', 'jobTitle', 'type', 'timing', 'description', 'jobDetails'];
+    const missingFields = requiredFields.filter(field => !formData[field]);
     
     if (missingFields.length > 0) {
       alert(`Please fill in all required fields: ${missingFields.join(', ')}`);
@@ -51,13 +33,10 @@ export default function AddJobVacancy() {
     try {
       const response = await addJobVacancy(formData);
       console.log('Submitting job vacancy:', response);
-
       
       alert('Job vacancy added successfully!');
-      // Reset form with default date
-      setFormData({
-        posted_date: new Date().toISOString().split('T')[0]
-      });
+      // Reset form
+      setFormData({});
     } catch (error) {
       console.error('Error submitting job vacancy:', error);
       alert('Failed to add job vacancy. Please try again.');
@@ -67,11 +46,9 @@ export default function AddJobVacancy() {
   };
 
   const handleCancel = () => {
-    if (Object.keys(formData).length > 1) { // More than just posted_date
+    if (Object.keys(formData).length > 0) {
       if (window.confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-        setFormData({
-          posted_date: new Date().toISOString().split('T')[0]
-        });
+        setFormData({});
       }
     }
   };
@@ -113,12 +90,6 @@ export default function AddJobVacancy() {
                   <div>
                     <span className="text-sm font-medium text-gray-600">Job Title: </span>
                     <span className="text-sm text-gray-900 font-semibold">{formData.title}</span>
-                  </div>
-                )}
-                {formData.slug && (
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">Slug: </span>
-                    <span className="text-sm text-gray-900 font-mono">{formData.slug}</span>
                   </div>
                 )}
                 {formData.posted_date && (

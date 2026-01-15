@@ -1,13 +1,14 @@
 export interface Ijob {
-  _id?: string;
-  title: string;
-  slug: string;
-  description: string;
-  jobDetails: string;
-  posted_date: Date;
-  company: string;
-  location: string;
-  type: string;
-  timing: string;
-  image: string;
-}
+    _id: string,
+    slug: string,
+    title: string,
+    company: string,
+    location: string,
+    jobTitle: string,
+    type: string,
+    timing: string,
+    jobDetails: string,
+    image: string,
+    description: string,
+    posted_date: Date
+  }

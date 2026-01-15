@@ -1,6 +1,7 @@
 export interface Ijob {
     title: string,
     company: string,
+    slug: string,
     location: string,
     jobTitle: string,
     type: string,
@@ -8,5 +9,5 @@ export interface Ijob {
     jobDetails: string,
     image: string,
     description: string,
-    posted_date: string
+    posted_date: Date
   }

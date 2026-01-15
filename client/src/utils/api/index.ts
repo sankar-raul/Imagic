@@ -1,4 +1,4 @@
-import { applyDemoClass, demoClassEntries } from "./applyDemoClass/appplyDemoClass";
+import { applyDemoClass, deleteDemoClassEntry, demoClassEntries } from "./applyDemoClass/appplyDemoClass";
 import { getAllBlogs, postBlog } from "./blog/blog";
 import {
   createCourse,
@@ -12,6 +12,7 @@ import {
   getAllJobs,
   getJobBySlug,
 } from "./jobVacancy/jobVacancy";
+import { addPlacement, deletePlacement, getAllPlacement } from "./placement/placement";
 import {
   addTestimonial,
   deleteTestimonial,
@@ -27,7 +28,8 @@ export const api = {
   },
   demoClass: {
     applyDemoClass,
-    demoClassEntries
+    demoClassEntries,
+    deleteDemoClassEntry,
   },
   blog: {
     getAllBlogs,
@@ -44,4 +46,9 @@ export const api = {
     deleteJob,
     getJobBySlug,
   },
+  placements:{
+    getAllPlacement,
+    addPlacement,
+    deletePlacement,
+  }
 };

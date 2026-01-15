@@ -9,6 +9,11 @@ export const jobSchema = new Schema({
         type: String,
         required: true
     },
+    slug: {
+        type: String,
+        required: true,
+        unique: true
+    },
     location: {
         type: String,
         required: true

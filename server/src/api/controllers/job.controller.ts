@@ -4,6 +4,29 @@ import Job from "../../models/job/job.model";
 export const createJob = async (req: Request, res: Response) => {
   try {
     const jobData = req.body;
+    // Generate slug from title
+    let slug = jobData.title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+    // Check if slug exists and append number if needed
+    let existingJob = await Job.findOne({ slug });
+    let counter = 1;
+    while (existingJob) {
+        slug = `${jobData.title
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/[\s_-]+/g, '-')
+            .replace(/^-+|-+$/g, '')}-${counter}`;
+        existingJob = await Job.findOne({ slug });
+        counter++;
+    }
+
+    jobData.slug = slug;
     const job = await Job.create(jobData);
     res.status(201).json(job);
   } catch (error) {
