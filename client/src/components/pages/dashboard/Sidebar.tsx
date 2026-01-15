@@ -29,8 +29,8 @@ function Sidebar() {
       ] },
     {  label: 'Demo class', path: '/dashboard/demo-class' },
     {  label: 'Placement', submenu: [
-        { label: 'All Placements', path: '/dashboard/placements' },
-        { label: 'Add New Placement', path: '/dashboard/placements/add' },
+        { label: 'All Placements', path: '/dashboard/placement' },
+        { label: 'Add New Placement', path: '/dashboard/placement/add' },
       ]},
     {  label: 'Blog', submenu: [
         { label: 'All Blogs', path: '/dashboard/blog' },

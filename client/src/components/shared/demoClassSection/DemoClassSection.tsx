@@ -157,7 +157,7 @@ const DemoClassSection: FC<DemoClassFormProps> = ({ minimal = false }) => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="w-full bg-black text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-90 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full bg-neutral-900 text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-90 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-3 border-x-white border-y-transparent"></div>

@@ -1,73 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import useGetAllJobVacancy from '@/hooks/jobVacancy/useGetAllJobVacancy';
 
-interface JobVacancy {
-  id: number;
-  title: string;
-  slug: string;
-  description: string;
-  jobDetails: string;
-  posted_date: string;
-}
 
-// Demo data
-const DEMO_JOBS: JobVacancy[] = [
-  {
-    id: 1,
-    title: "Senior 3D Animator",
-    slug: "senior-3d-animator",
-    description: "We are looking for an experienced 3D animator to join our creative team and work on exciting animation projects.",
-    jobDetails: "Responsibilities include creating high-quality 3D animations, collaborating with the art team, and meeting project deadlines. Minimum 5 years of experience required in Maya or Blender.",
-    posted_date: "2026-01-10"
-  },
-  {
-    id: 2,
-    title: "VFX Compositor",
-    slug: "vfx-compositor",
-    description: "Join our VFX team to create stunning visual effects for film and television productions.",
-    jobDetails: "Must have expert knowledge in Nuke and After Effects. Experience with green screen compositing, color correction, and rotoscoping. Portfolio required.",
-    posted_date: "2026-01-09"
-  },
-  {
-    id: 3,
-    title: "Motion Graphics Designer",
-    slug: "motion-graphics-designer",
-    description: "Creative motion graphics designer needed for advertising and promotional video content.",
-    jobDetails: "Proficiency in After Effects, Cinema 4D, and Adobe Creative Suite. Strong portfolio showcasing motion graphics work. 3+ years experience preferred.",
-    posted_date: "2026-01-08"
-  },
-  {
-    id: 4,
-    title: "Game Designer",
-    slug: "game-designer",
-    description: "Passionate game designer to develop engaging gameplay mechanics and level designs.",
-    jobDetails: "Experience with Unity or Unreal Engine. Understanding of game mechanics, player psychology, and level design principles. Bachelor's degree in relevant field.",
-    posted_date: "2026-01-07"
-  },
-  {
-    id: 5,
-    title: "Character Rigger",
-    slug: "character-rigger",
-    description: "Technical artist specializing in character rigging for animation projects.",
-    jobDetails: "Expertise in Maya rigging, skinning, and creating control rigs. Knowledge of Python scripting is a plus. Must work well with animators.",
-    posted_date: "2026-01-06"
-  },
-  {
-    id: 6,
-    title: "UI/UX Designer",
-    slug: "ui-ux-designer",
-    description: "Design intuitive and engaging user interfaces for our digital products and applications.",
-    jobDetails: "Proficiency in Figma, Adobe XD, and prototyping tools. Understanding of user-centered design principles. Strong portfolio demonstrating UI/UX projects.",
-    posted_date: "2026-01-05"
-  }
-];
 
 export default function AllJobVacancy() {
-  const [jobs, setJobs] = useState<JobVacancy[]>(DEMO_JOBS);
+  const { jobVacancy, isLoading, refetchJobVacancy } = useGetAllJobVacancy();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
 
-  const filteredAndSortedJobs = jobs
+  const filteredAndSortedJobs = jobVacancy
     .filter(job => 
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -78,16 +20,14 @@ export default function AllJobVacancy() {
       return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
     });
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (_id: string) => {
     if (window.confirm('Are you sure you want to delete this job vacancy? This action cannot be undone.')) {
-      setJobs(jobs.filter(job => job.id !== id));
-      // TODO: Replace with actual API call
-      // await fetch(`/api/job-vacancies/${id}`, { method: 'DELETE' });
+      refetchJobVacancy();
       alert('Job vacancy deleted successfully!');
     }
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -96,7 +36,7 @@ export default function AllJobVacancy() {
     });
   };
 
-  const getDaysAgo = (dateString: string) => {
+  const getDaysAgo = (dateString: Date) => {
     const today = new Date();
     const posted = new Date(dateString);
     const diffTime = Math.abs(today.getTime() - posted.getTime());
@@ -124,8 +64,18 @@ export default function AllJobVacancy() {
           </Link>
         </div>
 
-        {/* Search and Sort Bar */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading job vacancies...</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Search and Sort Bar */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <input
@@ -152,7 +102,7 @@ export default function AllJobVacancy() {
         {/* Results Count */}
         <div className="mb-4 flex items-center justify-between">
           <p className="text-gray-600">
-            Showing <span className="font-semibold text-gray-900">{filteredAndSortedJobs.length}</span> of <span className="font-semibold text-gray-900">{jobs.length}</span> job openings
+            Showing <span className="font-semibold text-gray-900">{filteredAndSortedJobs.length}</span> of <span className="font-semibold text-gray-900">{jobVacancy.length}</span> job openings
           </p>
           {searchQuery && (
             <button
@@ -185,7 +135,7 @@ export default function AllJobVacancy() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAndSortedJobs.map(job => (
               <div
-                key={job.id}
+                key={job._id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col"
               >
                 {/* Job Header */}
@@ -235,13 +185,13 @@ export default function AllJobVacancy() {
                 <div className="border-t border-gray-200 p-4 bg-gray-50">
                   <div className="flex gap-2">
                     <Link
-                      to={`/dashboard/job-vacancies/edit/${job.id}`}
+                      to={`/dashboard/job-vacancies/edit/${job._id}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                     >
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(job.id)}
+                      onClick={() => handleDelete(job._id)}
                       className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm"
                     >
                       Delete
@@ -251,6 +201,8 @@ export default function AllJobVacancy() {
               </div>
             ))}
           </div>
+        )}
+          </>
         )}
       </div>
     </div>

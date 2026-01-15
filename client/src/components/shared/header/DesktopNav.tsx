@@ -2,13 +2,19 @@ import { NavMenuItem } from "@/types";
 import NavLinkItem from "./NavLinkItem";
 import DropdownButton from "./DropdownButton";
 import DropdownMenu from "./DropdownMenu";
+import { ICourseItems } from "@/types/courseItems.interface";
 
 interface DesktopNavProps {
   menuItems: NavMenuItem[];
   onLinkClick?: () => void;
+  courseItems?: ICourseItems;
 }
 
-export default function DesktopNav({ menuItems, onLinkClick }: DesktopNavProps) {
+export default function DesktopNav({
+  menuItems,
+  onLinkClick,
+  courseItems,
+}: DesktopNavProps) {
   return (
     <nav className="hidden lg:block flex-1">
       <ul className="flex flex-row items-center gap-8 justify-center">
@@ -23,7 +29,11 @@ export default function DesktopNav({ menuItems, onLinkClick }: DesktopNavProps) 
             ) : (
               <>
                 <DropdownButton label={item.label} />
-                <DropdownMenu items={item.items} onLinkClick={onLinkClick} />
+                <DropdownMenu
+                  items={item.items}
+                  onLinkClick={onLinkClick}
+                  courseItems={courseItems}
+                />
               </>
             )}
           </li>

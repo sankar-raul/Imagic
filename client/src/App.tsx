@@ -1,13 +1,16 @@
-import './App.css'
+import "./App.css";
 
-import { RouterProvider } from 'react-router'
-import routes from './routes'
+import { RouterProvider } from "react-router";
+import routes from "./routes";
+import ChatAssistant from "./components/shared/ChatAssistant";
 
 function App() {
-
   return (
-    <RouterProvider router={routes}/>
-  )
+    <>
+      <RouterProvider router={routes} />
+      <ChatAssistant />
+    </>
+  );
 }
 
-export default App
+export default App;

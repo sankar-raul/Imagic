@@ -17,6 +17,11 @@ const demoClassSchema = new Schema<IdemoClass>({
     courseInterested: {
         type: String,
         required: true
+    },
+    submittedAt: {
+        type: Date,
+        required: true,
+        default: Date.now
     }
 });
 export default demoClassSchema;

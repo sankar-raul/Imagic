@@ -8,6 +8,7 @@ export interface ICourse {
   reviews: string;
   duration: string;
   eligibility: string;
+  slug: string;
   tag?: string;
 }
 

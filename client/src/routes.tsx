@@ -32,6 +32,7 @@ import StudentWork from "./components/pages/studentwork/StudentWork";
 import Testimonial from "./components/pages/testimonial/Testimonial";
 import Vacancies from "./components/pages/vacancies/Vacancies";
 import WhyImagic from "./components/pages/whyImagic/WhyImagic";
+import JobListingPage from "./components/JobsPage";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -57,7 +58,7 @@ const routes = createBrowserRouter(
         <Route path="vacancies">
           <Route index element={<Vacancies />} />
           {/* <Route path="page/:pageNumber" element={<div>Pagination Pagination Page</div>} /> */}
-          <Route path=":vacancyId" element={<Vacancies />} />
+          <Route path=":slug" element={<JobListingPage />} />
         </Route>
         <Route path="testimonial">
           <Route index element={<Testimonial />} />

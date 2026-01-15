@@ -9,7 +9,10 @@ import axios, {
 
 const API: AxiosInstance = axios.create({
   baseURL: BACKEND_END_POINT,
-  headers,
+  headers: {
+    ...headers,
+    Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+  },
   withCredentials: true, // Enables cookies
 });
 

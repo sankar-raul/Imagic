@@ -7,11 +7,13 @@ import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
 import JoinButton from "./JoinButton";
 import { navData } from "./navData";
+import useNavCourse from "@/hooks/course/useNavCourse";
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [expandDetails, setExpandDetails] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { coursesItems } = useNavCourse();
 
   const handleNavToggle = useCallback(() => {
     setIsNavOpen((prev) => !prev);
@@ -64,6 +66,7 @@ export default function Header() {
 
       <MobileNav
         isOpen={isNavOpen}
+        courseItems={coursesItems}
         menuItems={navData.menuItems}
         expandDetails={expandDetails}
         onToggle={handleNavToggle}
@@ -71,7 +74,11 @@ export default function Header() {
         onClose={handleNavClose}
       />
 
-      <DesktopNav menuItems={navData.menuItems} onLinkClick={handleNavClose} />
+      <DesktopNav
+        courseItems={coursesItems}
+        menuItems={navData.menuItems}
+        onLinkClick={handleNavClose}
+      />
 
       <JoinButton />
     </motion.header>
