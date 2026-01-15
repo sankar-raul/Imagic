@@ -21,7 +21,7 @@ export interface DecodedToken extends JwtPayload {
  */
 export const generateAccessToken = (
   payload: TokenPayload,
-  expiresIn: string = "15m"
+  expiresIn: string = "89988m"
 ): string => {
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined in environment variables");
