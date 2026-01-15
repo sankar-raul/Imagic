@@ -31,11 +31,11 @@ export const api = {
   testimonial: {
     getAllTestimonial,
     addTestimonial,
-    deleteTestimonial
+    deleteTestimonial,
   },
-  jobVacancy:{
+  jobVacancy: {
     getAllJobs,
     createJob,
-    deleteJob
-  }
+    deleteJob,
+  },
 };
