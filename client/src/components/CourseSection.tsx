@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import CourseCard from "./shared/CourseCard";
 import { ICourse } from "@/types";
 import { useCallback, useMemo } from "react";
@@ -201,12 +201,12 @@ export default function CoursesSection() {
         </div>
         {/* View All Courses Button */}
         <div className="flex justify-center mt-12">
-          <button
-            onClick={() => navigate("/courses")}
+          <Link
+            to={"/course"}
             className="px-8 py-4 rounded-full bg-yellow-400 text-black font-semibold text-base md:text-lg cursor-pointer hover:bg-yellow-300 duration-200 transition shadow-md hover:shadow-xl transform will-change-transform hover:scale-105"
           >
             View All Courses
-          </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -2,6 +2,8 @@ import { createPortal } from "react-dom";
 import { Link, NavLink } from "react-router";
 import { NavMenuItem } from "@/types";
 import HamburgerButton from "./HamburgerButton";
+import { ICourseItems } from "@/types/courseItems.interface";
+import { useMemo } from "react";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -10,6 +12,7 @@ interface MobileNavProps {
   onToggle: () => void;
   onExpandToggle: () => void;
   onClose: () => void;
+  courseItems?: ICourseItems;
 }
 
 export default function MobileNav({
@@ -19,7 +22,13 @@ export default function MobileNav({
   onToggle,
   onExpandToggle,
   onClose,
+  courseItems,
 }: MobileNavProps) {
+  const courseTitles = useMemo(
+    () => (courseItems ? Object.keys(courseItems) : []),
+    [courseItems]
+  );
+
   return createPortal(
     <div
       className={`${
@@ -63,23 +72,23 @@ export default function MobileNav({
                   {/* Mobile Dropdown */}
                   <div
                     className={`overflow-hidden transition-all duration-300 ${
-                      expandDetails ? "max-h-[600px]" : "max-h-0"
+                      expandDetails ? "max-h-150" : "max-h-0"
                     }`}
                   >
                     <div className="pl-4 pt-2 space-y-3">
-                      {item.items?.map((category, catIndex) => (
+                      {courseTitles?.map((title: string, catIndex) => (
                         <div key={catIndex} className="space-y-2">
                           <h3 className="font-semibold text-sm text-gray-700 px-2">
-                            {category.label}
+                            {title}
                           </h3>
-                          {category.items.map((subItem, subIndex) => (
+                          {courseItems?.[title]?.map((subItem, subIndex) => (
                             <Link
                               key={subIndex}
-                              to={subItem.href}
+                              to={`course/${subItem.slug}`}
                               onClick={onClose}
                               className="block px-4 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors"
                             >
-                              {subItem.label}
+                              {subItem.title}
                             </Link>
                           ))}
                         </div>
