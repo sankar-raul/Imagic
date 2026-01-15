@@ -2,6 +2,7 @@ import { applyDemoClass } from "./applyDemoClass/appplyDemoClass";
 import { getAllBlogs, postBlog } from "./blog/blog";
 import { createCourse, deleteCourse, getAllCourses } from "./course/course";
 import { addTestimonial, deleteTestimonial, getAllTestimonial } from "./testimonial/testimonial";
+import { createJob, deleteJob, getAllJobs } from "./jobVacancy/jobVacancy";
 
 
 export const api = {
@@ -21,5 +22,10 @@ export const api = {
     getAllTestimonial,
     addTestimonial,
     deleteTestimonial
+  },
+  jobVacancy:{
+    getAllJobs,
+    createJob,
+    deleteJob
   }
 };
