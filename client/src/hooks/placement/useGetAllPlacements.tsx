@@ -29,7 +29,7 @@ const useGetAllPlacements = ({
         currentLimit
       );
       setPlacements(response.data || []);
-      setTotalPages(response.totalPlacedStudents / limit || 0);
+      setTotalPages(Math.floor(response.totalPlacedStudents / currentLimit) || 0);
       setTotalItems(response.totalPlacedStudents || 0);
     } catch (error) {
       console.error("Error fetching placements:", error);
