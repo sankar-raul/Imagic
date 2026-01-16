@@ -1,9 +1,9 @@
 import { get, post, deleteRequest } from "../apiMethod";
 
 const INITIAL_ROUTE = "/jobs";
-export const getAllJobs = async () => {
+export const getAllJobs = async (page: number = 1, limit: number = 10) => {
   try {
-    const response = await get(`${INITIAL_ROUTE}`);
+    const response = await get(`${INITIAL_ROUTE}?page=${page}&limit=${limit}`);
     return response;
   } catch (error) {
     throw error;
