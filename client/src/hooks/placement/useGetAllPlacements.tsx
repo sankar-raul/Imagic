@@ -1,45 +1,46 @@
+import { Iplacement } from "@/types/placement.types";
 import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
-import { Itestimonial } from "@/types/testimonials.types";
 
-interface UseGetAllTestimonialProps {
+interface UseGetAllPlacementsProps {
   page?: number;
   limit?: number;
 }
 
-const useGetAllTestimonial = ({
+const useGetAllPlacements = ({
   page: initialPage = 1,
   limit: initialLimit = 10,
-}: UseGetAllTestimonialProps = {}) => {
-  const [testimonials, setTestimonials] = useState<Itestimonial[]>([]);
+}: UseGetAllPlacementsProps = {}) => {
+  const [placements, setPlacements] = useState<Iplacement[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(initialPage);
   const [limit, setLimit] = useState(initialLimit);
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
 
-  const fetchTestimonials = async (
+  const fetchPlacements = async (
     currentPage: number = page,
     currentLimit: number = limit
   ) => {
     try {
       setIsLoading(true);
-      const response = await api.testimonial.getAllTestimonial(
+      const response = await api.placements.getAllPlacement(
         currentPage,
         currentLimit
       );
-      setTestimonials(response?.testimonials || []);
-      setTotalPages(response?.totalPages || 0);
-      setTotalItems(response?.totalTestimonials || 0);
+      setPlacements(response.data || []);
+      setTotalPages(response.totalPlacedStudents / limit || 0);
+      setTotalItems(response.totalPlacedStudents || 0);
     } catch (error) {
-      console.error("Error fetching testimonials:", error);
+      console.error("Error fetching placements:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTestimonials(page, limit);
+    console.log("first");
+    fetchPlacements(page, limit);
   }, [page, limit]);
 
   const goToPage = (newPage: number) => {
@@ -49,14 +50,17 @@ const useGetAllTestimonial = ({
   };
 
   const nextPage = () => {
+    console.log("first");
+    console.log(page, totalPages);
     if (page < totalPages) {
-      setPage(page + 1);
+      console.log("op");
+      setPage((prev) => prev + 1);
     }
   };
 
   const prevPage = () => {
     if (page > 1) {
-      setPage(page - 1);
+      setPage((prev) => prev - 1);
     }
   };
 
@@ -66,7 +70,7 @@ const useGetAllTestimonial = ({
   };
 
   return {
-    testimonials,
+    placements,
     isLoading,
     page,
     limit,
@@ -76,8 +80,8 @@ const useGetAllTestimonial = ({
     nextPage,
     prevPage,
     changeLimit,
-    refetchTestimonials: () => fetchTestimonials(page, limit),
+    refetchPlacements: fetchPlacements,
   };
 };
 
-export default useGetAllTestimonial;
+export default useGetAllPlacements;

@@ -1,5 +1,3 @@
-
-
 // function ReviewsSection() {
 //   return (
 //     <div>
@@ -11,11 +9,8 @@
 
 // export default ReviewsSection
 
-
-
-
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 
 const ReviewsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -24,38 +19,46 @@ const ReviewsSection = () => {
     {
       id: 1,
       name: "Rohan Falia",
-      image: "https://imagic.net.in/wp-content/uploads/2023/09/rohan-website-final.jpg",
-      description: "Rohan from Bandel, got Digital marketing job before his NSOU Digital Marketing course completion.",
-      hasVideo: true
+      image:
+        "https://imagic.net.in/wp-content/uploads/2023/09/rohan-website-final.jpg",
+      description:
+        "Rohan from Bandel, got Digital marketing job before his NSOU Digital Marketing course completion.",
+      hasVideo: true,
     },
     {
       id: 2,
       name: "Rahul Dewan",
-      image: "https://imagic.net.in/wp-content/uploads/2023/09/rahul-jpeg-final-2-1.jpg",
-      description: "Rahul Dewan from Siliguri, Imagic Video editing Student. He share his learning experience.",
-      hasVideo: true
+      image:
+        "https://imagic.net.in/wp-content/uploads/2023/09/rahul-jpeg-final-2-1.jpg",
+      description:
+        "Rahul Dewan from Siliguri, Imagic Video editing Student. He share his learning experience.",
+      hasVideo: true,
     },
     {
       id: 3,
       name: "Sanjay Gayen",
-      image: "https://imagic.net.in/wp-content/uploads/2024/03/sanjoy-gayen_nsou_DM.jpg",
-      description: "Sanjay from North 24 Parganas, got Digital marketing job before his NSOU Digital Marketing course completion.",
-      hasVideo: true
+      image:
+        "https://imagic.net.in/wp-content/uploads/2024/03/sanjoy-gayen_nsou_DM.jpg",
+      description:
+        "Sanjay from North 24 Parganas, got Digital marketing job before his NSOU Digital Marketing course completion.",
+      hasVideo: true,
     },
     {
       id: 4,
       name: "Niva Shaw",
       image: "https://imagic.net.in/wp-content/uploads/2023/03/Pic-1.webp",
-      description: "Watch her journey after learning NSOU Web Design & Development Course from Imagic.",
-      hasVideo: true
+      description:
+        "Watch her journey after learning NSOU Web Design & Development Course from Imagic.",
+      hasVideo: true,
     },
     {
       id: 5,
       name: "Pabitra Naskar",
       image: "https://imagic.net.in/wp-content/uploads/2023/03/Pic-2.webp",
-      description: "Pabitra from Baruipur got his first job after completing NSOU Web Design and Diploma course from IMAGIC.",
-      hasVideo: true
-    }
+      description:
+        "Pabitra from Baruipur got his first job after completing NSOU Web Design and Diploma course from IMAGIC.",
+      hasVideo: true,
+    },
   ];
 
   const nextSlide = () => {
@@ -63,7 +66,9 @@ const ReviewsSection = () => {
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
   };
 
   const getVisibleTestimonials = () => {
@@ -93,32 +98,33 @@ const ReviewsSection = () => {
               {visibleIndices.map((index, position) => {
                 const testimonial = testimonials[index];
                 const isCenter = position === 1;
-                
+
                 return (
                   <div
                     key={testimonial.id}
                     className={`transition-all duration-500 ease-in-out ${
                       isCenter
-                        ? 'scale-100 opacity-100 z-10'
-                        : 'scale-90 sm:scale-80 opacity-80 blur-[1px]'
-                    } ${
-                      position === 0 ? 'hidden sm:block' : ''
-                    } ${
-                      position === 2 ? 'hidden sm:block' : ''
+                        ? "scale-100 opacity-100 z-10"
+                        : "scale-90 sm:scale-80 opacity-80 blur-[1px]"
+                    } ${position === 0 ? "hidden sm:block" : ""} ${
+                      position === 2 ? "hidden sm:block" : ""
                     }`}
                     style={{
-                      flex: isCenter ? '0 0 280px' : '0 0 200px',
-                      maxWidth: isCenter ? '280px' : '200px'
+                      flex: isCenter ? "0 0 280px" : "0 0 200px",
+                      maxWidth: isCenter ? "280px" : "200px",
                     }}
                   >
-                    <div className="flex flex-col items-center text-center" onClick={nextSlide}>
+                    <div
+                      className="flex flex-col items-center text-center"
+                      onClick={nextSlide}
+                    >
                       {/* Image Container */}
                       <div className="relative mb-4 sm:mb-6">
                         <div
                           className={`rounded-full overflow-hidden border-4 ${
                             isCenter
-                              ? 'border-purple-300 shadow-2xl shadow-purple-300/50 w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56'
-                              : 'border-gray-200 w-32 h-32 sm:w-36 sm:h-36'
+                              ? "border-purple-300 shadow-2xl shadow-purple-300/50 w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56"
+                              : "border-gray-200 w-32 h-32 sm:w-36 sm:h-36"
                           } transition-all duration-500`}
                         >
                           <img
@@ -127,18 +133,19 @@ const ReviewsSection = () => {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        
+
                         {/* Play Button */}
                         {testimonial.hasVideo && isCenter && (
-                           <a href="https://www.youtube.com/watch?v=dB6sowSVcZw&pp=0gcJCRYKAYcqIYzv"  target="_blank">
-                          <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 sm:p-3 shadow-lg">
-                            <div className="bg-linear-to-r from-orange-400 to-yellow-400 rounded-full p-1.5 sm:p-2">
-                             
-                              <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
-                             
+                          <a
+                            href="https://www.youtube.com/watch?v=dB6sowSVcZw&pp=0gcJCRYKAYcqIYzv"
+                            target="_blank"
+                          >
+                            <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 sm:p-3 shadow-lg">
+                              <div className="bg-linear-to-r from-orange-400 to-yellow-400 rounded-full p-1.5 sm:p-2">
+                                <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                              </div>
                             </div>
-                          </div>
-                           </a>
+                          </a>
                         )}
 
                         {/* Glow Effect for Center Card */}
@@ -151,8 +158,8 @@ const ReviewsSection = () => {
                       <h3
                         className={`font-bold mb-2 sm:mb-3 transition-all duration-500 ${
                           isCenter
-                            ? 'text-xl sm:text-2xl md:text-3xl text-gray-900'
-                            : 'text-base sm:text-lg text-gray-400'
+                            ? "text-xl sm:text-2xl md:text-3xl text-gray-900"
+                            : "text-base sm:text-lg text-gray-400"
                         }`}
                       >
                         {testimonial.name}
@@ -162,8 +169,8 @@ const ReviewsSection = () => {
                       <p
                         className={`transition-all duration-500 leading-relaxed ${
                           isCenter
-                            ? 'text-sm sm:text-base md:text-lg text-gray-600 px-2'
-                            : 'text-xs sm:text-sm text-gray-400 px-1'
+                            ? "text-sm sm:text-base md:text-lg text-gray-600 px-2"
+                            : "text-xs sm:text-sm text-gray-400 px-1"
                         }`}
                       >
                         {testimonial.description}
@@ -192,8 +199,8 @@ const ReviewsSection = () => {
               onClick={() => setCurrentIndex(index)}
               className={`transition-all duration-300 rounded-full ${
                 index === currentIndex
-                  ? 'w-8 sm:w-10 h-2 sm:h-2.5 bg-linear-to-r from-purple-500 to-pink-500'
-                  : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-gray-300 hover:bg-gray-400'
+                  ? "w-8 sm:w-10 h-2 sm:h-2.5 bg-linear-to-r from-purple-500 to-pink-500"
+                  : "w-2 sm:w-2.5 h-2 sm:h-2.5 bg-gray-300 hover:bg-gray-400"
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             />
