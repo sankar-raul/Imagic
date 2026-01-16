@@ -5,7 +5,7 @@ import JobsSection from "@/components/JobsSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import DemoClassSection from "@/components/shared/demoClassSection/DemoClassSection";
 import HeroSection from "@/components/shared/Hero/Hero";
-import { TestimonialsSection } from "@/components/Testimonial";
+import PlacementsSection from "@/components/Testimonial";
 import TestimonialSlider from "@/components/TestimonialSection";
 
 // import Hero from './components/Hero'
@@ -18,8 +18,7 @@ function Home() {
       <FeatureSection />
       <CoursesSection />
       <DemoClassSection />
-      <TestimonialsSection />
-      <TestimonialSlider />
+      <PlacementsSection />
       <JobsSection />
       <ReviewsSection />
     </>
