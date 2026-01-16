@@ -38,6 +38,7 @@ import {
   deleteStudentWork,
   getAllStudentWorks,
 } from "./studentWork/studentWork";
+import { login as authLogin } from "./auth/auth";
 
 export const api = {
   course: {
@@ -86,5 +87,8 @@ export const api = {
     getAllStudentWorks,
     addStudentWork,
     deleteStudentWork,
+  },
+  auth: {
+    login: authLogin,
   },
 };
