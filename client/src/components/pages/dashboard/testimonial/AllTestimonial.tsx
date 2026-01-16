@@ -171,7 +171,7 @@ export default function AllTestimonial() {
                         <img
                           src={`https://img.youtube.com/vi/${extractVideoId(testimonial.videoUrl)}/mqdefault.jpg`}
                           alt="Video thumbnail"
-                          className="w-full h-32 object-cover"
+                          className="w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition">
                           <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition">

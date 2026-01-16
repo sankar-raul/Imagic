@@ -33,6 +33,9 @@ import Testimonial from "./components/pages/testimonial/Testimonial";
 import Vacancies from "./components/pages/vacancies/Vacancies";
 import WhyImagic from "./components/pages/whyImagic/WhyImagic";
 import JobListingPage from "./components/JobsPage";
+import AddNews from "./components/pages/dashboard/news-events/AddNews";
+import AllNews from "./components/pages/dashboard/news-events/AllNews";
+import AllStudentWork from "./components/pages/dashboard/studentWork/AllStudentWork";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -98,7 +101,12 @@ const routes = createBrowserRouter(
           <Route index element={<AllBlog />} />
           <Route path="add" element={<AddBlog />} />
         </Route>
+        <Route path="news-events">
+          <Route index element={<AllNews />} />
+          <Route path="add" element={<AddNews />} />
+        </Route>
         <Route path="student-work">
+          <Route index element={<AllStudentWork />} />
           <Route path="add" element={<AddStudentWork />} />
         </Route>
         <Route path="job-vacancy">

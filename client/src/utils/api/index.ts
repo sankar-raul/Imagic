@@ -26,6 +26,12 @@ import {
   deleteTestimonial,
   getAllTestimonial,
 } from "./testimonial/testimonial";
+import { getAllNews, postNews, deleteNews } from "./news/news";
+import {
+  getAllStudentWorks,
+  addStudentWork,
+  deleteStudentWork,
+} from "./studentWork/studentWork";
 import {
   subscribeNewsletter,
   unsubscribeNewsletter,
@@ -64,11 +70,5 @@ export const api = {
     getAllPlacement,
     addPlacement,
     deletePlacement,
-  },
-  newsletter: {
-    subscribeNewsletter,
-    unsubscribeNewsletter,
-    getAllSubscribers,
-    deleteSubscriber,
   },
 };
