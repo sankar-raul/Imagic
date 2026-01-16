@@ -20,7 +20,7 @@ export const getPlacedStudents = async (req: Request, res: Response) => {
             
             const placedStudents = await Placement.find().skip(skip).limit(limit);
             const totalPlacedStudents = await Placement.countDocuments();
-            res.status(200).json({ placedStudents, totalPlacedStudents, page, limit });
+            res.status(200).json({ data: placedStudents, totalPlacedStudents, page, limit });
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
