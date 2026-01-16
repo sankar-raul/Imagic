@@ -36,6 +36,7 @@ import JobListingPage from "./components/JobsPage";
 import AddNews from "./components/pages/dashboard/news-events/AddNews";
 import AllNews from "./components/pages/dashboard/news-events/AllNews";
 import AllStudentWork from "./components/pages/dashboard/studentWork/AllStudentWork";
+import NewsletterEntries from "./components/pages/dashboard/newsletter/NewsletterEntries";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -100,6 +101,9 @@ const routes = createBrowserRouter(
         <Route path="blog">
           <Route index element={<AllBlog />} />
           <Route path="add" element={<AddBlog />} />
+        </Route>
+        <Route path="newsletter">
+          <Route index element={<NewsletterEntries />} />
         </Route>
         <Route path="news-events">
           <Route index element={<AllNews />} />
