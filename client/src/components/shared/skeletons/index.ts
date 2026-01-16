@@ -12,3 +12,6 @@ export {
   JobNotFound,
   CourseNotFound,
 } from "./JobPageSkeleton";
+export { default as JobCardSkeleton } from "./JobCardSkeleton";
+export { default as PlacementCardSkeleton } from "./PlacementCardSkeleton";
+export { default as TestimonialCardSkeleton } from "./TestimonialCardSkeleton";

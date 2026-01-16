@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight, X, Play } from "lucide-react";
 import useGetAllTestimonial from "@/hooks/testimonial/useGetAllTestimonial";
 import { Itestimonial } from "@/types/testimonials.types";
+import TestimonialCardSkeleton from "@/components/shared/skeletons/TestimonialCardSkeleton";
 
 export const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
   const { testimonials, isLoading } = useGetAllTestimonial({
     page: 1,
@@ -15,6 +17,23 @@ export const TestimonialsSection = () => {
 
   const itemsPerSlide = 3; // Show 3 testimonials per slide
   const totalSlides = Math.ceil(testimonials.length / itemsPerSlide);
+
+  const openVideoModal = (videoUrl: string) => {
+    setSelectedVideo(videoUrl);
+  };
+
+  const closeVideoModal = () => {
+    setSelectedVideo(null);
+  };
+
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoIdMatch = url.match(
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    );
+    return videoIdMatch
+      ? `https://www.youtube.com/embed/${videoIdMatch[1]}?autoplay=1`
+      : url;
+  };
 
   const nextSlide = () => {
     setDirection(1);
@@ -70,12 +89,23 @@ export const TestimonialsSection = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-50 to-blue-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading testimonials...</p>
+      <section className="py-20 px-4 bg-linear-to-br from-gray-50 via-blue-50 to-purple-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+              What Our Students Say
+            </h2>
+            <p className="text-lg text-gray-600">
+              Hear from our amazing students about their experiences
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(3)].map((_, i) => (
+              <TestimonialCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -177,17 +207,23 @@ export const TestimonialsSection = () => {
                       y: -8,
                       transition: { duration: 0.2 },
                     }}
-                    className="relative"
+                    onClick={() =>
+                      testimonial.videoUrl &&
+                      openVideoModal(testimonial.videoUrl)
+                    }
+                    className={`relative ${
+                      testimonial.videoUrl ? "cursor-pointer" : ""
+                    }`}
                   >
-                    <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                      {/* Profile Section */}
-                      <div className="flex flex-col items-center text-center mb-6">
+                    <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 h-full border border-gray-100">
+                      {/* Profile Section - Horizontal Layout */}
+                      <div className="flex items-start gap-4 mb-4">
                         <motion.div
                           whileHover={{ scale: 1.1 }}
                           transition={{ type: "spring", stiffness: 300 }}
-                          className="relative mb-4"
+                          className="relative flex-shrink-0"
                         >
-                          <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-blue-100">
+                          <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200">
                             <img
                               src={testimonial.studentPhoto}
                               alt={testimonial.studentName}
@@ -195,50 +231,36 @@ export const TestimonialsSection = () => {
                               onError={(e) => {
                                 e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
                                   testimonial.studentName
-                                )}&background=3b82f6&color=fff&size=80`;
+                                )}&background=3b82f6&color=fff&size=64`;
                               }}
                             />
                           </div>
+                          {/* Video Play Icon Overlay */}
+                          {testimonial.videoUrl && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
+                              <Play className="w-6 h-6 text-white fill-white" />
+                            </div>
+                          )}
                         </motion.div>
 
-                        <h3 className="text-xl font-bold text-gray-900 mb-1">
-                          {testimonial.studentName}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          {testimonial.jobTitle}
-                          {testimonial.companyName &&
-                            `, ${testimonial.companyName}`}
-                        </p>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">
+                            {testimonial.studentName}
+                          </h3>
+                          <p className="text-sm text-gray-500 truncate">
+                            {testimonial.jobTitle}
+                            {testimonial.companyName &&
+                              `, ${testimonial.companyName}`}
+                          </p>
+                        </div>
                       </div>
 
                       {/* Feedback Text */}
-                      <div className="flex-1 relative">
-                        <Quote className="absolute -top-2 -left-2 w-8 h-8 text-blue-200 opacity-50" />
-                        <p className="text-gray-700 leading-relaxed relative z-10">
+                      <div className="mt-4">
+                        <p className="text-gray-700 leading-relaxed line-clamp-4">
                           {testimonial.feedback}
                         </p>
-                        <Quote className="absolute -bottom-2 -right-2 w-8 h-8 text-blue-200 opacity-50 rotate-180" />
                       </div>
-
-                      {/* Video Badge (if available) */}
-                      {testimonial.videoUrl && (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.3, type: "spring" }}
-                          className="absolute top-4 right-4"
-                        >
-                          <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center shadow-lg">
-                            <svg
-                              className="w-5 h-5 text-white"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                            >
-                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                            </svg>
-                          </div>
-                        </motion.div>
-                      )}
                     </div>
                   </motion.div>
                 ))}
@@ -264,6 +286,43 @@ export const TestimonialsSection = () => {
             </div>
           )}
         </div>
+
+        {/* Video Modal */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeVideoModal}
+              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden"
+              >
+                <button
+                  onClick={closeVideoModal}
+                  className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+                >
+                  <X className="w-6 h-6 text-white" />
+                </button>
+                <div className="relative pt-[56.25%]">
+                  <iframe
+                    src={getYouTubeEmbedUrl(selectedVideo)}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

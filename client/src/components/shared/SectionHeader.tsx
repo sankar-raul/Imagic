@@ -9,7 +9,7 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <h1
-      className={`md:text-4xl text-2xl font-semibold text-black uppercase text-center font-[Poppins] ${className}`}
+      className={`md:text-5xl text-3xl font-semibold text-black font-serif text-center  ${className}`}
     >
       {title}
     </h1>
