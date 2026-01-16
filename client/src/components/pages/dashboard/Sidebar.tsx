@@ -28,6 +28,7 @@ function Sidebar() {
         { label: 'Add New Testimonial', path: '/dashboard/testimonial/add' },
       ] },
     {  label: 'Demo class', path: '/dashboard/demo-class' },
+    {  label: 'Newsletter', path: '/dashboard/newsletter' },
     {  label: 'Placement', submenu: [
         { label: 'All Placements', path: '/dashboard/placement' },
         { label: 'Add New Placement', path: '/dashboard/placement/add' },
