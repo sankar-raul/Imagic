@@ -18,6 +18,8 @@ import {
   deleteTestimonial,
   getAllTestimonial,
 } from "./testimonial/testimonial";
+import { getAllNews, postNews, deleteNews } from "./news/news";
+import { getAllStudentWorks, addStudentWork, deleteStudentWork } from "./studentWork/studentWork";
 
 export const api = {
   course: {
@@ -50,5 +52,15 @@ export const api = {
     getAllPlacement,
     addPlacement,
     deletePlacement,
+  },
+  news: {
+    getAllNews,
+    postNews,
+    deleteNews,
+  },
+  studentWork: {
+    getAllStudentWorks,
+    addStudentWork,
+    deleteStudentWork,
   }
 };

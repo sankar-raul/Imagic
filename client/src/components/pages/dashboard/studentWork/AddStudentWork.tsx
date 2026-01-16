@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import { studentWorkFormFields } from '../../../../constants/forms/studentWorkFormFields';
+import useAddStudentWork from '@/hooks/studentWork/useAddStudentWork';
 
 interface StudentWorkFormData {
   title: string;
@@ -11,6 +12,7 @@ interface StudentWorkFormData {
 }
 
 export default function AddStudentWork() {
+  const { addStudentWork } = useAddStudentWork();
   const [formData, setFormData] = useState<Partial<StudentWorkFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +24,7 @@ export default function AddStudentWork() {
     e.preventDefault();
     
     // Validate all required fields
-    const requiredFields = ['title', 'studentName', 'videoUrl', 'thumbnailUrl', 'courseName'];
+    const requiredFields = ['title', 'studentName', 'thumbnailUrl', 'courseName'];
     const missingFields = requiredFields.filter(field => !formData[field as keyof StudentWorkFormData]);
     
     if (missingFields.length > 0) {
@@ -33,16 +35,9 @@ export default function AddStudentWork() {
     setIsSubmitting(true);
     
     try {
-      // TODO: Replace with actual API call
       console.log('Submitting student work:', formData);
-      
-      // Example API call:
-      // const response = await fetch('/api/student-works', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // });
-      // const result = await response.json();
+      const response = await addStudentWork(formData);
+      console.log('Student work response:', response);
       
       alert('Student work added successfully!');
       // Reset form
