@@ -1,44 +1,35 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Rocket, Code, Paintbrush } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Award, Target, Trophy } from "lucide-react";
 
 const features = [
   {
-    step: 'Step 1',
-    title: 'Build Faster',
+    step: "Feature 1",
+    title: "Netaji Subhas Open University",
     content:
-      'Create your MVP in record time with our pre-built blocks and components.',
-    icon: <Rocket className="text-primary h-6 w-6" />,
+      "IMAGIC is the only NSOU (Netaji Subhas Open University) Affiliated Multimedia Animation Institute in entire West Bengal.",
+    icon: <Award className="text-yellow-600 h-6 w-6" />,
     image:
-      'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=2070&auto=format&fit=crop',
+      "https://imagic.net.in/wp-content/uploads/2024/02/WHY-IMAGIC-GFX_2_new-copy-583x400.webp",
   },
   {
-    step: 'Step 2',
-    title: 'Customize Easily',
+    step: "Feature 2",
+    title: "CorelDRAW Certificate",
     content:
-      'Tailor every component to your needs with our intuitive design system and flexible architecture.',
-    icon: <Paintbrush className="text-primary h-6 w-6" />,
+      "IMAGIC is the First and Only CorelDRAW Authorized institute in Kolkata as well as in West Bengal. Our faculties are also Corel certified.",
+    icon: <Target className="text-yellow-600 h-6 w-6" />,
     image:
-      'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=2070&auto=format&fit=crop',
+      "https://imagic.net.in/wp-content/uploads/2024/02/WHY-IMAGIC-GFX_2_new-copy-583x400.webp",
   },
   {
-    step: 'Step 3',
-    title: 'Deploy Confidently',
+    step: "Feature 3",
+    title: "Adobe Certified Institute in Kolkata",
     content:
-      'Launch your product with confidence using our optimized, responsive, and accessible components.',
-    icon: <Code className="text-primary h-6 w-6" />,
+      "It's Certiport Authorized training center in Kolkata. We provide this internationally industry approved certificate to our students.",
+    icon: <Trophy className="text-yellow-600 h-6 w-6" />,
     image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    step: 'Step 4',
-    title: 'Add Yours!',
-    content:
-      'Contribute your own blocks and become part of the MVPBlocks community.',
-    icon: <Code className="text-primary h-6 w-6" />,
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+      "https://imagic.net.in/wp-content/uploads/2024/02/WHY-IMAGIC-GFX_2_new-copy-583x400.webp",
   },
 ];
 
@@ -60,24 +51,24 @@ export default function FeatureSection() {
   }, [progress]);
 
   return (
-    <div 
-     className={'p-8 md:p-12'}>
+    <div className={"p-8 md:p-12"}>
       <div className="mx-auto w-full max-w-7xl">
         <div className="relative mx-auto mb-12 max-w-2xl sm:text-center">
           <div className="relative z-10">
             <h2 className="font-geist text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
-              Build Your MVP in Three Steps
+              Why Imagic?
             </h2>
             <p className="font-geist text-foreground/60 mt-3">
-              MVPBlocks helps you create, customize, and deploy your product
-              faster than ever before.
+              Imagic has been teaching Graphics Design, Video Editing and
+              Digital Marketing since 2010 in Kolkata. Lifetime 100% Job
+              Placement is provided to Imagic students.
             </p>
           </div>
           <div
             className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"
             style={{
               background:
-                'linear-gradient(152.92deg, rgba(192, 15, 102, 0.2) 4.54%, rgba(192, 11, 109, 0.26) 34.2%, rgba(192, 15, 102, 0.1) 77.55%)',
+                "linear-gradient(152.92deg, rgba(147, 51, 234, 0.2) 4.54%, rgba(147, 51, 234, 0.26) 34.2%, rgba(147, 51, 234, 0.1) 77.55%)",
             }}
           ></div>
         </div>
@@ -99,10 +90,10 @@ export default function FeatureSection() {
               >
                 <motion.div
                   className={cn(
-                    'flex h-12 w-12 items-center justify-center rounded-full border-2 md:h-14 md:w-14',
+                    "flex h-12 w-12 items-center justify-center rounded-full border-2 md:h-14 md:w-14",
                     index === currentFeature
-                      ? 'border-primary bg-primary/10 text-primary scale-110 [box-shadow:0_0_15px_rgba(192,15,102,0.3)]'
-                      : 'border-muted-foreground bg-muted',
+                      ? "border-yellow-600 bg-yellow-600/10 text-yellow-600 scale-110 [box-shadow:0_0_15px_rgba(147,51,234,0.3)]"
+                      : "border-muted-foreground bg-muted"
                   )}
                 >
                   {feature.icon}
@@ -122,7 +113,7 @@ export default function FeatureSection() {
 
           <div
             className={cn(
-              'border-primary/20 relative order-1 h-[200px] overflow-hidden rounded-xl border [box-shadow:0_5px_30px_-15px_rgba(192,15,102,0.3)] md:order-2 md:h-[300px] lg:h-[400px]',
+              "border-yellow-600/20 relative order-1 h-[200px] overflow-hidden rounded-xl border [box-shadow:0_5px_30px_-15px_rgba(147,51,234,0.3)] md:order-2 md:h-[300px] lg:h-[400px]"
             )}
           >
             <AnimatePresence mode="wait">
@@ -135,7 +126,7 @@ export default function FeatureSection() {
                       initial={{ y: 100, opacity: 0, rotateX: -20 }}
                       animate={{ y: 0, opacity: 1, rotateX: 0 }}
                       exit={{ y: -100, opacity: 0, rotateX: 20 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
                     >
                       <img
                         src={feature.image}
@@ -144,15 +135,15 @@ export default function FeatureSection() {
                         width={1000}
                         height={500}
                       />
-                      <div className="from-background via-background/50 absolute right-0 bottom-0 left-0 h-2/3 bg-linear-to-t to-transparent" />
+                      <div className="from-white via-white/50 absolute right-0 bottom-0 left-0 h-2/3 bg-linear-to-t to-transparent" />
 
-                      <div className="bg-background/80 absolute bottom-4 left-4 rounded-lg p-2 backdrop-blur-sm">
-                        <span className="text-primary text-xs font-medium">
-                          {feature.step}
+                      <div className="bg-white absolute bottom-4 left-4 rounded-lg p-2 backdrop-blur-sm">
+                        <span className="text-neutral-800 text-xs font-medium">
+                          {feature.title}
                         </span>
                       </div>
                     </motion.div>
-                  ),
+                  )
               )}
             </AnimatePresence>
           </div>

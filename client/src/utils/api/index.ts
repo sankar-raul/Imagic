@@ -1,4 +1,8 @@
-import { applyDemoClass, deleteDemoClassEntry, demoClassEntries } from "./applyDemoClass/appplyDemoClass";
+import {
+  applyDemoClass,
+  deleteDemoClassEntry,
+  demoClassEntries,
+} from "./applyDemoClass/appplyDemoClass";
 import { getAllBlogs, postBlog } from "./blog/blog";
 import {
   createCourse,
@@ -12,12 +16,29 @@ import {
   getAllJobs,
   getJobBySlug,
 } from "./jobVacancy/jobVacancy";
-import { addPlacement, deletePlacement, getAllPlacement } from "./placement/placement";
+import {
+  addPlacement,
+  deletePlacement,
+  getAllPlacement,
+} from "./placement/placement";
 import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonial,
 } from "./testimonial/testimonial";
+import {
+  subscribeNewsletter,
+  unsubscribeNewsletter,
+  getAllSubscribers,
+  deleteSubscriber,
+} from "./newsletter/newsletter";
+import { deleteNews, getAllNews, postNews } from "./news/news";
+import {
+  addStudentWork,
+  deleteStudentWork,
+  getAllStudentWorks,
+} from "./studentWork/studentWork";
+import { login as authLogin } from "./auth/auth";
 
 export const api = {
   course: {
@@ -46,9 +67,28 @@ export const api = {
     deleteJob,
     getJobBySlug,
   },
-  placements:{
+  placements: {
     getAllPlacement,
     addPlacement,
     deletePlacement,
-  }
+  },
+  newsletter: {
+    subscribeNewsletter,
+    unsubscribeNewsletter,
+    getAllSubscribers,
+    deleteSubscriber,
+  },
+  news: {
+    getAllNews,
+    postNews,
+    deleteNews,
+  },
+  studentWork: {
+    getAllStudentWorks,
+    addStudentWork,
+    deleteStudentWork,
+  },
+  auth: {
+    login: authLogin,
+  },
 };

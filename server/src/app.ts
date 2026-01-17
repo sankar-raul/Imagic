@@ -8,6 +8,7 @@ import courseRoutes from "./api/routes/course.route";
 import demoClassRoutes from "./api/routes/demoClass.route";
 import jobRutes from "./api/routes/job.route";
 import newsRoutes from "./api/routes/news.route";
+import newsletterRoutes from "./api/routes/newsletter.route";
 import placementRoutes from "./api/routes/placement.route";
 import studentWorkRoutes from "./api/routes/studentWork.route";
 import testimonialRoutes from "./api/routes/testimonial.route";
@@ -43,6 +44,7 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/demo-class", demoClassRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/news", newsRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/student-works", studentWorkRoutes);
 app.use("/api/upload", uploadRoutes);
 

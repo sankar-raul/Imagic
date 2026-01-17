@@ -33,6 +33,13 @@ import Testimonial from "./components/pages/testimonial/Testimonial";
 import Vacancies from "./components/pages/vacancies/Vacancies";
 import WhyImagic from "./components/pages/whyImagic/WhyImagic";
 import JobListingPage from "./components/JobsPage";
+import AddNews from "./components/pages/dashboard/news-events/AddNews";
+import AllNews from "./components/pages/dashboard/news-events/AllNews";
+import AllStudentWork from "./components/pages/dashboard/studentWork/AllStudentWork";
+import NewsletterEntries from "./components/pages/dashboard/newsletter/NewsletterEntries";
+import Login from "./components/pages/dashboard/Login";
+import ProtectedRoute from "./components/pages/dashboard/ProtectedRoute";
+import DashboardHome from "./components/pages/dashboard/DashboardHome";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -77,11 +84,14 @@ const routes = createBrowserRouter(
           <Route index element={<StudentWork />} />
         </Route>
       </Route>
-      <Route path="dashboard" element={<Dashbaord />}>
-        <Route path="course">
-          <Route index element={<AllCourse />} />
-          <Route path="add" element={<AddCourse />} />
-        </Route>
+      <Route path="dashboard">
+        <Route path="login" element={<Login />} />
+        <Route element={<ProtectedRoute><Dashbaord /></ProtectedRoute>}>
+          <Route index element={<DashboardHome />} />
+          <Route path="course">
+            <Route index element={<AllCourse />} />
+            <Route path="add" element={<AddCourse />} />
+          </Route>
 
         <Route path="testimonial">
           <Route index element={<AllTestimonial />} />
@@ -98,12 +108,21 @@ const routes = createBrowserRouter(
           <Route index element={<AllBlog />} />
           <Route path="add" element={<AddBlog />} />
         </Route>
+        <Route path="newsletter">
+          <Route index element={<NewsletterEntries />} />
+        </Route>
+        <Route path="news-events">
+          <Route index element={<AllNews />} />
+          <Route path="add" element={<AddNews />} />
+        </Route>
         <Route path="student-work">
+          <Route index element={<AllStudentWork />} />
           <Route path="add" element={<AddStudentWork />} />
         </Route>
         <Route path="job-vacancy">
           <Route index element={<AllJobVacancy />} />
           <Route path="add" element={<AddJobVacancy />} />
+        </Route>
         </Route>
       </Route>
     </Route>

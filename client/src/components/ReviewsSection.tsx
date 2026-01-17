@@ -1,207 +1,331 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, ChevronLeft, ChevronRight, X, Play } from "lucide-react";
+import useGetAllTestimonial from "@/hooks/testimonial/useGetAllTestimonial";
+import { Itestimonial } from "@/types/testimonials.types";
+import TestimonialCardSkeleton from "@/components/shared/skeletons/TestimonialCardSkeleton";
 
+export const TestimonialsSection = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-// function ReviewsSection() {
-//   return (
-//     <div>
-// <script src="https://elfsightcdn.com/platform.js" async></script>
-// <div class="elfsight-app-771235f7-fb67-4742-953d-cd4c9eb08d46" data-elfsight-app-lazy></div>
-//     </div>
-//   )
-// }
+  const { testimonials, isLoading } = useGetAllTestimonial({
+    page: 1,
+    limit: 100, // Load all testimonials for slider
+  });
 
-// export default ReviewsSection
+  const itemsPerSlide = 3; // Show 3 testimonials per slide
+  const totalSlides = Math.ceil(testimonials.length / itemsPerSlide);
 
+  const openVideoModal = (videoUrl: string) => {
+    setSelectedVideo(videoUrl);
+  };
 
+  const closeVideoModal = () => {
+    setSelectedVideo(null);
+  };
 
-
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
-
-const ReviewsSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-
-  const testimonials = [
-    {
-      id: 1,
-      name: "Rohan Falia",
-      image: "https://imagic.net.in/wp-content/uploads/2023/09/rohan-website-final.jpg",
-      description: "Rohan from Bandel, got Digital marketing job before his NSOU Digital Marketing course completion.",
-      hasVideo: true
-    },
-    {
-      id: 2,
-      name: "Rahul Dewan",
-      image: "https://imagic.net.in/wp-content/uploads/2023/09/rahul-jpeg-final-2-1.jpg",
-      description: "Rahul Dewan from Siliguri, Imagic Video editing Student. He share his learning experience.",
-      hasVideo: true
-    },
-    {
-      id: 3,
-      name: "Sanjay Gayen",
-      image: "https://imagic.net.in/wp-content/uploads/2024/03/sanjoy-gayen_nsou_DM.jpg",
-      description: "Sanjay from North 24 Parganas, got Digital marketing job before his NSOU Digital Marketing course completion.",
-      hasVideo: true
-    },
-    {
-      id: 4,
-      name: "Niva Shaw",
-      image: "https://imagic.net.in/wp-content/uploads/2023/03/Pic-1.webp",
-      description: "Watch her journey after learning NSOU Web Design & Development Course from Imagic.",
-      hasVideo: true
-    },
-    {
-      id: 5,
-      name: "Pabitra Naskar",
-      image: "https://imagic.net.in/wp-content/uploads/2023/03/Pic-2.webp",
-      description: "Pabitra from Baruipur got his first job after completing NSOU Web Design and Diploma course from IMAGIC.",
-      hasVideo: true
-    }
-  ];
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoIdMatch = url.match(
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    );
+    return videoIdMatch
+      ? `https://www.youtube.com/embed/${videoIdMatch[1]}?autoplay=1`
+      : url;
+  };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setDirection(1);
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setDirection(-1);
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
-  const getVisibleTestimonials = () => {
-    const prev = (currentIndex - 1 + testimonials.length) % testimonials.length;
-    const next = (currentIndex + 1) % testimonials.length;
-    return [prev, currentIndex, next];
+  const goToSlide = (index: number) => {
+    setDirection(index > currentSlide ? 1 : -1);
+    setCurrentSlide(index);
   };
 
-  const visibleIndices = getVisibleTestimonials();
+  const getCurrentTestimonials = () => {
+    const start = currentSlide * itemsPerSlide;
+    const end = start + itemsPerSlide;
+    return testimonials.slice(start, end);
+  };
+
+  // Handle drag end to change slides
+  const handleDragEnd = (e: any, { offset, velocity }: any) => {
+    const swipe = swipePower(offset.x, velocity.x);
+
+    if (swipe < -swipeConfidenceThreshold) {
+      nextSlide();
+    } else if (swipe > swipeConfidenceThreshold) {
+      prevSlide();
+    }
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -1000 : 1000,
+      opacity: 0,
+    }),
+  };
+
+  if (isLoading) {
+    return (
+      <section className="py-20 px-4 bg-linear-to-br from-gray-50 via-blue-50 to-purple-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+              What Our Students Say
+            </h2>
+            <p className="text-lg text-gray-600">
+              Hear from our amazing students about their experiences
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(3)].map((_, i) => (
+              <TestimonialCardSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) {
+    return (
+      <section className="py-20 px-4 bg-linear-to-br from-gray-50 via-blue-50 to-purple-50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+              <Quote className="w-10 h-10 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              No testimonials yet
+            </h3>
+            <p className="text-gray-600">
+              Check back soon for inspiring stories from our clients.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="w-full min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="relative flex items-center justify-center">
+    <section className="py-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+            <Quote className="w-4 h-4" />
+            <span>Testimonials</span>
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our Students Testimonials
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+            Our mission is to drive progress and enhance the lives of our
+            customers by delivering superior products and services that exceed
+            expectations.
+          </p>
+        </motion.div>
+
+        {/* Testimonials Slider */}
+        <div className="relative">
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 z-10 p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-400"
-            aria-label="Previous testimonial"
+            disabled={totalSlides <= 1}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+            <ChevronLeft className="w-6 h-6 text-blue-600" />
           </button>
-
-          {/* Testimonial Cards Container */}
-          <div className="w-full  px-8 sm:px-12 md:px-16 lg:px-20">
-            <div className="flex items-end justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-12">
-              {visibleIndices.map((index, position) => {
-                const testimonial = testimonials[index];
-                const isCenter = position === 1;
-                
-                return (
-                  <div
-                    key={testimonial.id}
-                    className={`transition-all duration-500 ease-in-out ${
-                      isCenter
-                        ? 'scale-100 opacity-100 z-10'
-                        : 'scale-90 sm:scale-80 opacity-80 blur-[1px]'
-                    } ${
-                      position === 0 ? 'hidden sm:block' : ''
-                    } ${
-                      position === 2 ? 'hidden sm:block' : ''
-                    }`}
-                    style={{
-                      flex: isCenter ? '0 0 280px' : '0 0 200px',
-                      maxWidth: isCenter ? '280px' : '200px'
-                    }}
-                  >
-                    <div className="flex flex-col items-center text-center" onClick={nextSlide}>
-                      {/* Image Container */}
-                      <div className="relative mb-4 sm:mb-6">
-                        <div
-                          className={`rounded-full overflow-hidden border-4 ${
-                            isCenter
-                              ? 'border-purple-300 shadow-2xl shadow-purple-300/50 w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56'
-                              : 'border-gray-200 w-32 h-32 sm:w-36 sm:h-36'
-                          } transition-all duration-500`}
-                        >
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        
-                        {/* Play Button */}
-                        {testimonial.hasVideo && isCenter && (
-                           <a href="https://www.youtube.com/watch?v=dB6sowSVcZw&pp=0gcJCRYKAYcqIYzv"  target="_blank">
-                          <div className="absolute bottom-0 right-0 bg-white rounded-full p-2 sm:p-3 shadow-lg">
-                            <div className="bg-linear-to-r from-orange-400 to-yellow-400 rounded-full p-1.5 sm:p-2">
-                             
-                              <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
-                             
-                            </div>
-                          </div>
-                           </a>
-                        )}
-
-                        {/* Glow Effect for Center Card */}
-                        {isCenter && (
-                          <div className="absolute inset-0 rounded-full bg-linear-to-r from-purple-400 to-pink-400 opacity-20 blur-2xl -z-10"></div>
-                        )}
-                      </div>
-
-                      {/* Name */}
-                      <h3
-                        className={`font-bold mb-2 sm:mb-3 transition-all duration-500 ${
-                          isCenter
-                            ? 'text-xl sm:text-2xl md:text-3xl text-gray-900'
-                            : 'text-base sm:text-lg text-gray-400'
-                        }`}
-                      >
-                        {testimonial.name}
-                      </h3>
-
-                      {/* Description */}
-                      <p
-                        className={`transition-all duration-500 leading-relaxed ${
-                          isCenter
-                            ? 'text-sm sm:text-base md:text-lg text-gray-600 px-2'
-                            : 'text-xs sm:text-sm text-gray-400 px-1'
-                        }`}
-                      >
-                        {testimonial.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
           <button
             onClick={nextSlide}
-            className="absolute right-0 z-10 p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-purple-400"
-            aria-label="Next testimonial"
+            disabled={totalSlides <= 1}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" />
+            <ChevronRight className="w-6 h-6 text-blue-600" />
           </button>
+
+          {/* Slider Container */}
+          <div className="cursor-grab active:cursor-grabbing">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentSlide}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={handleDragEnd}
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {getCurrentTestimonials().map((testimonial, index) => (
+                  <motion.div
+                    key={testimonial._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{
+                      y: -8,
+                      transition: { duration: 0.2 },
+                    }}
+                    onClick={() =>
+                      testimonial.videoUrl &&
+                      openVideoModal(testimonial.videoUrl)
+                    }
+                    className={`relative ${
+                      testimonial.videoUrl ? "cursor-pointer" : ""
+                    }`}
+                  >
+                    <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 h-full border border-gray-100">
+                      {/* Profile Section - Horizontal Layout */}
+                      <div className="flex items-start gap-4 mb-4">
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                          className="relative flex-shrink-0"
+                        >
+                          <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200">
+                            <img
+                              src={testimonial.studentPhoto}
+                              alt={testimonial.studentName}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                  testimonial.studentName
+                                )}&background=3b82f6&color=fff&size=64`;
+                              }}
+                            />
+                          </div>
+                          {/* Video Play Icon Overlay */}
+                          {testimonial.videoUrl && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
+                              <Play className="w-6 h-6 text-white fill-white" />
+                            </div>
+                          )}
+                        </motion.div>
+
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">
+                            {testimonial.studentName}
+                          </h3>
+                          <p className="text-sm text-gray-500 truncate">
+                            {testimonial.jobTitle}
+                            {testimonial.companyName &&
+                              `, ${testimonial.companyName}`}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Feedback Text */}
+                      <div className="mt-4">
+                        <p className="text-gray-700 leading-relaxed line-clamp-4">
+                          {testimonial.feedback}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Pagination Dots */}
+          {totalSlides > 1 && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? "w-8 bg-blue-600"
+                      : "w-2 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Dots Indicator */}
-        <div className="flex justify-center gap-2 mt-8 sm:mt-12">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex
-                  ? 'w-8 sm:w-10 h-2 sm:h-2.5 bg-linear-to-r from-purple-500 to-pink-500'
-                  : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-gray-300 hover:bg-gray-400'
-              }`}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
+        {/* Video Modal */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeVideoModal}
+              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden"
+              >
+                <button
+                  onClick={closeVideoModal}
+                  className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+                >
+                  <X className="w-6 h-6 text-white" />
+                </button>
+                <div className="relative pt-[56.25%]">
+                  <iframe
+                    src={getYouTubeEmbedUrl(selectedVideo)}
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default ReviewsSection;
+export default TestimonialsSection;
