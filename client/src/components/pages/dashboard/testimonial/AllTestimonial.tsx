@@ -122,7 +122,7 @@ export default function AllTestimonial() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredTestimonials.map(testimonial => (
               <div
-                key={testimonial.id}
+                key={testimonial._id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="p-6">
@@ -171,7 +171,7 @@ export default function AllTestimonial() {
                         <img
                           src={`https://img.youtube.com/vi/${extractVideoId(testimonial.videoUrl)}/mqdefault.jpg`}
                           alt="Video thumbnail"
-                          className="w-full h-32 object-cover"
+                          className="w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/50 transition">
                           <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition">
@@ -215,7 +215,7 @@ export default function AllTestimonial() {
                 <div className="border-t border-gray-200 p-4 bg-gray-50">
                   <div className="flex gap-2">
                     <Link
-                      to={`/dashboard/testimonials/edit/${testimonial.id}`}
+                      to={`/dashboard/testimonials/edit/${testimonial._id}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                     >
                       Edit

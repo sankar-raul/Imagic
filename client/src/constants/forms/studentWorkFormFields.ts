@@ -26,8 +26,7 @@ export const studentWorkFormFields: FieldConfig[] = [
     name: 'videoUrl',
     label: 'Video URL',
     type: 'url',
-    placeholder: 'https://youtube.com/...',
-    required: true
+    placeholder: 'https://youtube.com/...'
   },
   {
     name: 'thumbnailUrl',

@@ -28,6 +28,7 @@ function Sidebar() {
         { label: 'Add New Testimonial', path: '/dashboard/testimonial/add' },
       ] },
     {  label: 'Demo class', path: '/dashboard/demo-class' },
+    {  label: 'Newsletter', path: '/dashboard/newsletter' },
     {  label: 'Placement', submenu: [
         { label: 'All Placements', path: '/dashboard/placement' },
         { label: 'Add New Placement', path: '/dashboard/placement/add' },
@@ -36,7 +37,11 @@ function Sidebar() {
         { label: 'All Blogs', path: '/dashboard/blog' },
         { label: 'Add New Blog', path: '/dashboard/blog/add' },
       ]},
-    {  label: 'News & Events', path: '/dashboard/news-events' },
+    {  label: 'News & Events', path: '/dashboard/news-events' , submenu: [
+        { label: 'All News & Events', path: '/dashboard/news-events' },
+        { label: 'Add New News & Event', path: '/dashboard/news-events/add' },
+      ]
+    },
     {  label: 'Student Work', submenu: [
         { label: 'All Student Works', path: '/dashboard/student-work' },
         { label: 'Add New Student Work', path: '/dashboard/student-work/add' },

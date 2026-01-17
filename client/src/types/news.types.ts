@@ -1,4 +1,5 @@
 export interface Inews{
+    id: string;
     title: string;
     slug: string;
     thumbnail: string;

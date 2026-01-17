@@ -1,0 +1,42 @@
+[
+    {
+        "studentName": "Rohan Falia",
+        "studentPhoto": "https://imagic.net.in/wp-content/uploads/2023/09/rohan-website-final.jpg",
+        "feedback": "Rohan from Bandel, got Digital marketing job before his NSOU Digital Marketing course completion.",
+        "jobTitle": "Digital Marketing Specialist",
+        "videoUrl": "https://www.youtube.com/watch?v=XKwXKA4RQuU&list=RDXKwXKA4RQuU&start_radio=1",
+        "companyName": ""
+    },
+    {
+        "studentName": "Rahul Dewan",
+        "studentPhoto": "https://imagic.net.in/wp-content/uploads/2023/09/rahul-jpeg-final-2-1.jpg",
+        "feedback": "Rahul Dewan from Siliguri, Imagic Video editing Student. He share his learning experience.",
+        "jobTitle": "Video Editor",
+        "videoUrl": "https://www.youtube.com/watch?v=XKwXKA4RQuU&list=RDXKwXKA4RQuU&start_radio=1",
+        "companyName": ""
+    },
+    {
+        "studentName": "Sanjay Gayen",
+        "studentPhoto": "https://imagic.net.in/wp-content/uploads/2024/03/sanjoy-gayen_nsou_DM.jpg",
+        "feedback": "Sanjay from North 24 Parganas, got Digital marketing job before his NSOU Digital Marketing course completion.",
+        "jobTitle": "Digital Marketing Specialist",
+        "videoUrl": "https://www.youtube.com/watch?v=XKwXKA4RQuU&list=RDXKwXKA4RQuU&start_radio=1",
+        "companyName": ""
+    },
+    {
+        "studentName": "Niva Shaw",
+        "studentPhoto": "https://imagic.net.in/wp-content/uploads/2023/03/Pic-1.webp",
+        "feedback": "Watch her journey after learning NSOU Web Design & Development Course from Imagic.",
+        "jobTitle": "Web Developer",
+        "videoUrl": "https://www.youtube.com/watch?v=XKwXKA4RQuU&list=RDXKwXKA4RQuU&start_radio=1",
+        "companyName": ""
+    },
+    {
+        "studentName": "Pabitra Naskar",
+        "studentPhoto": "https://imagic.net.in/wp-content/uploads/2023/03/Pic-2.webp",
+        "feedback": "Pabitra from Baruipur got his first job after completing NSOU Web Design and Diploma course from IMAGIC.",
+        "jobTitle": "Web Designer",
+        "videoUrl": "https://www.youtube.com/watch?v=XKwXKA4RQuU&list=RDXKwXKA4RQuU&start_radio=1",
+        "companyName": ""
+    }
+]
