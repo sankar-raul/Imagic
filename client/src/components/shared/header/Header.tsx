@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import _ from "lodash";
 import { motion } from "framer-motion";
+import { Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import Logo from "./Logo";
 import HamburgerButton from "./HamburgerButton";
 import MobileNav from "./MobileNav";
@@ -52,7 +54,7 @@ export default function Header() {
         width: isScrolled ? "100%" : "max-content",
       }}
       transition={{ duration: 0.5 }}
-      className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-3 px-6 md:px-12 lg:px-16 gap-4 z-50 shadow-sm ${
+      className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-2 sm:py-3 px-3 sm:px-6 md:px-12 lg:px-16 gap-2 sm:gap-4 z-50 shadow-sm ${
         !isScrolled
           ? "lg:bg-white/80 lg:backdrop-blur-2xl lg:rounded-full lg:translate-y-2"
           : ""
@@ -60,7 +62,28 @@ export default function Header() {
     >
       <Logo src={navData.logo} alt={navData.logoAlt} />
 
-      <div className="z-200 lg:hidden">
+      {/* Contact Info - Mobile (visible when nav is closed) */}
+      <div className="flex lg:hidden items-center gap-1.5 sm:gap-2">
+        {!isNavOpen && (
+          <>
+            <a
+              href="https://wa.me/917044393332"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-green-50 hover:bg-green-100 active:bg-green-200 transition-all duration-300 border border-green-200"
+              aria-label="WhatsApp"
+            >
+              <FaWhatsapp className="text-green-600 text-base sm:text-lg" />
+            </a>
+            <a
+              href="tel:+917044393332"
+              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-all duration-300 border border-blue-200"
+              aria-label="Call Now"
+            >
+              <Phone className="text-blue-600 w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </a>
+          </>
+        )}
         <HamburgerButton isOpen={isNavOpen} onClick={handleNavToggle} />
       </div>
 
@@ -80,7 +103,35 @@ export default function Header() {
         onLinkClick={handleNavClose}
       />
 
-      <JoinButton />
+      {/* Contact Info - Desktop */}
+      <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+        <a
+          href="https://wa.me/917044393332"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 xl:gap-2 px-2 xl:px-4 py-2 rounded-full bg-green-50 hover:bg-green-100 transition-all duration-300 group border border-green-200"
+          aria-label="WhatsApp +91 7044393332"
+        >
+          <FaWhatsapp className="text-green-600 text-lg xl:text-xl group-hover:scale-110 transition-transform" />
+          <span className="hidden xl:inline text-xs xl:text-sm font-semibold text-green-700 whitespace-nowrap">
+            +91 7044393332
+          </span>
+        </a>
+        <a
+          href="tel:+917044393332"
+          className="flex items-center gap-1.5 xl:gap-2 px-2 xl:px-4 py-2 rounded-full bg-blue-50 hover:bg-blue-100 transition-all duration-300 group border border-blue-200"
+          aria-label="Call +91 7044393332"
+        >
+          <Phone className="text-blue-600 w-4 h-4 group-hover:scale-110 transition-transform" />
+          <span className="hidden xl:inline text-xs xl:text-sm font-semibold text-blue-700 whitespace-nowrap">
+            Call Now
+          </span>
+        </a>
+      </div>
+
+      <div className="hidden lg:block">
+        <JoinButton />
+      </div>
     </motion.header>
   );
 }

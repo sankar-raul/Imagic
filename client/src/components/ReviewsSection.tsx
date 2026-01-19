@@ -28,7 +28,7 @@ export const TestimonialsSection = () => {
 
   const getYouTubeEmbedUrl = (url: string) => {
     const videoIdMatch = url.match(
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/,
     );
     return videoIdMatch
       ? `https://www.youtube.com/embed/${videoIdMatch[1]}?autoplay=1`
@@ -144,7 +144,7 @@ export const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-50 text-neutral-800 text-sm font-medium mb-4">
             <Quote className="w-4 h-4" />
             <span>Testimonials</span>
           </div>
@@ -166,7 +166,7 @@ export const TestimonialsSection = () => {
             disabled={totalSlides <= 1}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronLeft className="w-6 h-6 text-blue-600" />
+            <ChevronLeft className="w-6 h-6 text-neutral-800" />
           </button>
 
           <button
@@ -174,7 +174,7 @@ export const TestimonialsSection = () => {
             disabled={totalSlides <= 1}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronRight className="w-6 h-6 text-blue-600" />
+            <ChevronRight className="w-6 h-6 text-neutral-800" />
           </button>
 
           {/* Slider Container */}
@@ -230,7 +230,7 @@ export const TestimonialsSection = () => {
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                  testimonial.studentName
+                                  testimonial.studentName,
                                 )}&background=3b82f6&color=fff&size=64`;
                               }}
                             />

@@ -4,6 +4,8 @@ import { NavMenuItem } from "@/types";
 import HamburgerButton from "./HamburgerButton";
 import { ICourseItems } from "@/types/courseItems.interface";
 import { useMemo } from "react";
+import { Phone } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -26,7 +28,7 @@ export default function MobileNav({
 }: MobileNavProps) {
   const courseTitles = useMemo(
     () => (courseItems ? Object.keys(courseItems) : []),
-    [courseItems]
+    [courseItems],
   );
 
   return createPortal(
@@ -100,8 +102,45 @@ export default function MobileNav({
             </li>
           ))}
         </ul>
+
+        {/* Contact Buttons at Bottom */}
+        <div className="mt-6 pt-6 border-t border-gray-200 px-4">
+          <p className="text-xs text-gray-500 mb-3 font-medium">Get in Touch</p>
+          <div className="flex flex-col gap-3">
+            <a
+              href="https://wa.me/917044393332"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-green-50 hover:bg-green-100 transition-all duration-300 border border-green-200"
+            >
+              <FaWhatsapp className="text-green-600 text-2xl" />
+              <div className="flex flex-col">
+                <span className="text-xs text-green-600 font-medium">
+                  WhatsApp
+                </span>
+                <span className="text-sm font-bold text-green-700">
+                  +91 7044393332
+                </span>
+              </div>
+            </a>
+            <a
+              href="tel:+917044393332"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 hover:bg-blue-100 transition-all duration-300 border border-blue-200"
+            >
+              <Phone className="text-blue-600 w-5 h-5" />
+              <div className="flex flex-col">
+                <span className="text-xs text-blue-600 font-medium">
+                  Call Now
+                </span>
+                <span className="text-sm font-bold text-blue-700">
+                  +91 7044393332
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
       </nav>
     </div>,
-    document.getElementById("portals") as HTMLElement
+    document.getElementById("portals") as HTMLElement,
   );
 }

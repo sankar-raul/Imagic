@@ -15,6 +15,23 @@
     animation: spin 20s linear infinite reverse;
   }
 
+  /* Animation delay utilities for loading screen */
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
   .ribbon {
     height: 188px;
     position: relative;
@@ -64,7 +81,9 @@
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     border: 1px dashed;
-    box-shadow: 0 0 0 3px #ff02, 0px 20px 5px -18px rgba(0, 0, 0, 0.6);
+    box-shadow:
+      0 0 0 3px #ff02,
+      0px 20px 5px -18px rgba(0, 0, 0, 0.6);
     text-align: center;
   }
 

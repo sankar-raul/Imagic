@@ -22,9 +22,18 @@ export default function CoursePage() {
   const { id: slug } = useParams();
   const { courseData, isLoading } = useGetCourseById(slug);
 
+  // Scroll to top when component mounts
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
-    console.log(slug);
+    scrollToTop();
   }, [slug]);
+
   // if (!courseData) return <h2>Loading...</h2>;
   if (isLoading) {
     return <CoursePageSkeleton />;
@@ -152,7 +161,7 @@ export default function CoursePage() {
                     </h2>
                   </div>
 
-                  <div className="grid  gap-4">
+                  <div className="grid gap-4">
                     <HtmlRenderer content={courseData.course_overview} />
                   </div>
                 </div>
@@ -167,7 +176,7 @@ export default function CoursePage() {
               )}
             </div>
 
-            <DemoClassSection minimal={true} />
+            <DemoClassSection id={"enrollnow"} minimal={true} />
           </div>
 
           {/* Sidebar */}
@@ -210,9 +219,24 @@ export default function CoursePage() {
               </div>
 
               {/* CTA Buttons */}
-              <button className="w-full bg-black/90 md:cursor-pointer hover:bg-black text-white font-semibold py-3 rounded-lg mb-3 transition-colors">
-                Enroll Now
-              </button>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.getElementById("enrollnow");
+                  if (element) {
+                    const yOffset = -80; // Adjust this value to control offset
+                    const y =
+                      element.getBoundingClientRect().top +
+                      window.pageYOffset +
+                      yOffset;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                  }
+                }}
+              >
+                <button className="w-full bg-black/90 md:cursor-pointer hover:bg-black text-white font-semibold py-3 rounded-lg mb-3 transition-colors">
+                  Enroll Now
+                </button>
+              </a>
 
               {/* <button 
                 onClick={() => setIsFavorite(!isFavorite)}
