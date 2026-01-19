@@ -2,9 +2,21 @@ import { get, post, deleteRequest, put } from "../apiMethod";
 
 const INITIAL_ROUTE = "/blogs";
 
-export const getAllBlogs = async () => {
+interface PaginationParams {
+  page?: number;
+  limit?: number;
+}
+
+export const getAllBlogs = async (params?: PaginationParams) => {
   try {
-    const response = await get(`${INITIAL_ROUTE}`);
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append("page", params.page.toString());
+    if (params?.limit) queryParams.append("limit", params.limit.toString());
+
+    const queryString = queryParams.toString();
+    const url = queryString ? `${INITIAL_ROUTE}?${queryString}` : INITIAL_ROUTE;
+
+    const response = await get(url);
     return response;
   } catch (error) {
     throw error;
