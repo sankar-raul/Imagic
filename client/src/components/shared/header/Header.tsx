@@ -28,6 +28,9 @@ export default function Header() {
   const handleExpand = useCallback(() => {
     setExpandDetails((prev) => !prev);
   }, []);
+  const gotoDemo = useCallback(() => {
+    scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     const handleScroll = _.throttle(() => {
@@ -130,7 +133,19 @@ export default function Header() {
       </div>
 
       <div className="hidden lg:block">
-        <JoinButton />
+        <JoinButton
+          onClick={() => {
+            const element = document.getElementById("democlass");
+            if (element) {
+              const yOffset = -80; // Adjust this value to control offset
+              const y =
+                element.getBoundingClientRect().top +
+                window.pageYOffset +
+                yOffset;
+              window.scrollTo({ top: y, behavior: "smooth" });
+            }
+          }}
+        />
       </div>
     </motion.header>
   );

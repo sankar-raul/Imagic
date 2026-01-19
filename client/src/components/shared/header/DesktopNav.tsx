@@ -17,7 +17,7 @@ export default function DesktopNav({
 }: DesktopNavProps) {
   return (
     <nav className="hidden lg:block flex-1">
-      <ul className="flex flex-row items-center gap-0 xl:gap-6 justify-center">
+      <ul className="flex flex-row items-center gap-0 xl:gap-4 justify-center">
         {menuItems.map((item, index) => (
           <li className="relative group" key={index}>
             {item.type === "link" ? (

@@ -3,7 +3,14 @@ import {
   deleteDemoClassEntry,
   demoClassEntries,
 } from "./applyDemoClass/appplyDemoClass";
-import { getAllBlogs, postBlog, getBlogById, updateBlog, deleteBlog } from "./blog/blog";
+import {
+  getAllBlogs,
+  postBlog,
+  getBlogById,
+  updateBlog,
+  deleteBlog,
+  getBlogBySlug,
+} from "./blog/blog";
 import {
   createCourse,
   deleteCourse,
@@ -66,6 +73,7 @@ export const api = {
     getBlogById,
     updateBlog,
     deleteBlog,
+    getBlogBySlug,
   },
   testimonial: {
     getAllTestimonial,
