@@ -1,14 +1,17 @@
 import React, { FC, useState } from "react";
 import { BookOpen, CheckCircle } from "lucide-react";
-import FormImg from "@/assets/formImg.png";
 import formImage from "@/assets/images/form-image.jpg";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
 
 interface DemoClassFormProps {
   minimal?: boolean;
+  id?: string;
 }
-const DemoClassSection: FC<DemoClassFormProps> = ({ minimal = false }) => {
+const DemoClassSection: FC<DemoClassFormProps> = ({
+  minimal = false,
+  id = "democlass",
+}) => {
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -54,10 +57,7 @@ const DemoClassSection: FC<DemoClassFormProps> = ({ minimal = false }) => {
   };
 
   return (
-    <div
-      className="flex items-center justify-center p-4 sm:p-6 lg:p-8"
-      id="demoClass"
-    >
+    <div className="flex items-center justify-center p-4 sm:p-6 lg:p-8" id={id}>
       <motion.div
         initial={{
           opacity: 0,
