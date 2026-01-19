@@ -1,4 +1,4 @@
-import { get, post, deleteRequest } from "../apiMethod";
+import { get, post, deleteRequest, put } from "../apiMethod";
 
 const INITIAL_ROUTE = "/jobs";
 export const getAllJobs = async (page: number = 1, limit: number = 10) => {
@@ -30,6 +30,24 @@ export const deleteJob = async (jobId: string) => {
 export const getJobBySlug = async (slug: string) => {
   try {
     const response = await get(`${INITIAL_ROUTE}/${slug}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getJobById = async (jobId: string) => {
+  try {
+    const response = await get(`${INITIAL_ROUTE}/id/${jobId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateJob = async (jobId: string, jobData: any) => {
+  try {
+    const response = await put(`${INITIAL_ROUTE}/${jobId}`, jobData);
     return response;
   } catch (error) {
     throw error;

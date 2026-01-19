@@ -18,7 +18,20 @@ export const getBlogDetails = async (req: Request, res: Response) => {
         if (!blogDetails) {
             return res.status(404).json({ message: "Blog not found" });
         }
-        res.status(200).json(blogDetails);
+        res.status(200).json({ data: blogDetails });
+    } catch (error) {
+        res.status(500).json({ message: (error as Error).message });
+    }
+};
+
+export const getBlogById = async (req: Request, res: Response) => {
+    try {
+        const { blogId } = req.params;
+        const blogDetails = await blog.findById(blogId);
+        if (!blogDetails) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+        res.status(200).json({ data: blogDetails });
     } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
