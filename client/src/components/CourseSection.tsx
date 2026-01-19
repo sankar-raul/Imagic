@@ -174,8 +174,8 @@ export default function CoursesSection() {
     <section className="flex justify-center" id="course">
       <div className="py-16 px-4 md:px-10 lg:px-20 max-w-7xl">
         {/* Heading */}
-        <div className="text-center mb-10 ">
-          <h2 className="text-4xl md:text-5xl font-bold mt-2">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mt-2 font-serif">
             Imagic Job <span className="text-yellow-400">Assured Courses.</span>
           </h2>
           <p className="text-black/60 mt-6">
@@ -203,7 +203,7 @@ export default function CoursesSection() {
         <div className="flex justify-center mt-12">
           <Link
             to={"/course"}
-            className="px-8 py-4 rounded-full bg-yellow-400 text-black font-semibold text-base md:text-lg cursor-pointer hover:bg-yellow-300 duration-200 transition shadow-md hover:shadow-xl transform will-change-transform hover:scale-105"
+            className="px-8 py-4 rounded-full bg-yellow-300 text-black font-semibold text-base md:text-lg cursor-pointer hover:bg-yellow-200 duration-200 transition shadow-sm hover:shadow-sm transform will-change-transform hover:scale-105"
           >
             View All Courses
           </Link>

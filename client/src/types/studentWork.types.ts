@@ -1,5 +1,5 @@
 export interface IStudentWork {
-    id: string;
+    _id: string;
     title: string;
     studentName: string;
     videoUrl: string;

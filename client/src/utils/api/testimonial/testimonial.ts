@@ -1,4 +1,4 @@
-import { get, post, deleteRequest } from "../apiMethod";
+import { get, post, deleteRequest, put } from "../apiMethod";
 
 const INITIAL_ROUTE = "/testimonials";
 export const getAllTestimonial = async (
@@ -24,6 +24,24 @@ export const addTestimonial = async (testimonialData: any) => {
 export const deleteTestimonial = async (testimonialId: string) => {
   try {
     const response = await deleteRequest(`${INITIAL_ROUTE}/${testimonialId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getTestimonialById = async (testimonialId: string) => {
+  try {
+    const response = await get(`${INITIAL_ROUTE}/${testimonialId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateTestimonial = async (testimonialId: string, testimonialData: any) => {
+  try {
+    const response = await put(`${INITIAL_ROUTE}/${testimonialId}`, testimonialData);
     return response;
   } catch (error) {
     throw error;

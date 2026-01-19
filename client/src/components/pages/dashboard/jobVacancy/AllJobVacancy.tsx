@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import useGetAllJobVacancy from '@/hooks/jobVacancy/useGetAllJobVacancy';
+import useDeleteJob from '@/hooks/jobVacancy/useDeleteJob';
 
 
 
 export default function AllJobVacancy() {
   const { jobVacancy, isLoading, refetchJobVacancy } = useGetAllJobVacancy();
+  const { deleteJobById } = useDeleteJob();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const filteredAndSortedJobs = jobVacancy
     .filter(job => 
@@ -20,10 +23,19 @@ export default function AllJobVacancy() {
       return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
     });
 
-  const handleDelete = async (_id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this job vacancy? This action cannot be undone.')) {
-      refetchJobVacancy();
-      alert('Job vacancy deleted successfully!');
+      try {
+        setDeletingId(id);
+        await deleteJobById(id);
+        alert('Job vacancy deleted successfully!');
+        refetchJobVacancy();
+      } catch (error) {
+        console.error('Error deleting job vacancy:', error);
+        alert('Failed to delete job vacancy. Please try again.');
+      } finally {
+        setDeletingId(null);
+      }
     }
   };
 
@@ -57,7 +69,7 @@ export default function AllJobVacancy() {
             <p className="text-gray-600">Manage all job openings and career opportunities</p>
           </div>
           <Link
-            to="/dashboard/job-vacancies/add"
+            to="/dashboard/job-vacancy/add"
             className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Post New Job
@@ -185,16 +197,17 @@ export default function AllJobVacancy() {
                 <div className="border-t border-gray-200 p-4 bg-gray-50">
                   <div className="flex gap-2">
                     <Link
-                      to={`/dashboard/job-vacancies/edit/${job._id}`}
+                      to={`/dashboard/job-vacancy/edit/${job._id}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                     >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(job._id)}
-                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm"
+                      disabled={deletingId === job._id}
+                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Delete
+                      {deletingId === job._id ? 'Deleting...' : 'Delete'}
                     </button>
                   </div>
                 </div>

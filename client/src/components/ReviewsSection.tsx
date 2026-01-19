@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight, X, Play } from "lucide-react";
 import useGetAllTestimonial from "@/hooks/testimonial/useGetAllTestimonial";
 import { Itestimonial } from "@/types/testimonials.types";
 import TestimonialCardSkeleton from "@/components/shared/skeletons/TestimonialCardSkeleton";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
 
-export const TestimonialsSection = () => {
+interface TestimonialsSectionProps {
+  itemsPerSlide?: number;
+}
+
+export const TestimonialsSection = ({
+  itemsPerSlide = 3,
+}: TestimonialsSectionProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-
+  const { scrollToTop } = useCustomScroll();
   const { testimonials, isLoading } = useGetAllTestimonial({
     page: 1,
     limit: 100, // Load all testimonials for slider
   });
-
-  const itemsPerSlide = 3; // Show 3 testimonials per slide
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   const totalSlides = Math.ceil(testimonials.length / itemsPerSlide);
 
   const openVideoModal = (videoUrl: string) => {
@@ -28,7 +36,7 @@ export const TestimonialsSection = () => {
 
   const getYouTubeEmbedUrl = (url: string) => {
     const videoIdMatch = url.match(
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/,
     );
     return videoIdMatch
       ? `https://www.youtube.com/embed/${videoIdMatch[1]}?autoplay=1`
@@ -74,7 +82,7 @@ export const TestimonialsSection = () => {
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 100 : -100,
       opacity: 0,
     }),
     center: {
@@ -82,7 +90,7 @@ export const TestimonialsSection = () => {
       opacity: 1,
     },
     exit: (direction: number) => ({
-      x: direction > 0 ? -1000 : 1000,
+      x: direction > 0 ? -100 : 100,
       opacity: 0,
     }),
   };
@@ -93,14 +101,18 @@ export const TestimonialsSection = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-              What Our Students Say
+              Our Students Testimonials
             </h2>
             <p className="text-lg text-gray-600">
-              Hear from our amazing students about their experiences
+              Our mission is to drive progress and enhance the lives of our
+              customers by delivering superior products and services that exceed
+              expectations.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(3)].map((_, i) => (
+          <div
+            className={`grid grid-cols-1 ${itemsPerSlide >= 2 ? "md:grid-cols-2" : ""} ${itemsPerSlide >= 3 ? "lg:grid-cols-3" : ""} gap-8`}
+          >
+            {[...Array(itemsPerSlide)].map((_, i) => (
               <TestimonialCardSkeleton key={i} />
             ))}
           </div>
@@ -144,9 +156,8 @@ export const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-50 text-neutral-800 text-sm font-medium mb-4">
             <Quote className="w-4 h-4" />
-            <span>Testimonials</span>
           </div>
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Students Testimonials
@@ -166,7 +177,7 @@ export const TestimonialsSection = () => {
             disabled={totalSlides <= 1}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronLeft className="w-6 h-6 text-blue-600" />
+            <ChevronLeft className="w-6 h-6 text-neutral-800" />
           </button>
 
           <button
@@ -174,7 +185,7 @@ export const TestimonialsSection = () => {
             disabled={totalSlides <= 1}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-blue-50 hidden md:block"
           >
-            <ChevronRight className="w-6 h-6 text-blue-600" />
+            <ChevronRight className="w-6 h-6 text-neutral-800" />
           </button>
 
           {/* Slider Container */}
@@ -195,7 +206,7 @@ export const TestimonialsSection = () => {
                   x: { type: "spring", stiffness: 300, damping: 30 },
                   opacity: { duration: 0.2 },
                 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                className={`grid grid-cols-1 ${itemsPerSlide >= 2 ? "md:grid-cols-2" : ""} ${itemsPerSlide >= 3 ? "lg:grid-cols-3" : itemsPerSlide >= 2 ? "lg:grid-cols-2" : ""} gap-8`}
               >
                 {getCurrentTestimonials().map((testimonial, index) => (
                   <motion.div
@@ -221,7 +232,7 @@ export const TestimonialsSection = () => {
                         <motion.div
                           whileHover={{ scale: 1.1 }}
                           transition={{ type: "spring", stiffness: 300 }}
-                          className="relative flex-shrink-0"
+                          className="relative shrink-0"
                         >
                           <div className="w-16 h-16 rounded-full overflow-hidden ring-2 ring-gray-200">
                             <img
@@ -230,7 +241,7 @@ export const TestimonialsSection = () => {
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                  testimonial.studentName
+                                  testimonial.studentName,
                                 )}&background=3b82f6&color=fff&size=64`;
                               }}
                             />
