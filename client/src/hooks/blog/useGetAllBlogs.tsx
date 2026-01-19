@@ -10,7 +10,7 @@ const useGetAllBlogs = () => {
     try {
       setIsLoading(true);
       const response = await api.blog.getAllBlogs();
-      setBlogs(response?.blogs || []);
+      setBlogs(response?.data || []);
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {

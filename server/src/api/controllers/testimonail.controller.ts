@@ -25,12 +25,25 @@ export const getAllTestimonials = async (req: Request, res: Response) => {
     }
 };
 
+export const getTestimonialById = async (req: Request, res: Response) => {
+    try {
+        const { testimonialId } = req.params;
+        const testimonialDetails = await testimonial.findById(testimonialId);
+        if (!testimonialDetails) {
+            return res.status(404).json({ message: "Testimonial not found" });
+        }
+        res.status(200).json(testimonialDetails);
+    } catch (error) {
+        res.status(500).json({ message: (error as Error).message });
+    }
+};
+
 export const updateTestimonial = async (req: Request, res: Response) => {
     try {
         const { testimonialId } = req.params;
         const updateData = req.body;
         const updatedTestimonial = await testimonial.findByIdAndUpdate(testimonialId, updateData, { new: true });
-        res.status(200).json(updatedTestimonial);
+        res.status(200).json({data: updatedTestimonial} );
     }
     catch (error) {
         res.status(500).json({ message: (error as Error).message });

@@ -52,13 +52,19 @@ export default function FeatureSection() {
 
   return (
     <div className={"p-8 md:p-12"}>
-      <div className="mx-auto w-full max-w-7xl">
+      <motion.div
+        initial={{ opacity: 0, y: 200, rotate: -2 }}
+        whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true, amount: 0.6 }}
+        className="mx-auto w-full max-w-7xl"
+      >
         <div className="relative mx-auto mb-12 max-w-2xl sm:text-center">
           <div className="relative z-10">
-            <h2 className="font-geist text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
+            <h2 className="font-geist font-serif text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
               Why Imagic?
             </h2>
-            <p className="font-geist text-foreground/60 mt-3">
+            <p className="font-geist text-foreground/60 mt-4">
               Imagic has been teaching Graphics Design, Video Editing and
               Digital Marketing since 2010 in Kolkata. Lifetime 100% Job
               Placement is provided to Imagic students.
@@ -93,7 +99,7 @@ export default function FeatureSection() {
                     "flex h-12 w-12 items-center justify-center rounded-full border-2 md:h-14 md:w-14",
                     index === currentFeature
                       ? "border-yellow-600 bg-yellow-600/10 text-yellow-600 scale-110 [box-shadow:0_0_15px_rgba(147,51,234,0.3)]"
-                      : "border-muted-foreground bg-muted"
+                      : "border-muted-foreground bg-muted",
                   )}
                 >
                   {feature.icon}
@@ -113,7 +119,7 @@ export default function FeatureSection() {
 
           <div
             className={cn(
-              "border-yellow-600/20 relative order-1 h-[200px] overflow-hidden rounded-xl border [box-shadow:0_5px_30px_-15px_rgba(147,51,234,0.3)] md:order-2 md:h-[300px] lg:h-[400px]"
+              "border-yellow-600/20 relative order-1 h-[200px] overflow-hidden rounded-xl border [box-shadow:0_5px_30px_-15px_rgba(147,51,234,0.3)] md:order-2 md:h-[300px] lg:h-[400px]",
             )}
           >
             <AnimatePresence mode="wait">
@@ -143,12 +149,12 @@ export default function FeatureSection() {
                         </span>
                       </div>
                     </motion.div>
-                  )
+                  ),
               )}
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

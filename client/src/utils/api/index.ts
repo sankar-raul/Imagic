@@ -3,7 +3,14 @@ import {
   deleteDemoClassEntry,
   demoClassEntries,
 } from "./applyDemoClass/appplyDemoClass";
-import { getAllBlogs, postBlog } from "./blog/blog";
+import {
+  getAllBlogs,
+  postBlog,
+  getBlogById,
+  updateBlog,
+  deleteBlog,
+  getBlogBySlug,
+} from "./blog/blog";
 import {
   createCourse,
   deleteCourse,
@@ -15,16 +22,22 @@ import {
   deleteJob,
   getAllJobs,
   getJobBySlug,
+  getJobById,
+  updateJob,
 } from "./jobVacancy/jobVacancy";
 import {
   addPlacement,
   deletePlacement,
   getAllPlacement,
+  getPlacementById,
+  updatePlacement,
 } from "./placement/placement";
 import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonial,
+  getTestimonialById,
+  updateTestimonial,
 } from "./testimonial/testimonial";
 import {
   subscribeNewsletter,
@@ -37,6 +50,8 @@ import {
   addStudentWork,
   deleteStudentWork,
   getAllStudentWorks,
+  getStudentWorkById,
+  updateStudentWork,
 } from "./studentWork/studentWork";
 import { login as authLogin } from "./auth/auth";
 
@@ -55,22 +70,32 @@ export const api = {
   blog: {
     getAllBlogs,
     postBlog,
+    getBlogById,
+    updateBlog,
+    deleteBlog,
+    getBlogBySlug,
   },
   testimonial: {
     getAllTestimonial,
     addTestimonial,
     deleteTestimonial,
+    getTestimonialById,
+    updateTestimonial,
   },
   jobVacancy: {
     getAllJobs,
     createJob,
     deleteJob,
     getJobBySlug,
+    getJobById,
+    updateJob,
   },
   placements: {
     getAllPlacement,
     addPlacement,
     deletePlacement,
+    getPlacementById,
+    updatePlacement,
   },
   newsletter: {
     subscribeNewsletter,
@@ -87,6 +112,8 @@ export const api = {
     getAllStudentWorks,
     addStudentWork,
     deleteStudentWork,
+    getStudentWorkById,
+    updateStudentWork,
   },
   auth: {
     login: authLogin,

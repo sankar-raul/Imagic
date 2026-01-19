@@ -26,6 +26,19 @@ export const getPlacedStudents = async (req: Request, res: Response) => {
     }
 };
 
+export const getPlacedStudentById = async (req: Request, res: Response) => {
+    try {
+        const { placementId } = req.params;
+        const placedStudent = await Placement.findById(placementId);
+        if (!placedStudent) {
+            return res.status(404).json({ message: "Placed student not found" });
+        }
+        res.status(200).json({ data: placedStudent });
+    } catch (error) {
+        res.status(500).json({ message: (error as Error).message });
+    }
+};
+
 export const updatePlacedStudent = async (req: Request, res: Response) => {
     try {
         const { placementId } = req.params;

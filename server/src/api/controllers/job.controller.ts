@@ -50,6 +50,19 @@ export const getJobsDetails = async (req: Request, res: Response) => {
   }
 };
 
+export const getJobById = async (req: Request, res: Response) => {
+  try {
+    const { jobId } = req.params;
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    res.status(200).json({ data: job });
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
+};
+
 export const getAllJobs = async (req: Request, res: Response) => {
   try {
     const page = Math.max(parseInt(req.query.page as string) || 1, 1);

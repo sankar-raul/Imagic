@@ -1,10 +1,13 @@
-export default function JoinButton() {
+interface JoinButtonProps {
+  onClick?: () => void;
+}
+export default function JoinButton({ onClick }: JoinButtonProps) {
+  const handleClick = () => {
+    onClick?.();
+  };
   return (
-    <div className="hidden lg:block z-20 shrink-0">
-      <a
-        href="/contact"
-        className="px-7 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-full inline-flex items-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-      >
+    <div onClick={handleClick} className="hidden lg:block z-20 shrink-0">
+      <div className="px-7 py-3 bg-yellow-300 hover:bg-yellow-400 md:cursor-pointer text-black font-semibold rounded-full inline-flex items-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
         Join Now
         <svg
           className="w-4 h-4"
@@ -19,7 +22,7 @@ export default function JoinButton() {
             d="M13 7l5 5m0 0l-5 5m5-5H6"
           />
         </svg>
-      </a>
+      </div>
     </div>
   );
 }

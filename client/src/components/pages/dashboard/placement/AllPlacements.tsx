@@ -53,7 +53,7 @@ export default function AllPlacements() {
             <p className="text-gray-600">Showcase our successful alumni and their achievements</p>
           </div>
           <Link
-            to="/dashboard/placements/add"
+            to="/dashboard/placement/add"
             className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Add Placement
@@ -186,7 +186,7 @@ export default function AllPlacements() {
                       <div className="border-t border-gray-200 p-4 bg-gray-50">
                         <div className="flex gap-2">
                           <Link
-                            to={`/dashboard/placements/edit/${placement._id}`}
+                            to={`/dashboard/placement/edit/${placement._id}`}
                             className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                           >
                             Edit

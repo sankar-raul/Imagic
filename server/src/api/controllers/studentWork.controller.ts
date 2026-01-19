@@ -27,6 +27,30 @@ export const getAllStudentWorks = async (req: Request, res: Response) => {
     }
 };
 
+export const getStudentWorkById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const work = await studentWork.findById(id);
+        if (!work) {
+            return res.status(404).json({ message: "Student work not found" });
+        }
+        res.status(200).json({ data: work });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error });
+    }
+};
+
+export const updateStudentWork = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        const updatedWork = await studentWork.findByIdAndUpdate(id, updateData, { new: true });
+        res.status(200).json({ message: "Student work updated successfully", data: updatedWork });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error });
+    }
+};
+
 export const deleteStudentWork = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
