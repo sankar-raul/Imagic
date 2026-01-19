@@ -1,9 +1,29 @@
 import { Link } from 'react-router';
 import useGetAllBlogs from '@/hooks/blog/useGetAllBlogs';
+import useDeleteBlog from '@/hooks/blog/useDeleteBlog';
+import { useState } from 'react';
 
 export default function AllBlog() {
-  const { blogs, isLoading } = useGetAllBlogs();
+  const { blogs, isLoading, refetchBlogs } = useGetAllBlogs();
+  const { deleteBlogById } = useDeleteBlog();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   console.log('Fetched blogs:', blogs);
+
+  const handleDelete = async (_id: string) => {
+    if (window.confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+      try {
+        setDeletingId(_id);
+        await deleteBlogById(_id);
+        alert('Blog post deleted successfully!');
+        refetchBlogs();
+      } catch (error) {
+        console.error('Error deleting blog:', error);
+        alert('Failed to delete blog post. Please try again.');
+      } finally {
+        setDeletingId(null);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen p-6 w-full">
@@ -16,7 +36,7 @@ export default function AllBlog() {
           </div>
           <Link
             to="/dashboard/blog/add"
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
+            className="px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
           >
             + Add New Blog
           </Link>
@@ -48,7 +68,7 @@ export default function AllBlog() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {blogs.map(blog => (
               <div
-                key={blog.id}
+                key={blog._id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 {/* Blog Thumbnail */}
@@ -88,15 +108,17 @@ export default function AllBlog() {
                   {/* Action Buttons */}
                   <div className="flex gap-2 pt-4 border-t border-gray-200">
                     <Link
-                      to={`/dashboard/blog/edit/${blog.id}`}
+                      to={`/dashboard/blog/edit/${blog._id}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                     >
                       Edit
                     </Link>
                     <button
-                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm"
+                      onClick={() => handleDelete(blog._id)}
+                      disabled={deletingId === blog._id}
+                      className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Delete
+                      {deletingId === blog._id ? 'Deleting...' : 'Delete'}
                     </button>
                   </div>
                 </div>

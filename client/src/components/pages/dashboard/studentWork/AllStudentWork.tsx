@@ -135,7 +135,7 @@ export default function AllStudentWork() {
 
               return (
                 <div
-                  key={work.id}
+                  key={work._id}
                   className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   {/* Video Thumbnail */}
@@ -212,7 +212,7 @@ export default function AllStudentWork() {
                     {/* Action Buttons */}
                     <div className="flex gap-2">
                       <Link
-                        to={`/dashboard/student-work/edit/${work.id}`}
+                        to={`/dashboard/student-work/edit/${work._id}`}
                         className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm flex items-center justify-center gap-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,11 +221,11 @@ export default function AllStudentWork() {
                         Edit
                       </Link>
                       <button
-                        onClick={() => handleDelete(work.id)}
-                        disabled={deletingId === work.id}
+                        onClick={() => handleDelete(work._id)}
+                        disabled={deletingId === work._id}
                         className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {deletingId === work.id ? (
+                        {deletingId === work._id ? (
                           <>
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                             Deleting...

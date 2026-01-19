@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import useGetAllTestimonial from '@/hooks/testimonial/useGetAllTestimonial';
+import useDeleteTestimonial from '@/hooks/testimonial/useDeleteTestimonial';
 
 export default function AllTestimonial() {
   const { testimonials, isLoading, refetchTestimonials } = useGetAllTestimonial();
+  const { deleteTestimonialById } = useDeleteTestimonial();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCompany, setFilterCompany] = useState('All');
 
@@ -19,14 +21,18 @@ export default function AllTestimonial() {
     return matchesSearch && matchesCompany;
   });
 
-  // const handleDelete = async (id: string) => {
-  //   if (window.confirm('Are you sure you want to delete this testimonial?')) {
-  //     // TODO: Call delete API
-  //     // await api.testimonial.deleteTestimonial(id);
-  //     refetchTestimonials();
-  //     alert('Testimonial deleted successfully!');
-  //   }
-  // };
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this testimonial? This action cannot be undone.')) {
+      try {
+        await deleteTestimonialById(id);
+        alert('Testimonial deleted successfully!');
+        refetchTestimonials();
+      } catch (error) {
+        console.error('Error deleting testimonial:', error);
+        alert('Failed to delete testimonial. Please try again.');
+      }
+    }
+  };
 
   const extractVideoId = (url: string) => {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
@@ -215,13 +221,13 @@ export default function AllTestimonial() {
                 <div className="border-t border-gray-200 p-4 bg-gray-50">
                   <div className="flex gap-2">
                     <Link
-                      to={`/dashboard/testimonials/edit/${testimonial._id}`}
+                      to={`/dashboard/testimonial/edit/${testimonial._id}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium text-center text-sm"
                     >
                       Edit
                     </Link>
                     <button
-                      // onClick={() => handleDelete(testimonial.id)}
+                      onClick={() => handleDelete(testimonial._id)}
                       className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition font-medium text-sm"
                     >
                       Delete
