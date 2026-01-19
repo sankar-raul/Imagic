@@ -24,10 +24,10 @@ export default function PageHeader({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <h1 className="text-4xl md:text-4xl font-bold text-gray-700 mb-2">
+      <h1 className="text-4xl md:text-4xl font-bold text-gray-700 mb-2 font-serif">
         {title}
       </h1>
-      {subtitle && <p className="text-purple-400 text-lg">{subtitle}</p>}
+      {subtitle && <p className="text-neutral-600 text-lg">{subtitle}</p>}
       {showStats && totalItems > 0 && (
         <motion.p
           className="text-gray-600 mt-2"

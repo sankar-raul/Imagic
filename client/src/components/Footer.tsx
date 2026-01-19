@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   MapPin,
@@ -20,11 +20,24 @@ import {
 import { useToast } from "@/contexts/ToastContext";
 import { useNewsletter } from "@/hooks/newsletter/useNewsletter";
 import logo from "../assets/logo.jpg";
+import { Link } from "react-router";
 
 function Footer() {
   const [email, setEmail] = useState("");
   const { subscribe, isLoading } = useNewsletter();
   const { showSuccess, showError } = useToast();
+  const quickLinks = useMemo(
+    () => [
+      { to: "/about", label: "About Us" },
+      { to: "/news-events", label: "News & Event" },
+      { to: "/testimonial", label: "Testimonial" },
+      { to: "/showcase", label: "Showreel" },
+      { to: "/student-work", label: "Students Work" },
+      { to: "/animation-institute-franchise", label: "Franchise" },
+      { to: "/dashboard", label: "Login" },
+    ],
+    [],
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,48 +127,15 @@ function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Company</h3>
             <nav className="space-y-2 text-sm">
-              <a
-                href="/about"
-                className="block transition-colors hover:text-primary"
-              >
-                About Us
-              </a>
-              <a
-                href="/news-events"
-                className="block transition-colors hover:text-primary"
-              >
-                News & Event
-              </a>
-              <a
-                href="/testimonial"
-                className="block transition-colors hover:text-primary"
-              >
-                Testimonial
-              </a>
-              <a
-                href="/showcase"
-                className="block transition-colors hover:text-primary"
-              >
-                Showreel
-              </a>
-              <a
-                href="/student-work"
-                className="block transition-colors hover:text-primary"
-              >
-                Students Work
-              </a>
-              <a
-                href="/franchise"
-                className="block transition-colors hover:text-primary"
-              >
-                Franchise
-              </a>
-              <a
-                href="/login"
-                className="block transition-colors hover:text-primary"
-              >
-                Login
-              </a>
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="block transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </nav>
           </div>
 

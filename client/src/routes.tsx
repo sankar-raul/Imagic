@@ -41,6 +41,8 @@ import Login from "./components/pages/dashboard/Login";
 import ProtectedRoute from "./components/pages/dashboard/ProtectedRoute";
 import DashboardHome from "./components/pages/dashboard/DashboardHome";
 import ShowAllCourse from "./components/pages/allCourse/ShowAllCourse";
+import TestimonialsSection from "./components/ReviewsSection";
+import NotFound from "./components/pages/notFound/NotFound";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -85,6 +87,7 @@ const routes = createBrowserRouter(
         <Route path="student-work">
           <Route index element={<StudentWork />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="dashboard">
         <Route path="login" element={<Login />} />

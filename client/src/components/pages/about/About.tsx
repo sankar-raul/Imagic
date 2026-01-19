@@ -1,7 +1,16 @@
-// Compatibility shim: Placeholder for About page
-// TODO: Create actual About component in new architecture
+import AboutSection from "@/components/shared/AboutSection";
+import PageHeader from "@/components/shared/PageHeader";
+
 const About = () => {
-  return <div>About Page - To be implemented</div>;
+  return (
+    <div>
+      <PageHeader
+        title="About Imagic"
+        subtitle="Discover the story behind Kolkata's premier Animation & Multimedia training institute"
+      />
+      <AboutSection />
+    </div>
+  );
 };
 
 export default About;

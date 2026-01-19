@@ -12,48 +12,68 @@ function App() {
       <ToastProvider>
         <Suspense
           fallback={
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-linear-to-br from-white via-yellow-50 to-yellow-100">
-              {/* Animated background elements */}
-              <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute -top-40 -left-40 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-                <div className="absolute top-40 -right-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse animation-delay-2000"></div>
-                <div className="absolute -bottom-40 left-1/2 w-80 h-80 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse animation-delay-4000"></div>
+            <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+              {/* Header Skeleton */}
+              <div className="sticky top-0 bg-white shadow-sm z-40">
+                <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                  <div className="w-32 h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+                  <div className="hidden md:flex gap-6">
+                    <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+                    <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
               </div>
 
-              {/* Main loader content */}
-              <div className="relative flex flex-col items-center gap-8 px-4">
-                {/* Logo/Brand */}
-                <div className="relative">
-                  <div className="absolute inset-0 bg-yellow-400 rounded-full blur-2xl opacity-40 animate-pulse"></div>
-                  <div className="relative bg-linear-to-br from-yellow-400 to-yellow-500 rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition-transform">
-                    <span className="text-5xl font-bold text-black font-serif tracking-tight">
-                      imagic
-                    </span>
-                  </div>
+              {/* Hero Section Skeleton */}
+              <div className="max-w-7xl mx-auto px-4 py-12">
+                <div className="h-96 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded-3xl animate-pulse"></div>
+              </div>
+
+              {/* Content Section Skeleton */}
+              <div className="max-w-7xl mx-auto px-4 py-8">
+                {/* Section Title */}
+                <div className="text-center mb-12">
+                  <div className="h-12 w-2/3 mx-auto bg-gray-200 rounded-lg animate-pulse mb-4"></div>
+                  <div className="h-4 w-3/4 mx-auto bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 w-2/3 mx-auto bg-gray-200 rounded animate-pulse mt-2"></div>
                 </div>
 
-                {/* Spinner */}
-                <div className="relative">
-                  <div className="w-20 h-20 border-4 border-yellow-200 rounded-full"></div>
-                  <div className="absolute top-0 left-0 w-20 h-20 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
+                {/* Cards Grid */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <div
+                      key={i}
+                      className="rounded-3xl overflow-hidden shadow-lg"
+                    >
+                      <div className="h-64 bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse"></div>
+                      <div className="p-6 space-y-4">
+                        <div className="flex gap-2">
+                          <div className="w-20 h-7 bg-gray-200 rounded-2xl animate-pulse"></div>
+                          <div className="w-24 h-7 bg-gray-200 rounded-2xl animate-pulse"></div>
+                        </div>
+                        <div className="h-6 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-6 w-3/4 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="space-y-2">
+                          <div className="h-3 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="h-3 bg-gray-200 rounded animate-pulse"></div>
+                          <div className="h-3 w-2/3 bg-gray-200 rounded animate-pulse"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                {/* Loading text */}
-                <div className="flex flex-col items-center gap-2">
-                  <p className="text-xl font-semibold text-gray-800 tracking-wide">
-                    Loading your experience
-                  </p>
-                  <div className="flex gap-1.5">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce animation-delay-200"></span>
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-bounce animation-delay-400"></span>
-                  </div>
-                </div>
-
-                {/* Tagline */}
-                <p className="text-sm text-gray-600 font-medium mt-2">
-                  Your journey to creativity starts here
-                </p>
+              {/* Loading indicator */}
+              <div className="fixed bottom-8 right-8 bg-yellow-400 text-black px-6 py-3 rounded-full shadow-lg flex items-center gap-3 animate-pulse">
+                <div className="w-5 h-5 border-3 border-black border-t-transparent rounded-full animate-spin"></div>
+                <span className="font-semibold">Loading...</span>
               </div>
             </div>
           }
