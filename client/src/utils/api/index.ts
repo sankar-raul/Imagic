@@ -54,6 +54,12 @@ import {
   updateStudentWork,
 } from "./studentWork/studentWork";
 import { login as authLogin } from "./auth/auth";
+import {
+  commentOnBlogPost,
+  deleteComment,
+  getBlogComments,
+  likeComment,
+} from "./comment/comment";
 
 export const api = {
   course: {
@@ -117,5 +123,11 @@ export const api = {
   },
   auth: {
     login: authLogin,
+  },
+  comment: {
+    getBlogComments,
+    commentOnBlogPost,
+    likeComment,
+    deleteComment,
   },
 };

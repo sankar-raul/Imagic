@@ -39,3 +39,5 @@ export interface Slide {
   showBadge: boolean;
   bottomText: string;
 }
+
+export * from "./comment.types";

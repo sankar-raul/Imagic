@@ -16,6 +16,8 @@ import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import useGetCourseById from "../hooks/course/useGetCourseById";
 import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
+import Testimonial from "./pages/testimonial/Testimonial";
+import TestimonialsSection from "./ReviewsSection";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -275,7 +277,7 @@ export default function CoursePage() {
             </div>
           </div>
         </div>
-        <TestimonialSection />
+        <TestimonialsSection />
       </motion.div>
     </div>
   );

@@ -1,7 +1,7 @@
 import {  useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
-import { testimonialFormFields } from '../../../../constants/forms/testimonialFormFields';
 import useAddTestimonial from '@/hooks/testimonial/useAddTestimonial';
+import { useTestimonialFormFields } from '@/constants/forms/testimonialFormFields';
 
 interface TestimonialFormData {
   studentName: string;
@@ -10,9 +10,11 @@ interface TestimonialFormData {
   jobTitle: string;
   videoUrl: string;
   companyName: string;
+  courseName: string;
 }
 
 export default function AddTestimonial() {
+  const { testimonialFormFields, isLoading } = useTestimonialFormFields();
   const { addTestimonial, isLoading: isAdding } = useAddTestimonial();
   const [formData, setFormData] = useState<Partial<TestimonialFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);

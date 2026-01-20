@@ -8,6 +8,7 @@ const blogSchema = new Schema<Iblog>({
     short_description: { type: String, required: true },
     posted_date: { type: Date, default: Date.now },
     content: { type: String, required: true },
+    likes: { type: Number, default: 0 },
 })
 
 export default blogSchema;

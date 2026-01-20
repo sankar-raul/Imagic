@@ -1,40 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router';
 import DynamicForm from '../../../shared/form/DynamicForm';
 import RichTextEditor from '../../../shared/RichTextEditor';
 import {
   basicInfoFields,
   courseDetailsFields,
   syllabusFields,
-  // studentWorkFields,
   reviewFields,
-  // testimonialFields
 } from '../../../../constants/forms/courseFormFields';
 import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails } from '@/types/course.types';
-import useCreateCourse from '@/hooks/course/useCreateCourse';
-import { useNavigate } from 'react-router';
+import useUpdateCourse from '@/hooks/course/useUpdateCourse';
+import useGetCourseById from '@/hooks/course/useGetCourseById';
 
-
-type SectionKey=
-  | 'basic'
-  | 'details'
-  | 'syllabus'
-  | 'reviews';
+type SectionKey = 'basic' | 'details' | 'syllabus' | 'reviews';
 
 interface SectionHeaderProps {
   title: string;
   section: SectionKey;
 }
 
-export default function CourseForm() {
+export default function EditCourse() {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const { courseData, isLoading: loadingCourse } = useGetCourseById(slug);
+  const { updateCourse, isLoading: updating } = useUpdateCourse();
+
   const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
     basic: true,
     details: true,
     syllabus: false,
-    reviews: false
+    reviews: false,
   });
 
-  // Form state management
   interface BasicInfo {
     title: string;
     slug: string;
@@ -47,9 +45,6 @@ export default function CourseForm() {
     short_description: ''
   });
   const [overview, setOverview] = useState('');
-
-  const navigate = useNavigate();
-
   const [courseDetails, setCourseDetails] = useState<IcourseDetails>({} as IcourseDetails);
   const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>([]);
   const [reviews, setReviews] = useState<IcourseReview[]>([]);
@@ -58,7 +53,36 @@ export default function CourseForm() {
   const [currentSyllabus, setCurrentSyllabus] = useState<Partial<ISyllabusSection>>({});
   const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>({});
 
-  const { createCourse, isLoading } = useCreateCourse();
+  // Load course data when available
+  useEffect(() => {
+    if (courseData) {
+      setBasicInfo({
+        title: courseData.title || '',
+        slug: courseData.slug || '',
+        short_description: courseData.short_description || ''
+      });
+      setOverview(courseData.course_overview || '');
+      
+      // Convert date to yyyy-MM-dd format for HTML date input
+      const courseDetailsWithFormattedDate = {
+        ...courseData.courseDetails,
+        start_on: courseData.courseDetails?.start_on 
+          ? new Date(courseData.courseDetails.start_on).toISOString().split('T')[0]
+          : ''
+      };
+      
+      setCourseDetails(courseDetailsWithFormattedDate as any);
+      setSyllabusModules(courseData.courseSyllabus || []);
+      
+      // Format review dates if they exist
+      const formattedReviews = (courseData.reviews || []).map(review => ({
+        ...review,
+        date: review.date ? new Date(review.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+      }));
+      
+      setReviews(formattedReviews as any);
+    }
+  }, [courseData]);
 
   const toggleSection = (section: SectionKey) => {
     setExpandedSections(prev => ({
@@ -67,8 +91,13 @@ export default function CourseForm() {
     }));
   };
 
-  const handleSubmit = () => {
-    const courseData: Icourse = {
+  const handleSubmit = async () => {
+    if (!slug) {
+      alert('Course slug is missing');
+      return;
+    }
+
+    const updatedCourseData: Icourse = {
       title: basicInfo.title,
       slug: basicInfo.slug,
       short_description: basicInfo.short_description,
@@ -77,19 +106,18 @@ export default function CourseForm() {
       courseSyllabus: syllabusModules,
       reviews: reviews,
     };
-    console.log('Course created:', courseData);
-    createCourse(courseData)
-      .then(response => {
-        console.log('Course successfully created:', response);
-        navigate('/dashboard/courses');
-      })
-      .catch(error => {
-        console.error('Error creating course:', error);
-      });
+
+    try {
+      await updateCourse(slug, updatedCourseData);
+      alert('Course updated successfully!');
+      navigate('/dashboard/course');
+    } catch (error) {
+      console.error('Error updating course:', error);
+      alert('Failed to update course. Please try again.');
+    }
   };
 
   const handleFieldChange = (section: string) => (name: string, value: any) => {
-    // Handle nested field names (e.g., 'courseDetails.price')
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
       if (parent === 'courseDetails') {
@@ -120,7 +148,9 @@ export default function CourseForm() {
     }
   };
 
-
+  const removeModule = (index: number) => {
+    setSyllabusModules(prev => prev.filter((_, i) => i !== index));
+  };
 
   const addReview = () => {
     if (currentReview.name && currentReview.rating) {
@@ -129,7 +159,9 @@ export default function CourseForm() {
     }
   };
 
-
+  const removeReview = (index: number) => {
+    setReviews(prev => prev.filter((_, i) => i !== index));
+  };
 
   const SectionHeader = ({ title, section }: SectionHeaderProps) => (
     <div 
@@ -141,13 +173,40 @@ export default function CourseForm() {
     </div>
   );
 
+  if (loadingCourse) {
+    return (
+      <div className="min-h-screen p-6 w-full flex justify-center items-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (!courseData) {
+    return (
+      <div className="min-h-screen p-6 w-full">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Course Not Found</h3>
+            <p className="text-gray-600 mb-4">The course you're looking for doesn't exist.</p>
+            <button
+              onClick={() => navigate('/dashboard/course')}
+              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            >
+              Back to Courses
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen p-6 w-full">
       <div className="w-full">
         <div className="w-full">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Course</h1>
-            <p className="text-gray-600">Fill in the details to add a new course to the platform</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Course</h1>
+            <p className="text-gray-600">Update course details</p>
           </div>
 
           <div className="space-y-6">
@@ -164,7 +223,6 @@ export default function CourseForm() {
                     />
                   </div>
                   
-                  {/* Rich text editor for course overview */}
                   <RichTextEditor
                     value={overview}
                     onChange={setOverview}
@@ -200,9 +258,17 @@ export default function CourseForm() {
                     <div className="space-y-2 mb-4">
                       <h3 className="font-medium text-gray-700">Added Modules: {syllabusModules.length}</h3>
                       {syllabusModules.map((module, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{module.title}</p>
-                          <p className="text-sm text-gray-600">{module.description}</p>
+                        <div key={index} className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start">
+                          <div>
+                            <p className="font-medium">{module.title}</p>
+                            <p className="text-sm text-gray-600">{module.description}</p>
+                          </div>
+                          <button
+                            onClick={() => removeModule(index)}
+                            className="text-red-500 hover:text-red-700 ml-2"
+                          >
+                            Remove
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -226,40 +292,6 @@ export default function CourseForm() {
               )}
             </div>
 
-            {/* Students Work */}
-            {/* <div className="space-y-4">
-              <SectionHeader title="Students Work" section="work" />
-              {expandedSections.work && (
-                <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-                  {studentWorks.length > 0 && (
-                    <div className="space-y-2 mb-4">
-                      <h3 className="font-medium text-gray-700">Added Works: {studentWorks.length}</h3>
-                      {studentWorks.map((work, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{work.name} - {work.tool}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <DynamicForm
-                      fields={studentWorkFields[0].fields || []}
-                      values={currentWork}
-                      onChange={handleFieldChange('work')}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={addStudentWork}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium"
-                  >
-                    <Plus size={18} />
-                    Add Student Work
-                  </button>
-                </div>
-              )}
-            </div> */}
-
             {/* Reviews */}
             <div className="space-y-4">
               <SectionHeader title="Reviews" section="reviews" />
@@ -269,8 +301,17 @@ export default function CourseForm() {
                     <div className="space-y-2 mb-4">
                       <h3 className="font-medium text-gray-700">Added Reviews: {reviews.length}</h3>
                       {reviews.map((review, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{review.name} - {review.rating}★</p>
+                        <div key={index} className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start">
+                          <div>
+                            <p className="font-medium">{review.name} - {review.rating}★</p>
+                            <p className="text-sm text-gray-600">{review.comment}</p>
+                          </div>
+                          <button
+                            onClick={() => removeReview(index)}
+                            className="text-red-500 hover:text-red-700 ml-2"
+                          >
+                            Remove
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -294,52 +335,20 @@ export default function CourseForm() {
               )}
             </div>
 
-            {/* Testimonials */}
-            {/* <div className="space-y-4">
-              <SectionHeader title="Student Testimonials" section="testimonials" />
-              {expandedSections.testimonials && (
-                <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-                  {testimonials.length > 0 && (
-                    <div className="space-y-2 mb-4">
-                      <h3 className="font-medium text-gray-700">Added Testimonials: {testimonials.length}</h3>
-                      {testimonials.map((testimonial, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200">
-                          <p className="font-medium">{testimonial.name}</p>
-                          <p className="text-sm text-gray-600">{testimonial.designation}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <DynamicForm
-                      fields={testimonialFields[0].fields || []}
-                      values={currentTestimonial}
-                      onChange={handleFieldChange('testimonial')}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={addTestimonial}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-medium"
-                  >
-                    <Plus size={18} />
-                    Add Testimonial
-                  </button>
-                </div>
-              )}
-            </div> */}
-
             {/* Submit Buttons */}
             <div className="flex gap-4 pt-6 border-t border-gray-200">
               <button
                 onClick={handleSubmit}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg"
+                disabled={updating}
+                className="flex-1 px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Create Course
+                {updating ? 'Updating...' : 'Update Course'}
               </button>
               <button
                 type="button"
-                className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-semibold"
+                onClick={() => navigate('/dashboard/course')}
+                disabled={updating}
+                className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Cancel
               </button>
