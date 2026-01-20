@@ -97,6 +97,11 @@ export const navData: {
       type: "link",
     },
     {
+      label: "Blogs",
+      href: "/blogs",
+      type: "link",
+    },
+    {
       label: "Contact",
       href: "/contact",
       type: "link",
