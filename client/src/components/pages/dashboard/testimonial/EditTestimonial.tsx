@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import DynamicForm from '../../../shared/form/DynamicForm';
-import { testimonialFormFields } from '../../../../constants/forms/testimonialFormFields';
+import { useTestimonialFormFields } from '../../../../constants/forms/testimonialFormFields';
 import useUpdateTestimonial from '@/hooks/testimonial/useUpdateTestimonial';
 import useGetTestimonialById from '@/hooks/testimonial/useGetTestimonialById';
 
@@ -12,11 +12,13 @@ interface TestimonialFormData {
   jobTitle: string;
   videoUrl: string;
   companyName: string;
+  courseName: string;
 }
 
 export default function EditTestimonial() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { testimonialFormFields } = useTestimonialFormFields();
   const { updateTestimonial, isLoading: isUpdating } = useUpdateTestimonial();
   const { testimonial, isLoading, error } = useGetTestimonialById(id || '');
   const [formData, setFormData] = useState<Partial<TestimonialFormData>>({});

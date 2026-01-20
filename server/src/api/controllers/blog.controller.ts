@@ -4,6 +4,22 @@ import blog from "../../models/blog/blog.model";
 export const postBlog = async (req: Request, res: Response) => {
   try {
     const blogData = req.body;
+    if (!blogData.slug) {
+      const baseSlug = blogData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      
+      let slug = baseSlug;
+      let counter = 1;
+      
+      while (await blog.findOne({ slug })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      }
+      
+      blogData.slug = slug;
+        }
     const blogDetails = await blog.create(blogData);
     res.status(201).json(blogDetails);
   } catch (error) {

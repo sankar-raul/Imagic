@@ -7,6 +7,27 @@ export const createCourse = async (
 ): Promise<Response> => {
   try {
     const courseData = req.body;
+    // Generate unique slug from course title
+      const generateSlug = (title: string): string => {
+        return title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/--+/g, '-')
+        .trim();
+      };
+
+      let slug = generateSlug(courseData.title);
+      let slugExists = await Course.findOne({ slug });
+      let counter = 1;
+      
+      while (slugExists) {
+        slug = `${generateSlug(courseData.title)}-${counter}`;
+        slugExists = await Course.findOne({ slug });
+        counter++;
+      }
+      
+      courseData.slug = slug;
     const newCourse = await Course.create(courseData);
     return res.status(201).json({ success: true, data: newCourse });
   } catch (error: any) {

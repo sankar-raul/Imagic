@@ -6,4 +6,5 @@ export interface Iblog{
     short_description: string;
     posted_date: Date;
     content: string;
+    likes: number;
 }

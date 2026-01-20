@@ -45,24 +45,24 @@ const CourseSchema = new Schema({
         description: { type: String },
         // tools: [courseToolsSchema]
     }],
-    students_work: [{
-        tool: { type: String, required: true },
-        name: { type: String, required: true },
-        description: { type: String, required: true },
-        image: { type: String, required: true }
-    }],
+    // students_work: [{
+    //     tool: { type: String, required: true },
+    //     name: { type: String, required: true },
+    //     description: { type: String, required: true },
+    //     image: { type: String, required: true }
+    // }],
     reviews: [{
         name: { type: String, required: true },
         rating: { type: Number, required: true },
         comment: { type: String, required: true },
         date: { type: Date, required: true }
     }],
-    students_testimonials: [{
-        name: { type: String, required: true },
-        designation: { type: String, required: true },
-        testimonial: { type: String, required: true },
-        image: { type: String, required: true },
-        video: { type: String }
-    }]
+    // students_testimonials: [{
+    //     name: { type: String, required: true },
+    //     designation: { type: String, required: true },
+    //     testimonial: { type: String, required: true },
+    //     image: { type: String, required: true },
+    //     video: { type: String }
+    // }]
 });
 export default CourseSchema;

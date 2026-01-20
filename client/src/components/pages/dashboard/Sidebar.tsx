@@ -66,7 +66,7 @@ function Sidebar() {
     return false;
   };
   return (
-    <div className="w-64 min-h-screen border-r border-gray-300 shadow-md overflow-y-scroll ">
+    <div className="w-64 min-h-screen shrink-0 border-r border-gray-300 shadow-md overflow-y-scroll ">
         {/* Logo */}
         <div className="p-6 flex items-center gap-3">
          

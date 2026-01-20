@@ -8,13 +8,13 @@ export const blogFormFields: FieldConfig[] = [
     placeholder: 'e.g., Getting Started with React',
     required: true
   },
-  {
-    name: 'slug',
-    label: 'Slug',
-    type: 'text',
-    placeholder: 'e.g., getting-started-with-react',
-    required: true
-  },
+  // {
+  //   name: 'slug',
+  //   label: 'Slug',
+  //   type: 'text',
+  //   placeholder: 'e.g., getting-started-with-react',
+  //   required: true
+  // },
   {
     name: 'thumbnail',
     label: 'Thumbnail',

@@ -6,12 +6,13 @@ import {
   basicInfoFields,
   courseDetailsFields,
   syllabusFields,
-  studentWorkFields,
+  // studentWorkFields,
   reviewFields,
-  testimonialFields
+  // testimonialFields
 } from '../../../../constants/forms/courseFormFields';
 import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails, IcourseTestimonial, IstudentWork } from '@/types/course.types';
 import useCreateCourse from '@/hooks/course/useCreateCourse';
+import { useNavigate } from 'react-router';
 
 
 type SectionKey =
@@ -51,6 +52,8 @@ export default function CourseForm() {
   });
   const [overview, setOverview] = useState('');
 
+  const navigate = useNavigate();
+
   const [courseDetails, setCourseDetails] = useState<IcourseDetails>({} as IcourseDetails);
   const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>([]);
   const [studentWorks, setStudentWorks] = useState<IstudentWork[]>([]);
@@ -88,6 +91,7 @@ export default function CourseForm() {
     createCourse(courseData)
       .then(response => {
         console.log('Course successfully created:', response);
+        navigate('/dashboard/courses');
       })
       .catch(error => {
         console.error('Error creating course:', error);
@@ -249,7 +253,7 @@ export default function CourseForm() {
             </div>
 
             {/* Students Work */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <SectionHeader title="Students Work" section="work" />
               {expandedSections.work && (
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
@@ -280,7 +284,7 @@ export default function CourseForm() {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* Reviews */}
             <div className="space-y-4">
@@ -317,7 +321,7 @@ export default function CourseForm() {
             </div>
 
             {/* Testimonials */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <SectionHeader title="Student Testimonials" section="testimonials" />
               {expandedSections.testimonials && (
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
@@ -349,7 +353,7 @@ export default function CourseForm() {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* Submit Buttons */}
             <div className="flex gap-4 pt-6 border-t border-gray-200">

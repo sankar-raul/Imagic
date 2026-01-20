@@ -16,12 +16,12 @@ export const basicInfoFields: FieldConfig[] = [
     type: 'text',
     required: true,
   },
-  {
-    name: 'slug',
-    label: 'Slug',
-    type: 'text',
-    required: true,
-  },
+  // {
+  //   name: 'slug',
+  //   label: 'Slug',
+  //   type: 'text',
+  //   required: true,
+  // },
   {
     name: 'short_description',
     label: 'Short Description',
@@ -123,41 +123,41 @@ export const syllabusFields: FieldConfig[] = [
    Maps to: students_work: IstudentWork[]
 ===================================================== */
 
-export const studentWorkFields: FieldConfig[] = [
-  {
-    name: 'students_work',
-    label: 'Student Work',
-    type: 'group',
-    repeatable: true,
-    fields: [
-      {
-        name: 'tool',
-        label: 'Tool',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'name',
-        label: 'Student Name',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'description',
-        label: 'Work Description',
-        type: 'textarea',
-        rows: 2,
-        required: true,
-      },
-      {
-        name: 'image',
-        label: 'Work Image',
-        type: 'image-upload',
-        required: true,
-      },
-    ],
-  },
-];
+// export const studentWorkFields: FieldConfig[] = [
+//   {
+//     name: 'students_work',
+//     label: 'Student Work',
+//     type: 'group',
+//     repeatable: true,
+//     fields: [
+//       {
+//         name: 'tool',
+//         label: 'Tool',
+//         type: 'text',
+//         required: true,
+//       },
+//       {
+//         name: 'name',
+//         label: 'Student Name',
+//         type: 'text',
+//         required: true,
+//       },
+//       {
+//         name: 'description',
+//         label: 'Work Description',
+//         type: 'textarea',
+//         rows: 2,
+//         required: true,
+//       },
+//       {
+//         name: 'image',
+//         label: 'Work Image',
+//         type: 'image-upload',
+//         required: true,
+//       },
+//     ],
+//   },
+// ];
 
 /* =====================================================
    COURSE REVIEWS
@@ -207,43 +207,43 @@ export const reviewFields: FieldConfig[] = [
    Maps to: students_testimonials: IcourseTestimonial[]
 ===================================================== */
 
-export const testimonialFields: FieldConfig[] = [
-  {
-    name: 'students_testimonials',
-    label: 'Student Testimonials',
-    type: 'group',
-    repeatable: true,
-    fields: [
-      {
-        name: 'name',
-        label: 'Student Name',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'designation',
-        label: 'Designation',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'testimonial',
-        label: 'Testimonial',
-        type: 'textarea',
-        rows: 3,
-        required: true,
-      },
-      {
-        name: 'image',
-        label: 'Student Image',
-        type: 'image-upload',
-        required: true,
-      },
-      {
-        name: 'video',
-        label: 'Video URL (optional)',
-        type: 'url',
-      },
-    ],
-  },
-];
+// export const testimonialFields: FieldConfig[] = [
+//   {
+//     name: 'students_testimonials',
+//     label: 'Student Testimonials',
+//     type: 'group',
+//     repeatable: true,
+//     fields: [
+//       {
+//         name: 'name',
+//         label: 'Student Name',
+//         type: 'text',
+//         required: true,
+//       },
+//       {
+//         name: 'designation',
+//         label: 'Designation',
+//         type: 'text',
+//         required: true,
+//       },
+//       {
+//         name: 'testimonial',
+//         label: 'Testimonial',
+//         type: 'textarea',
+//         rows: 3,
+//         required: true,
+//       },
+//       {
+//         name: 'image',
+//         label: 'Student Image',
+//         type: 'image-upload',
+//         required: true,
+//       },
+//       {
+//         name: 'video',
+//         label: 'Video URL (optional)',
+//         type: 'url',
+//       },
+//     ],
+//   },
+// ];
