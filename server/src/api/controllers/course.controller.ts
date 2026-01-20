@@ -53,6 +53,8 @@ export const viewCourse = async (
   }
 };
 
+
+
 export const allCourse = async (
   req: Request,
   res: Response
