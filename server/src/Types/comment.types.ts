@@ -4,4 +4,5 @@ export interface Icomment {
     commenterEmail: string;
     commentText: string;
     commentedAt: Date;
+    likes?: number;
 }
