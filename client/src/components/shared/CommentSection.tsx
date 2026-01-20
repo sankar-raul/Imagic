@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, User, Mail, Send, Clock, Heart } from "lucide-react";
 import useGetComments from "@/hooks/comment/useGetComments";
@@ -23,7 +23,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.author || !formData.email || !formData.content) {
+    if (!formData.author || !formData.content) {
       return;
     }
 
@@ -82,7 +82,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
       >
         <div className="flex items-start gap-4">
           {/* Avatar */}
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+          <div className="w-12 h-12 rounded-full bg-linear-to-br from-yellow-300 to-pink-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
             {comment.author.charAt(0).toUpperCase()}
           </div>
 
@@ -92,7 +92,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
               <h4 className="font-semibold text-gray-900">{comment.author}</h4>
               <div className="flex items-center gap-1 text-sm text-gray-500">
                 <Clock className="w-4 h-4" />
-                <span>{formatDate(comment.createdAt)}</span>
+                <span>{formatDate(comment.commentedAt)}</span>
               </div>
             </div>
             <p className="text-gray-700 leading-relaxed mb-3">
@@ -126,7 +126,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
       <div className="flex items-center gap-3 mb-8">
         <MessageCircle className="w-6 h-6 text-pink-600" />
         <h2 className="text-2xl font-bold text-gray-900">
-          Comments ({comments.length})
+          Comments ({comments?.length})
         </h2>
       </div>
 
@@ -168,14 +168,13 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email *
+                Email ( Optional )
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="email"
                   id="email"
-                  required
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })

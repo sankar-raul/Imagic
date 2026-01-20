@@ -14,22 +14,11 @@ const usePostComment = () => {
       setError(null);
 
       // Mock API call - replace with actual API when backend is ready
-      // const response = await api.comment.postComment(formData);
-      // return response.data;
-
-      // Mock response for now
-      const mockComment: IComment = {
-        _id: Date.now().toString(),
-        blogId: formData.blogId,
-        author: formData.author,
-        email: formData.email,
-        content: formData.content,
-        createdAt: new Date().toISOString(),
-        replies: [],
-        parentId: formData.parentId || null,
-      };
-
-      return mockComment;
+      const response = await api.comment.commentOnBlogPost(
+        formData.blogId,
+        formData,
+      );
+      return response || ({} as IComment);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Failed to post comment";

@@ -1,8 +1,8 @@
 export interface Icomment {
-    blogId: string;
-    commenterName: string;
-    commenterEmail: string;
-    commentText: string;
-    commentedAt: Date;
-    likes?: number;
+  blogId: string;
+  author: string;
+  email: string;
+  content: string;
+  commentedAt: string;
+  likes?: number;
 }
