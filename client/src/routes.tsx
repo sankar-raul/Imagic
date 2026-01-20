@@ -84,7 +84,7 @@ const routes = createBrowserRouter(
         </Route>
         <Route path="blogs">
           <Route index element={<Blogs />} />
-          <Route path=":blogId" element={<NewsAndEventDetails />} />
+          <Route path=":id" element={<BlogDetails />} />
         </Route>
         <Route path="animation-institute-franchise">
           <Route index element={<Fanchise />} />
@@ -113,7 +113,7 @@ const routes = createBrowserRouter(
             <Route index element={<AllTestimonial />} />
             <Route path="add" element={<AddTestimonial />} />
             <Route path="edit/:id" element={<EditTestimonial />} />
-        </Route>
+          </Route>
           <Route path="demo-class">
             <Route index element={<AllEntries />} />
           </Route>
@@ -121,12 +121,12 @@ const routes = createBrowserRouter(
             <Route index element={<AllPlacements />} />
             <Route path="add" element={<AddPlacement />} />
             <Route path="edit/:id" element={<EditPlacement />} />
-        </Route>
+          </Route>
           <Route path="blog">
             <Route index element={<AllBlog />} />
             <Route path="add" element={<AddBlog />} />
             <Route path="edit/:id" element={<EditBlog />} />
-        </Route>
+          </Route>
           <Route path="newsletter">
             <Route index element={<NewsletterEntries />} />
           </Route>
@@ -138,12 +138,12 @@ const routes = createBrowserRouter(
             <Route index element={<AllStudentWork />} />
             <Route path="add" element={<AddStudentWork />} />
             <Route path="edit/:id" element={<EditStudentWork />} />
-        </Route>
+          </Route>
           <Route path="job-vacancy">
             <Route index element={<AllJobVacancy />} />
             <Route path="add" element={<AddJobVacancy />} />
             <Route path="edit/:id" element={<EditJobVacancy />} />
-        </Route>
+          </Route>
         </Route>
       </Route>
     </Route>,

@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useEffect, useRef } from "react";
 import PageHeader from "@/components/shared/PageHeader";
 import useGetAllBlogs from "@/hooks/blog/useGetAllBlogs";
+import { BlogCardSkeleton } from "@/components/shared/skeletons";
 
 const Blogs = () => {
   const { blogs, isLoading, isLoadingMore, hasMore, loadMore } = useGetAllBlogs(
@@ -56,18 +57,7 @@ const Blogs = () => {
             // Loading Skeleton
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-neutral-50 rounded-2xl overflow-hidden animate-pulse"
-                >
-                  <div className="h-64 bg-neutral-200"></div>
-                  <div className="p-6 space-y-4">
-                    <div className="h-4 bg-neutral-200 rounded w-3/4"></div>
-                    <div className="h-6 bg-neutral-200 rounded"></div>
-                    <div className="h-4 bg-neutral-200 rounded w-5/6"></div>
-                    <div className="h-4 bg-neutral-200 rounded w-4/6"></div>
-                  </div>
-                </div>
+                <BlogCardSkeleton key={index} />
               ))}
             </div>
           ) : blogs.length === 0 ? (
@@ -97,7 +87,7 @@ const Blogs = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ duration: 0.5, delay: (index % 6) * 0.1 }}
                     className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-neutral-100"
                   >
                     <Link to={`/blogs/${blog.slug}`}>
@@ -158,9 +148,10 @@ const Blogs = () => {
               {/* Infinite Scroll Trigger & Loader */}
               <div ref={observerTarget} className="flex justify-center py-8">
                 {isLoadingMore && (
-                  <div className="flex items-center gap-3 text-neutral-600">
-                    <Loader2 className="w-6 h-6 animate-spin" />
-                    <span className="font-medium">Loading more blogs...</span>
+                  <div className="grid w-full md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {[...Array(6)].map((_, index) => (
+                      <BlogCardSkeleton key={index} />
+                    ))}
                   </div>
                 )}
                 {!hasMore && blogs.length > 0 && (

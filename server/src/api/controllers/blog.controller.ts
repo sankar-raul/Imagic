@@ -82,7 +82,7 @@ export const getAllBlogs = async (req: Request, res: Response) => {
     if (blogs.length === 0) {
       return res.status(404).json({ message: "No blogs found" });
     }
-    res.status(200).json({ data: blogs, totalBlogs, page, limit });
+    res.status(200).json({ data: blogs, total: totalBlogs, page, limit });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }

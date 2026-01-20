@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BACKEND_END_POINT } from "@/config/config";
 import { Iblog } from "@/types/blog.types";
+import { api } from "@/utils/api";
 
 interface BlogNavigationResponse {
   data: Iblog;
@@ -26,17 +27,11 @@ const useGetBlogsBySlug = (slug: string | undefined) => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`${BACKEND_END_POINT}/blog/slug/${slug}`);
+        const response = await api.blog.getBlogBySlug(slug);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch blog details");
-        }
-
-        const data: BlogNavigationResponse = await response.json();
-
-        setBlogDetails(data.data);
-        setPrevSlug(data.prevSlug);
-        setNextSlug(data.nextSlug);
+        setBlogDetails(response.data);
+        setPrevSlug(response.prevSlug);
+        setNextSlug(response.nextSlug);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
         console.error("Error fetching blog:", err);
