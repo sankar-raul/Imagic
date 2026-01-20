@@ -1,3 +1,4 @@
+import { api } from "@/utils/api";
 import { useState } from "react";
 
 interface UseLikeCommentReturn {
@@ -5,6 +6,7 @@ interface UseLikeCommentReturn {
   likeCount: number;
   toggleLike: () => Promise<void>;
   isLoading: boolean;
+  setIsLiked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const useLikeComment = (
@@ -24,9 +26,9 @@ const useLikeComment = (
 
       // Mock API call - replace with actual API when backend is ready
       // await api.comment.toggleLike(commentId);
-
+      await api.comment.likeComment(commentId, isLiked ? "dislike" : "like");
       const newLikedState = !isLiked;
-      setIsLiked(newLikedState);
+      setIsLiked((prev) => !prev);
       setLikeCount((prev) => (newLikedState ? prev + 1 : prev - 1));
 
       // Store in localStorage
@@ -46,6 +48,7 @@ const useLikeComment = (
     likeCount,
     toggleLike,
     isLoading,
+    setIsLiked,
   };
 };
 

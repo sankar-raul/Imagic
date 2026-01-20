@@ -18,13 +18,8 @@ const useGetComments = (blogId: string | undefined) => {
         setIsLoading(true);
         setError(null);
 
-        // Mock API call - replace with actual API when backend is ready
-        // const response = await api.comment.getCommentsByBlogId(blogId);
-        // setComments(response.data);
-
-        // Mock data for now
-        const mockComments: IComment[] = [];
-        setComments(mockComments);
+        const response = await api.comment.getBlogComments(blogId);
+        setComments(response || []);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load comments",

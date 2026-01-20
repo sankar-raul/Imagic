@@ -4,10 +4,7 @@ export interface IComment {
   author: string;
   email: string;
   content: string;
-  createdAt: string;
-  updatedAt?: string;
-  replies?: IComment[];
-  parentId?: string | null;
+  commentedAt: string;
   likes?: number;
 }
 
@@ -16,7 +13,6 @@ export interface CommentFormData {
   email: string;
   content: string;
   blogId: string;
-  parentId?: string | null;
 }
 
 export interface CommentResponse {
