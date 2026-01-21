@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { NavMenuItem } from "@/types";
 import { ICourseItems } from "@/types/courseItems.interface";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 interface DropdownMenuProps {
   items?: NavMenuItem["items"];
@@ -17,8 +17,11 @@ export default function DropdownMenu({
   if (!items) return null;
   const courseData = useMemo(
     () => (courseItems ? Object.keys(courseItems) : []),
-    [courseItems]
+    [courseItems],
   );
+  useEffect(() => {
+    console.log(courseItems);
+  }, [courseItems]);
 
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white backdrop-blur-xl shadow-xl rounded-3xl p-6 w-[650px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">
