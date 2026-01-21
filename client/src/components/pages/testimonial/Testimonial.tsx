@@ -1,5 +1,5 @@
-import TestimonialsSection from "@/components/ReviewsSection";
 import DemoClassSection from "@/components/shared/demoClassSection/DemoClassSection";
+import TestimonialsSection from "@/components/shared/testimonial/TestimonialsSection";
 
 const Testimonial = () => {
   return (

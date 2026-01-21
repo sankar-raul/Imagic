@@ -12,6 +12,7 @@ import {
   getBlogBySlug,
 } from "./blog/blog";
 import {
+  availableCourses,
   createCourse,
   deleteCourse,
   getAllCourses,
@@ -36,6 +37,7 @@ import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonial,
+  getTestimonialByCourseSlug,
   getTestimonialById,
   updateTestimonial,
 } from "./testimonial/testimonial";
@@ -67,6 +69,7 @@ export const api = {
     createCourse,
     getCourseById,
     deleteCourse,
+    availableCourses,
   },
   demoClass: {
     applyDemoClass,
@@ -87,6 +90,7 @@ export const api = {
     deleteTestimonial,
     getTestimonialById,
     updateTestimonial,
+    getTestimonialByCourseSlug,
   },
   jobVacancy: {
     getAllJobs,

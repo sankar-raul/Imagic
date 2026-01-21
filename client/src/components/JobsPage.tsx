@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Briefcase, MapPin, DollarSign, Clock, Building } from "lucide-react";
 import { useParams } from "react-router";
 import useGetJobBySlug from "@/hooks/jobVacancy/useGetJobBySlug";
@@ -6,11 +6,15 @@ import { motion } from "framer-motion";
 import { JobPageSkeleton, JobNotFound } from "@/components/shared/skeletons";
 import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
 
 export default function JobListingPage() {
   const { slug } = useParams();
   const { loading, job, refetch } = useGetJobBySlug(slug || "");
-  console.log(job, "pk");
+  const { scrollToTop } = useCustomScroll();
+  useEffect(() => {
+    scrollToTop();
+  }, [slug]);
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -35,7 +39,7 @@ export default function JobListingPage() {
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({

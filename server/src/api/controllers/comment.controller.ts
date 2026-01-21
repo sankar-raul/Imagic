@@ -51,8 +51,28 @@ export const deleteComment = async (req: Request, res: Response) => {
 export const getCommentsByBlogId = async (req: Request, res: Response) => {
   try {
     const { blogId } = req.params;
-    const comments = await comment.find({ blogId }).sort({ commentedAt: -1 });
-    res.status(200).json({ data: comments });
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 3;
+    const skip = (page - 1) * limit;
+
+    const [comments, total] = await Promise.all([
+      comment
+        .find({ blogId })
+        .sort({ commentedAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      comment.countDocuments({ blogId }),
+    ]);
+
+    res.status(200).json({
+      data: comments,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(total / limit),
+        totalComments: total,
+        limit,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

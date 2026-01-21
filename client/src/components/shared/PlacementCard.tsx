@@ -43,7 +43,7 @@ export default function PlacementCard({
           stiffness: 200,
         }}
       >
-        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-purple-600 shadow-lg">
+        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-400 shadow-lg">
           <img
             src={placement.studentPhoto}
             alt={placement.studentName}

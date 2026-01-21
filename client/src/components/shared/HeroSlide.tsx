@@ -1,8 +1,9 @@
-import type { Slide } from "../../types";
+import { HeroSlide as hs } from "@/constants/heroSlides";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 interface HeroSlideProps {
-  slide: Slide;
-  onExploreClick: () => void;
+  slide: hs;
+  onExploreClick: (link: string | null) => void;
   onDemoClick: () => void;
 }
 
@@ -49,7 +50,7 @@ export default function HeroSlide({
                 {/* Buttons */}
                 <div className="mt-8 flex flex-wrap gap-4">
                   <button
-                    onClick={onExploreClick}
+                    onClick={() => onExploreClick(slide.link)}
                     className="px-8 py-4 rounded-full bg-yellow-400 text-neutral-900 font-semibold text-base md:text-lg cursor-pointer will-change-auto hover:bg-yellow-500 transition shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     {slide.primaryButtonText}

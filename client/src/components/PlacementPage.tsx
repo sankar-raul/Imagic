@@ -5,6 +5,8 @@ import Pagination from "@/components/shared/Pagination";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
+import { useEffect } from "react";
 
 export default function PlacementPage() {
   const {
@@ -17,9 +19,12 @@ export default function PlacementPage() {
     nextPage,
     prevPage,
   } = useGetAllPlacements({ page: 1, limit: 6 });
-
+  const { scrollToTop } = useCustomScroll();
+  useEffect(() => {
+    scrollToTop();
+  }, [page]);
   if (isLoading) {
-    return <LoadingSpinner message="Loading placements..." />;
+    return <LoadingSpinner />;
   }
 
   return (

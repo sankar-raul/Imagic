@@ -1,8 +1,9 @@
 import React, { FC, useState } from "react";
 import { BookOpen, CheckCircle } from "lucide-react";
-import formImage from "@/assets/images/form-image.jpg";
+import formImage from "@/assets/images/demoClass.png";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
+import useGetAvailableCourses from "@/hooks/course/useGetAvailableCourses";
 
 interface DemoClassFormProps {
   minimal?: boolean;
@@ -12,7 +13,9 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
   minimal = false,
   id = "democlass",
 }) => {
+  const { courses } = useGetAvailableCourses();
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -147,11 +150,11 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 appearance-none cursor-pointer"
                 >
                   <option value="">Select a course</option>
-                  <option value="web-dev">Web Development</option>
-                  <option value="data-science">Data Science</option>
-                  <option value="mobile-dev">Mobile Development</option>
-                  <option value="ui-ux">UI/UX Design</option>
-                  <option value="digital-marketing">Digital Marketing</option>
+                  {courses.map((course) => (
+                    <option key={course._id} value={course.slug}>
+                      {course.title}
+                    </option>
+                  ))}
                 </select>
               </div>
               <button
@@ -183,16 +186,16 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
 
           {/* Illustration Section */}
           {!minimal && (
-            <div className="w-full lg:grow p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
+            <div className="w-full lg:grow p-6 sm:p-8 lg:p-12 flex items-baseline justify-center relative overflow-hidden">
               <div className="absolute inset-0">
                 <img
                   src={formImage}
                   alt="form image"
-                  className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-center"
+                  className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-bottom"
                 />
-                <div className="absolute inset-0 bg-linear-to-b from-transparent via-yellow-500/40 to-yellow-300"></div>
+                <div className="absolute inset-0"></div>
               </div>
-              <div className="flex-col z-1">
+              <div className="flex-col z-1 ">
                 <div className="space-y-4 text-center text-white">
                   <h2 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
                     Start Learning Today!

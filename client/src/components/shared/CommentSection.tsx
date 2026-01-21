@@ -11,7 +11,15 @@ interface CommentSectionProps {
 }
 
 export default function CommentSection({ blogId }: CommentSectionProps) {
-  const { comments, isLoading, addComment } = useGetComments(blogId);
+  const {
+    comments,
+    isLoading,
+    isLoadingMore,
+    hasMore,
+    totalComments,
+    loadMore,
+    addComment,
+  } = useGetComments(blogId);
   const { postComment, isSubmitting } = usePostComment();
 
   const [formData, setFormData] = useState({
@@ -75,9 +83,6 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
     return (
       <motion.div
         key={comment._id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
         className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow"
       >
         <div className="flex items-start gap-4">
@@ -124,9 +129,9 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
     <div className="mt-12 pt-8 border-t border-gray-200">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
-        <MessageCircle className="w-6 h-6 text-pink-600" />
+        <MessageCircle className="w-6 h-6 text-yellow-400" />
         <h2 className="text-2xl font-bold text-gray-900">
-          Comments ({comments?.length})
+          Comments ({totalComments})
         </h2>
       </div>
 
@@ -158,7 +163,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
                   onChange={(e) =>
                     setFormData({ ...formData, author: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-300 focus:border-transparent transition-all"
                   placeholder="Your name"
                 />
               </div>
@@ -179,7 +184,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-300 focus:border-transparent transition-all"
                   placeholder="your@email.com"
                 />
               </div>
@@ -200,14 +205,14 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
                 setFormData({ ...formData, content: e.target.value })
               }
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-300 focus:border-transparent transition-all resize-none"
               placeholder="Share your thoughts..."
             />
           </div>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-yellow-300 md:cursor-pointer hover:bg-yellow-400 disabled:bg-gray-400 text-neutral-900 font-semibold rounded-lg transition-colors"
           >
             {isSubmitting ? (
               <>
@@ -257,6 +262,33 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
           comments.map((comment, index) => (
             <CommentItem key={comment._id} comment={comment} index={index} />
           ))
+        )}
+
+        {/* Load More Button */}
+        {!isLoading && hasMore && comments.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center mt-6"
+          >
+            <button
+              onClick={loadMore}
+              disabled={isLoadingMore}
+              className="px-8 py-3 bg-neutral-900 hover:bg-neutral-800 text-white disabled:bg-gray-300 font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 md:cursor-pointer"
+            >
+              {isLoadingMore ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin" />
+                  <span>Loading...</span>
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Load More Comments</span>
+                </>
+              )}
+            </button>
+          </motion.div>
         )}
       </div>
     </div>

@@ -19,11 +19,12 @@ import {
 import HtmlRenderer from "@/components/shared/ui/HtmlRenderer";
 import AccordionItem from "@/components/ui/coursePage/Accordian";
 import DemoClassSection from "@/components/shared/demoClassSection/DemoClassSection";
-import TestimonialsSection from "@/components/ReviewsSection";
 import Testimonial from "../testimonial/Testimonial";
 import useGetBlogsBySlug from "@/hooks/blog/useGetBlogsBySlug";
 import CommentSection from "@/components/shared/CommentSection";
 import useLikeBlog from "@/hooks/blog/useLikeBlog";
+import BlogNavigation from "@/components/shared/BlogNavigation";
+import TestimonialsSection from "@/components/shared/testimonial/TestimonialsSection";
 
 export default function BlogDetails() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -80,7 +81,7 @@ export default function BlogDetails() {
   ];
 
   return (
-    <div className="min-h-screen my-5">
+    <div className="min-h-screen mb-5">
       <motion.div
         initial={{ opacity: 0, y: 100, rotate: -3 }}
         whileInView={{ opacity: 1, y: 0, rotate: 0 }}
@@ -92,9 +93,10 @@ export default function BlogDetails() {
         viewport={{
           once: true,
         }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <BlogNavigation prevSlug={prevSlug} nextSlug={nextSlug} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Header */}
@@ -180,12 +182,13 @@ export default function BlogDetails() {
               )}
             </div>
 
-            <DemoClassSection id={"enrollnow"} minimal={true} />
+            {/* Blog Navigation */}
+            <BlogNavigation prevSlug={prevSlug} nextSlug={nextSlug} />
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-6 sticky top-4 space-y-6">
+          <div className="lg:col-span-1 overflow-hidden">
+            <div className="bg-white rounded-lg p-6 space-y-6 overflow-hidden">
               {/* Preview Image */}
               <div className="relative mb-6 rounded-lg overflow-hidden bg-gray-100">
                 <img
@@ -283,8 +286,9 @@ export default function BlogDetails() {
             </div>
           </div>
         </div>
-        <Testimonial />
+        <TestimonialsSection />
       </motion.div>
+      <DemoClassSection />
     </div>
   );
 }

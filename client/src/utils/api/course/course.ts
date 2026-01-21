@@ -43,3 +43,11 @@ export const deleteCourse = async (courseId: string) => {
     throw error;
   }
 };
+export const availableCourses = async () => {
+  try {
+    const response = await get(`${INITIAL_ROUTE}/available-courses`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
