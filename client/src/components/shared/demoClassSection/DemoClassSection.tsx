@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { BookOpen, CheckCircle } from "lucide-react";
-import formImage from "@/assets/images/form-image.jpg";
+import formImage from "@/assets/images/demoClass.png";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
 import useGetAvailableCourses from "@/hooks/course/useGetAvailableCourses";
@@ -186,16 +186,16 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
 
           {/* Illustration Section */}
           {!minimal && (
-            <div className="w-full lg:grow p-6 sm:p-8 lg:p-12 flex items-center justify-center relative overflow-hidden">
+            <div className="w-full lg:grow p-6 sm:p-8 lg:p-12 flex items-baseline justify-center relative overflow-hidden">
               <div className="absolute inset-0">
                 <img
                   src={formImage}
                   alt="form image"
-                  className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-center"
+                  className="bg-red w-full group-hover/form:scale-105 duration-200 mx-auto h-full object-cover object-bottom"
                 />
-                <div className="absolute inset-0 bg-linear-to-b from-transparent via-yellow-500/40 to-yellow-300"></div>
+                <div className="absolute inset-0"></div>
               </div>
-              <div className="flex-col z-1">
+              <div className="flex-col z-1 ">
                 <div className="space-y-4 text-center text-white">
                   <h2 className="text-2xl sm:text-4xl font-bold drop-shadow-lg">
                     Start Learning Today!
