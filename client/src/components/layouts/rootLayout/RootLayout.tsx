@@ -7,7 +7,7 @@ import { Footerdemo } from "@/components/ui/footer-section";
 function RootLayout() {
   return (
     <>
-      <Topbar />
+      {/* <Topbar /> */}
       <Header />
       <Outlet />
       <Footer />
