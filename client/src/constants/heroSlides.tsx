@@ -10,13 +10,14 @@ export interface HeroSlide {
   imageAlt: string;
   showBadge: boolean;
   bottomText: string;
+  link: string | null;
 }
 
 export const heroSlidesData: HeroSlide[] = [
   {
     heading: (
       <>
-       Build Skills.  <br />Build Careers.
+        Build Skills.<br />Build Careers.
       </>
     ),
     description: "Your Creative Career Starts Here",
@@ -26,6 +27,7 @@ export const heroSlidesData: HeroSlide[] = [
     imageAlt: "Career transformation",
     showBadge: true,
     bottomText: "Industry-leading placement programs",
+    link: null
   },
   {
     heading: (
@@ -40,6 +42,7 @@ export const heroSlidesData: HeroSlide[] = [
     imageAlt: "Students learning together",
     showBadge: false,
     bottomText: "Highly recommended courses for kids",
+    link: "/vacancies"
   },
   
 ];
