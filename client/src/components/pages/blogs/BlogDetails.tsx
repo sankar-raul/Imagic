@@ -24,6 +24,7 @@ import useGetBlogsBySlug from "@/hooks/blog/useGetBlogsBySlug";
 import CommentSection from "@/components/shared/CommentSection";
 import useLikeBlog from "@/hooks/blog/useLikeBlog";
 import BlogNavigation from "@/components/shared/BlogNavigation";
+import TestimonialsSection from "@/components/shared/testimonial/TestimonialsSection";
 
 export default function BlogDetails() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -287,7 +288,7 @@ export default function BlogDetails() {
             </div>
           </div>
         </div>
-        <Testimonial />
+        <TestimonialsSection />
       </motion.div>
     </div>
   );
