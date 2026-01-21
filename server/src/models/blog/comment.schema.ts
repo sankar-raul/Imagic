@@ -6,7 +6,6 @@ const commentSchema = new Schema({
   email: { type: String },
   content: { type: String, required: true },
   commentedAt: { type: Date, default: Date.now },
-  rating: { type: Number, required: true },
   likes: { type: Number, default: 0 },
 });
 
