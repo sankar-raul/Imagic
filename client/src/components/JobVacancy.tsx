@@ -1,24 +1,27 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import JobCard from "./ui/jobvacancy/JobCard";
 import { Link } from "react-router";
 import useGetAllJobVacancy from "@/hooks/jobVacancy/useGetAllJobVacancy";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
 function JobVacancy() {
   const { isLoading, jobVacancy } = useGetAllJobVacancy();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-
+  const { scrollToTop } = useCustomScroll();
+  useEffect(() => {
+    scrollToTop();
+  }, [currentPage, scrollToTop]);
   const totalPages = useMemo(
     () => Math.ceil(jobVacancy.length / itemsPerPage),
-    [itemsPerPage, jobVacancy]
+    [itemsPerPage, jobVacancy],
   );
 
   const startIndex = useMemo(
     () => (currentPage - 1) * itemsPerPage,
-    [currentPage, itemsPerPage]
+    [currentPage, itemsPerPage],
   );
   const currentData = jobVacancy.slice(startIndex, startIndex + itemsPerPage);
 
-  console.log(currentData);
   return (
     <div className="flex justify-center">
       <div className="container my-25">
@@ -41,6 +44,8 @@ function JobVacancy() {
             {currentData.map((job, index) => (
               <Link to={`/vacancies/${job.slug}`} key={index}>
                 <JobCard
+                  _id={job._id}
+                  jobTitle={job.jobTitle}
                   jobDetails={job.jobDetails}
                   slug={job.slug}
                   description={job.description}

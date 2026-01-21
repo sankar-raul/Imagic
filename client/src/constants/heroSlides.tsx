@@ -1,6 +1,10 @@
 import { ReactNode } from "react";
 import slide1Image from "@/assets/images/heroSlide1.png";
 import slide2Image from "@/assets/images/heroSlide2.png";
+interface HeroSlideButton {
+  title: string;
+  link?: string;
+}
 export interface HeroSlide {
   heading: ReactNode;
   description: string | null;
@@ -10,14 +14,16 @@ export interface HeroSlide {
   imageAlt: string;
   showBadge: boolean;
   bottomText: string;
-  link: string | null;
+  link: null | string;
 }
 
 export const heroSlidesData: HeroSlide[] = [
   {
     heading: (
       <>
-        Build Skills.<br />Build Careers.
+        Build Skills.
+        <br />
+        Build Careers.
       </>
     ),
     description: "Your Creative Career Starts Here",
@@ -27,12 +33,12 @@ export const heroSlidesData: HeroSlide[] = [
     imageAlt: "Career transformation",
     showBadge: true,
     bottomText: "Industry-leading placement programs",
-    link: null
+    link: null,
   },
   {
     heading: (
       <>
-      Explore Career  <br /> Opportunities
+        Explore Career <br /> Opportunities
       </>
     ),
     description: null,
@@ -42,7 +48,6 @@ export const heroSlidesData: HeroSlide[] = [
     imageAlt: "Students learning together",
     showBadge: false,
     bottomText: "Highly recommended courses for kids",
-    link: "/vacancies"
+    link: "/vacancies",
   },
-  
 ];
