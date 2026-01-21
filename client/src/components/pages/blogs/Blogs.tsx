@@ -5,12 +5,16 @@ import { useEffect, useRef } from "react";
 import PageHeader from "@/components/shared/PageHeader";
 import useGetAllBlogs from "@/hooks/blog/useGetAllBlogs";
 import { BlogCardSkeleton } from "@/components/shared/skeletons";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
 
 const Blogs = () => {
   const { blogs, isLoading, isLoadingMore, hasMore, loadMore } = useGetAllBlogs(
     { limit: 6, infinite: true },
   );
-
+  const { scrollToTopImmediate } = useCustomScroll();
+  useEffect(() => {
+    scrollToTopImmediate();
+  }, []);
   const observerTarget = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
