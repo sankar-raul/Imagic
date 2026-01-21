@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import DynamicForm from '../../../shared/form/DynamicForm';
-import { studentWorkFormFields } from '../../../../constants/forms/studentWorkFormFields';
+import { useStudentWorkFormFields } from '../../../../constants/forms/studentWorkFormFields';
 import useUpdateStudentWork from '@/hooks/studentWork/useUpdateStudentWork';
 import useGetStudentWorkById from '@/hooks/studentWork/useGetStudentWorkById';
 
@@ -16,6 +16,7 @@ interface StudentWorkFormData {
 export default function EditStudentWork() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { studentWorkFormFields } = useStudentWorkFormFields();
   const { updateStudentWork, isLoading: isUpdating } = useUpdateStudentWork();
   const { studentWork, isLoading, error } = useGetStudentWorkById(id || '');
   const [formData, setFormData] = useState<Partial<StudentWorkFormData>>({});

@@ -16,6 +16,9 @@ import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import useGetCourseById from "../hooks/course/useGetCourseById";
 import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
+import Testimonial from "./pages/testimonial/Testimonial";
+import TestimonialsSection from "./ReviewsSection";
+import CourseTestimonial from "./shared/testimonial/CourseTestimonial";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -41,7 +44,7 @@ export default function CoursePage() {
 
   if (!courseData) return <CourseNotFound />;
 
-  const tabs = ["Overview", "Syllabus"];
+  const tabs = ["Overview", "Syllabus", "Reviews"];
 
   const accordionData = courseData.courseSyllabus.map((item, index) => ({
     id: index + 1,
@@ -275,7 +278,7 @@ export default function CoursePage() {
             </div>
           </div>
         </div>
-        <TestimonialSection />
+        <CourseTestimonial slug={slug} />
       </motion.div>
     </div>
   );

@@ -13,6 +13,7 @@ import placementRoutes from "./api/routes/placement.route";
 import studentWorkRoutes from "./api/routes/studentWork.route";
 import testimonialRoutes from "./api/routes/testimonial.route";
 import uploadRoutes from "./api/routes/upload.route";
+import commentRoutes from "./api/routes/comment.route";
 
 const app = express();
 const DEV_MODE = "true";
@@ -41,6 +42,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/jobs", jobRutes);
 app.use("/api/placements", placementRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/comments", commentRoutes);
 app.use("/api/demo-class", demoClassRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/news", newsRoutes);

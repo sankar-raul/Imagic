@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DynamicForm from '../../../shared/form/DynamicForm';
-import { studentWorkFormFields } from '../../../../constants/forms/studentWorkFormFields';
+import { useStudentWorkFormFields } from '../../../../constants/forms/studentWorkFormFields';
 import useAddStudentWork from '@/hooks/studentWork/useAddStudentWork';
 
 interface StudentWorkFormData {
@@ -12,6 +12,7 @@ interface StudentWorkFormData {
 }
 
 export default function AddStudentWork() {
+  const { studentWorkFormFields, isLoading } = useStudentWorkFormFields();
   const { addStudentWork } = useAddStudentWork();
   const [formData, setFormData] = useState<Partial<StudentWorkFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);

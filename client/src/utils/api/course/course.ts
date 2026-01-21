@@ -1,4 +1,4 @@
-import { deleteRequest, get, post } from "../apiMethod";
+import { deleteRequest, get, post, put } from "../apiMethod";
 
 const INITIAL_ROUTE = "/courses";
 export const getAllCourses = async () => {
@@ -26,9 +26,26 @@ export const createCourse = async (courseData: any) => {
   }
 };
 
+export const updateCourse = async (courseId: string, courseData: any) => {
+  try {
+    const response = await put(`${INITIAL_ROUTE}/${courseId}`, courseData);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const deleteCourse = async (courseId: string) => {
   try {
     const response = await deleteRequest(`${INITIAL_ROUTE}/${courseId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+export const availableCourses = async () => {
+  try {
+    const response = await get(`${INITIAL_ROUTE}/available-courses`);
     return response;
   } catch (error) {
     throw error;

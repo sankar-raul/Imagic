@@ -4,6 +4,22 @@ import blog from "../../models/blog/blog.model";
 export const postBlog = async (req: Request, res: Response) => {
   try {
     const blogData = req.body;
+    if (!blogData.slug) {
+      const baseSlug = blogData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      
+      let slug = baseSlug;
+      let counter = 1;
+      
+      while (await blog.findOne({ slug })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+      }
+      
+      blogData.slug = slug;
+        }
     const blogDetails = await blog.create(blogData);
     res.status(201).json(blogDetails);
   } catch (error) {
@@ -66,7 +82,7 @@ export const getAllBlogs = async (req: Request, res: Response) => {
     if (blogs.length === 0) {
       return res.status(404).json({ message: "No blogs found" });
     }
-    res.status(200).json({ data: blogs, totalBlogs, page, limit });
+    res.status(200).json({ data: blogs, total: totalBlogs, page, limit });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }

@@ -5,4 +5,5 @@ export interface Itestimonial{
     jobTitle: string;
     videoUrl: string;
     companyName: string;
+    courseName: string;
 }

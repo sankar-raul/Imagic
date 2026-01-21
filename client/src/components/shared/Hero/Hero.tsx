@@ -1,19 +1,25 @@
+import { useNavigate } from "react-router";
 import Carousel from "../Carousel";
 import HeroSlide from "../HeroSlide";
 import { heroSlidesData } from "@/constants/heroSlides";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
 
 export default function HeroSection() {
+  const { scrollToId } = useCustomScroll();
   const handleScroll = () => {
     const coursesElement = document.getElementById("course");
     coursesElement?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
+  const navigate = useNavigate();
+  const handlePrimaryClick = (link?: string | null) => {
+    if (link) {
+      navigate(link);
+    } else {
+      handleScroll();
+    }
+  };
   const handleScrollTodemoClass = () => {
-    const coursesElement = document.getElementById("demoClass");
-    coursesElement?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    scrollToId("democlass");
   };
 
   return (
@@ -22,7 +28,7 @@ export default function HeroSection() {
         {(slide) => (
           <HeroSlide
             slide={slide}
-            onExploreClick={handleScroll}
+            onExploreClick={handlePrimaryClick}
             onDemoClick={handleScrollTodemoClass}
           />
         )}

@@ -14,7 +14,7 @@ const useNavCourse = () => {
         const existingItems = items?.[course.courseDetails.category];
         items[course.courseDetails.category] = [
           {
-            title: course.courseDetails.category,
+            title: course.title,
             slug: course.slug,
           },
           ...(Array.isArray(existingItems) ? existingItems : []),

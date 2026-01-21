@@ -8,6 +8,7 @@ const testimonialSchema = new Schema<Itestimonial>({
     jobTitle: { type: String, required: true },
     videoUrl: { type: String, required: true },
     companyName: { type: String, required: true },
+    courseName: { type: String, required: true },
 })
 
 export default testimonialSchema;

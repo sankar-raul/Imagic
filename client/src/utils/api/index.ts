@@ -12,6 +12,7 @@ import {
   getBlogBySlug,
 } from "./blog/blog";
 import {
+  availableCourses,
   createCourse,
   deleteCourse,
   getAllCourses,
@@ -36,6 +37,7 @@ import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonial,
+  getTestimonialByCourseSlug,
   getTestimonialById,
   updateTestimonial,
 } from "./testimonial/testimonial";
@@ -54,6 +56,12 @@ import {
   updateStudentWork,
 } from "./studentWork/studentWork";
 import { login as authLogin } from "./auth/auth";
+import {
+  commentOnBlogPost,
+  deleteComment,
+  getBlogComments,
+  likeComment,
+} from "./comment/comment";
 
 export const api = {
   course: {
@@ -61,6 +69,7 @@ export const api = {
     createCourse,
     getCourseById,
     deleteCourse,
+    availableCourses,
   },
   demoClass: {
     applyDemoClass,
@@ -81,6 +90,7 @@ export const api = {
     deleteTestimonial,
     getTestimonialById,
     updateTestimonial,
+    getTestimonialByCourseSlug,
   },
   jobVacancy: {
     getAllJobs,
@@ -117,5 +127,11 @@ export const api = {
   },
   auth: {
     login: authLogin,
+  },
+  comment: {
+    getBlogComments,
+    commentOnBlogPost,
+    likeComment,
+    deleteComment,
   },
 };

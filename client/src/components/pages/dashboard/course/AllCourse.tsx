@@ -54,7 +54,7 @@ export default function AllCourse() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.isArray(courses) && courses.map(course => (
               <div
-                key={course.id}
+                key={course._id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
                 {/* Course Thumbnail */}
@@ -102,13 +102,13 @@ export default function AllCourse() {
                     {/* Action Buttons */}
                     <div className="flex gap-2">
                     <Link
-                      to={`/dashboard/course/${course._id}`}
+                      to={`/dashboard/course/edit/${course.slug}`}
                       className="flex-1 px-4 py-2 bg-blue-500 text-white text-center text-sm font-semibold rounded-lg hover:bg-blue-600 transition"
                     >
                       Edit
                     </Link>
                     <button
-                      onClick={() => handleDelete(course._id)}
+                      onClick={() => course._id && handleDelete(course._id)}
                       className="flex-1 px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-lg hover:bg-red-600 transition"
                     >
                       Delete

@@ -6,21 +6,20 @@ import {
   basicInfoFields,
   courseDetailsFields,
   syllabusFields,
-  studentWorkFields,
+  // studentWorkFields,
   reviewFields,
-  testimonialFields
+  // testimonialFields
 } from '../../../../constants/forms/courseFormFields';
-import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails, IcourseTestimonial, IstudentWork } from '@/types/course.types';
+import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails } from '@/types/course.types';
 import useCreateCourse from '@/hooks/course/useCreateCourse';
+import { useNavigate } from 'react-router';
 
 
-type SectionKey =
+type SectionKey=
   | 'basic'
   | 'details'
   | 'syllabus'
-  | 'work'
-  | 'reviews'
-  | 'testimonials';
+  | 'reviews';
 
 interface SectionHeaderProps {
   title: string;
@@ -28,13 +27,11 @@ interface SectionHeaderProps {
 }
 
 export default function CourseForm() {
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
     basic: true,
     details: true,
     syllabus: false,
-    work: false,
-    reviews: false,
-    testimonials: false
+    reviews: false
   });
 
   // Form state management
@@ -51,17 +48,15 @@ export default function CourseForm() {
   });
   const [overview, setOverview] = useState('');
 
+  const navigate = useNavigate();
+
   const [courseDetails, setCourseDetails] = useState<IcourseDetails>({} as IcourseDetails);
   const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>([]);
-  const [studentWorks, setStudentWorks] = useState<IstudentWork[]>([]);
   const [reviews, setReviews] = useState<IcourseReview[]>([]);
-  const [testimonials, setTestimonials] = useState<IcourseTestimonial[]>([]);
 
   // Temporary state for adding new items
   const [currentSyllabus, setCurrentSyllabus] = useState<Partial<ISyllabusSection>>({});
-  const [currentWork, setCurrentWork] = useState<Partial<IstudentWork>>({});
   const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>({});
-  const [currentTestimonial, setCurrentTestimonial] = useState<Partial<IcourseTestimonial>>({});
 
   const { createCourse, isLoading } = useCreateCourse();
 
@@ -80,14 +75,13 @@ export default function CourseForm() {
       courseDetails: courseDetails,
       course_overview: overview,
       courseSyllabus: syllabusModules,
-      students_work: studentWorks,
       reviews: reviews,
-      students_testimonials: testimonials,
     };
     console.log('Course created:', courseData);
     createCourse(courseData)
       .then(response => {
         console.log('Course successfully created:', response);
+        navigate('/dashboard/courses');
       })
       .catch(error => {
         console.error('Error creating course:', error);
@@ -115,12 +109,6 @@ export default function CourseForm() {
         case 'review':
           setCurrentReview(prev => ({ ...prev, [name]: value }));
           break;
-        case 'work':
-          setCurrentWork(prev => ({ ...prev, [name]: value }));
-          break;
-        case 'testimonial':
-          setCurrentTestimonial(prev => ({ ...prev, [name]: value }));
-          break;
       }
     }
   };
@@ -132,12 +120,7 @@ export default function CourseForm() {
     }
   };
 
-  const addStudentWork = () => {
-    if (currentWork.name && currentWork.tool) {
-      setStudentWorks(prev => [...prev, currentWork as IstudentWork]);
-      setCurrentWork({});
-    }
-  };
+
 
   const addReview = () => {
     if (currentReview.name && currentReview.rating) {
@@ -146,12 +129,7 @@ export default function CourseForm() {
     }
   };
 
-  const addTestimonial = () => {
-    if (currentTestimonial.name && currentTestimonial.designation) {
-      setTestimonials(prev => [...prev, currentTestimonial as IcourseTestimonial]);
-      setCurrentTestimonial({});
-    }
-  };
+
 
   const SectionHeader = ({ title, section }: SectionHeaderProps) => (
     <div 
@@ -249,7 +227,7 @@ export default function CourseForm() {
             </div>
 
             {/* Students Work */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <SectionHeader title="Students Work" section="work" />
               {expandedSections.work && (
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
@@ -280,7 +258,7 @@ export default function CourseForm() {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* Reviews */}
             <div className="space-y-4">
@@ -317,7 +295,7 @@ export default function CourseForm() {
             </div>
 
             {/* Testimonials */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <SectionHeader title="Student Testimonials" section="testimonials" />
               {expandedSections.testimonials && (
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
@@ -349,7 +327,7 @@ export default function CourseForm() {
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* Submit Buttons */}
             <div className="flex gap-4 pt-6 border-t border-gray-200">
