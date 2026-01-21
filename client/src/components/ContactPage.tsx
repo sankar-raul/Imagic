@@ -239,8 +239,6 @@ export default function ContactPage() {
               height="400"
               frameBorder="0"
               scrolling="no"
-              marginHeight="0"
-              marginWidth="0"
               src="https://maps.google.com/maps?width=100%25&height=400&hl=en&q=15,C.R.%20Avenue%204th%20Floor.%20Chandni%20Chowk,%20Kolkata%20700072+(My%20Business%20Name)&t=&z=16&ie=UTF8&iwloc=B&output=embed"
               title="Google Map Embed"
             >
@@ -255,7 +253,6 @@ export default function ContactPage() {
               height="450"
               src="https://www.youtube.com/embed/VBbPi5m8UQ4"
               title="IMAGIC Institute Chandni Chowk Kolkata Walkthrough Video"
-              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
