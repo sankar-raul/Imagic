@@ -37,10 +37,17 @@ export const deleteComment = async (commentId: string) => {
     throw error;
   }
 };
-export const getBlogComments = async (blogId: string) => {
+export const getBlogComments = async (
+  blogId: string,
+  page: number = 1,
+  limit: number = 10,
+) => {
   try {
-    const response = await get(`${INITIAL_rOUTE}/blog/${blogId}`, {});
-    return response.data;
+    const response = await get(
+      `${INITIAL_rOUTE}/blog/${blogId}?page=${page}&limit=${limit}`,
+      {},
+    );
+    return response;
   } catch (error) {
     console.error("Error fetching blog comments:", error);
     throw error;

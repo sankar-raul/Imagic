@@ -11,7 +11,15 @@ interface CommentSectionProps {
 }
 
 export default function CommentSection({ blogId }: CommentSectionProps) {
-  const { comments, isLoading, addComment } = useGetComments(blogId);
+  const {
+    comments,
+    isLoading,
+    isLoadingMore,
+    hasMore,
+    totalComments,
+    loadMore,
+    addComment,
+  } = useGetComments(blogId);
   const { postComment, isSubmitting } = usePostComment();
 
   const [formData, setFormData] = useState({
@@ -75,9 +83,6 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
     return (
       <motion.div
         key={comment._id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
         className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow"
       >
         <div className="flex items-start gap-4">
@@ -126,7 +131,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
       <div className="flex items-center gap-3 mb-8">
         <MessageCircle className="w-6 h-6 text-yellow-400" />
         <h2 className="text-2xl font-bold text-gray-900">
-          Comments ({comments?.length})
+          Comments ({totalComments})
         </h2>
       </div>
 
@@ -257,6 +262,33 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
           comments.map((comment, index) => (
             <CommentItem key={comment._id} comment={comment} index={index} />
           ))
+        )}
+
+        {/* Load More Button */}
+        {!isLoading && hasMore && comments.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center mt-6"
+          >
+            <button
+              onClick={loadMore}
+              disabled={isLoadingMore}
+              className="px-8 py-3 bg-neutral-900 hover:bg-neutral-800 text-white disabled:bg-gray-300 font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 md:cursor-pointer"
+            >
+              {isLoadingMore ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-neutral-900 border-t-transparent rounded-full animate-spin" />
+                  <span>Loading...</span>
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Load More Comments</span>
+                </>
+              )}
+            </button>
+          </motion.div>
         )}
       </div>
     </div>
