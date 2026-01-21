@@ -3,7 +3,7 @@ import { get, post, deleteRequest, put } from "../apiMethod";
 const INITIAL_ROUTE = "/testimonials";
 export const getAllTestimonial = async (
   page: number = 1,
-  limit: number = 10
+  limit: number = 10,
 ) => {
   try {
     const response = await get(`${INITIAL_ROUTE}?page=${page}&limit=${limit}`);
@@ -39,9 +39,23 @@ export const getTestimonialById = async (testimonialId: string) => {
   }
 };
 
-export const updateTestimonial = async (testimonialId: string, testimonialData: any) => {
+export const updateTestimonial = async (
+  testimonialId: string,
+  testimonialData: any,
+) => {
   try {
-    const response = await put(`${INITIAL_ROUTE}/${testimonialId}`, testimonialData);
+    const response = await put(
+      `${INITIAL_ROUTE}/${testimonialId}`,
+      testimonialData,
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getTestimonialByCourseSlug = async (courseSlug: string) => {
+  try {
+    const response = await get(`${INITIAL_ROUTE}/course/${courseSlug}`);
     return response;
   } catch (error) {
     throw error;

@@ -19,9 +19,6 @@ export default function DropdownMenu({
     () => (courseItems ? Object.keys(courseItems) : []),
     [courseItems],
   );
-  useEffect(() => {
-    console.log(courseItems);
-  }, [courseItems]);
 
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white backdrop-blur-xl shadow-xl rounded-3xl p-6 w-[650px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-gray-100">

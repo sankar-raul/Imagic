@@ -20,16 +20,18 @@ const useGetAllPlacements = ({
 
   const fetchPlacements = async (
     currentPage: number = page,
-    currentLimit: number = limit
+    currentLimit: number = limit,
   ) => {
     try {
       setIsLoading(true);
       const response = await api.placements.getAllPlacement(
         currentPage,
-        currentLimit
+        currentLimit,
       );
       setPlacements(response.data || []);
-      setTotalPages(Math.floor(response.totalPlacedStudents / currentLimit) || 0);
+      setTotalPages(
+        Math.floor(response.totalPlacedStudents / currentLimit) || 0,
+      );
       setTotalItems(response.totalPlacedStudents || 0);
     } catch (error) {
       console.error("Error fetching placements:", error);
@@ -39,7 +41,6 @@ const useGetAllPlacements = ({
   };
 
   useEffect(() => {
-    console.log("first");
     fetchPlacements(page, limit);
   }, [page, limit]);
 

@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight, X, Play } from "lucide-react";
-import useGetAllTestimonial from "@/hooks/testimonial/useGetAllTestimonial";
 import { Itestimonial } from "@/types/testimonials.types";
 import TestimonialCardSkeleton from "@/components/shared/skeletons/TestimonialCardSkeleton";
 import useCustomScroll from "@/hooks/global/useCustomScroll";
 
-interface TestimonialsSectionProps {
+interface TestimonialsProps {
+  testimonials: Itestimonial[];
   itemsPerSlide?: number;
+  isLoading?: boolean;
 }
-
-export const TestimonialsSection = ({
+const Testimonials: FC<TestimonialsProps> = ({
+  testimonials,
   itemsPerSlide = 3,
-}: TestimonialsSectionProps) => {
+  isLoading = false,
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const { scrollToTop } = useCustomScroll();
-  const { testimonials, isLoading } = useGetAllTestimonial({
-    page: 1,
-    limit: 100, // Load all testimonials for slider
-  });
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -104,9 +102,8 @@ export const TestimonialsSection = ({
               Our Students Testimonials
             </h2>
             <p className="text-lg text-gray-600">
-              Our mission is to drive progress and enhance the lives of our
-              customers by delivering superior products and services that exceed
-              expectations.
+              Hear what our students have to say about their learning experience
+              and how our courses have helped them achieve their goals.
             </p>
           </div>
           <div
@@ -137,7 +134,7 @@ export const TestimonialsSection = ({
               No testimonials yet
             </h3>
             <p className="text-gray-600">
-              Check back soon for inspiring stories from our clients.
+              Check back soon for inspiring stories from our students.
             </p>
           </motion.div>
         </div>
@@ -339,4 +336,4 @@ export const TestimonialsSection = ({
   );
 };
 
-export default TestimonialsSection;
+export default Testimonials;

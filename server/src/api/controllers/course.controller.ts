@@ -3,31 +3,31 @@ import Course from "../../models/course/course.model";
 
 export const createCourse = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response> => {
   try {
     const courseData = req.body;
     // Generate unique slug from course title
-      const generateSlug = (title: string): string => {
-        return title
+    const generateSlug = (title: string): string => {
+      return title
         .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/--+/g, '-')
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/--+/g, "-")
         .trim();
-      };
+    };
 
-      let slug = generateSlug(courseData.title);
-      let slugExists = await Course.findOne({ slug });
-      let counter = 1;
-      
-      while (slugExists) {
-        slug = `${generateSlug(courseData.title)}-${counter}`;
-        slugExists = await Course.findOne({ slug });
-        counter++;
-      }
-      
-      courseData.slug = slug;
+    let slug = generateSlug(courseData.title);
+    let slugExists = await Course.findOne({ slug });
+    let counter = 1;
+
+    while (slugExists) {
+      slug = `${generateSlug(courseData.title)}-${counter}`;
+      slugExists = await Course.findOne({ slug });
+      counter++;
+    }
+
+    courseData.slug = slug;
     const newCourse = await Course.create(courseData);
     return res.status(201).json({ success: true, data: newCourse });
   } catch (error: any) {
@@ -37,7 +37,7 @@ export const createCourse = async (
 
 export const viewCourse = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response> => {
   try {
     const { courseId } = req.params;
@@ -53,11 +53,9 @@ export const viewCourse = async (
   }
 };
 
-
-
 export const allCourse = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response> => {
   try {
     const courses = await Course.find();
@@ -72,7 +70,7 @@ export const allCourse = async (
 
 export const updateCourse = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response> => {
   try {
     const { courseId } = req.params;
@@ -91,7 +89,7 @@ export const updateCourse = async (
 
 export const deleteCourse = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response> => {
   try {
     const { courseId } = req.params;
@@ -99,6 +97,20 @@ export const deleteCourse = async (
     return res
       .status(200)
       .json({ success: true, message: "Course deleted successfully" });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const getAvailableCourses = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  try {
+    const courses = await Course.find({}, { slug: 1, title: 1, _id: 1 });
+    if (courses.length === 0) {
+      return res.status(404).json({ message: "No available courses found" });
+    }
+    return res.status(200).json({ data: courses });
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }

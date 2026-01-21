@@ -3,6 +3,7 @@ import { BookOpen, CheckCircle } from "lucide-react";
 import formImage from "@/assets/images/form-image.jpg";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
+import useGetAvailableCourses from "@/hooks/course/useGetAvailableCourses";
 
 interface DemoClassFormProps {
   minimal?: boolean;
@@ -12,7 +13,9 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
   minimal = false,
   id = "democlass",
 }) => {
+  const { courses } = useGetAvailableCourses();
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -147,11 +150,11 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 appearance-none cursor-pointer"
                 >
                   <option value="">Select a course</option>
-                  <option value="web-dev">Web Development</option>
-                  <option value="data-science">Data Science</option>
-                  <option value="mobile-dev">Mobile Development</option>
-                  <option value="ui-ux">UI/UX Design</option>
-                  <option value="digital-marketing">Digital Marketing</option>
+                  {courses.map((course) => (
+                    <option key={course._id} value={course.slug}>
+                      {course.title}
+                    </option>
+                  ))}
                 </select>
               </div>
               <button
