@@ -59,7 +59,7 @@ export default function Header() {
       transition={{ duration: 0.5 }}
       className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-2 sm:py-3 px-3 sm:px-6 md:px-12 lg:px-16 gap-2 sm:gap-4 z-50 shadow-sm ${
         !isScrolled
-          ? "lg:bg-white/80 lg:backdrop-blur-2xl lg:rounded-full lg:translate-y-2"
+          ? "lg:bg-white/90 lg:backdrop-blur-2xl lg:rounded-full lg:translate-y-2"
           : ""
       } bg-white`}
     >
