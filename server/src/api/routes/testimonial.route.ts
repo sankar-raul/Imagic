@@ -3,6 +3,7 @@ import {
   addTestimonial,
   deleteTestimonial,
   getAllTestimonials,
+  getTestimonialByCourseId,
   getTestimonialById,
   updateTestimonial,
 } from "../controllers/testimonail.controller";
@@ -13,6 +14,7 @@ const router = Router();
 router.post("/add", adminAuth, addTestimonial);
 router.get("/", getAllTestimonials);
 router.get("/:testimonialId", getTestimonialById);
+router.get("/course/:courseId", getTestimonialByCourseId);
 router.put("/:testimonialId", adminAuth, updateTestimonial);
 router.delete("/:testimonialId", adminAuth, deleteTestimonial);
 

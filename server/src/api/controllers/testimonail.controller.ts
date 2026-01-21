@@ -38,6 +38,20 @@ export const getTestimonialById = async (req: Request, res: Response) => {
     }
 };
 
+export const getTestimonialByCourseId = async (req: Request, res: Response) => {
+    try {
+        const { courseId } = req.params;
+        const testimonials = await testimonial.find({ slug: courseId });
+        if (testimonials.length === 0) {
+            return res.status(404).json({ message: "No testimonials found for this course" });
+        }
+        res.status(200).json({data: testimonials});
+    }
+    catch (error) {
+        res.status(500).json({ message: (error as Error).message });
+    }
+};
+
 export const updateTestimonial = async (req: Request, res: Response) => {
     try {
         const { testimonialId } = req.params;
