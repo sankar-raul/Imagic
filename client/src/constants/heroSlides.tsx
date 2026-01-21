@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-
+import slide1Image from "@/assets/images/heroSlide1.png";
 export interface HeroSlide {
   heading: ReactNode;
   description: string | null;
@@ -21,7 +21,7 @@ export const heroSlidesData: HeroSlide[] = [
     description: "Join thousands of successful students who have transformed their careers",
     primaryButtonText: "View All Courses",
     secondaryButtonText: "Book Free Session",
-    backgroundImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop",
+    backgroundImage: slide1Image,
     imageAlt: "Career transformation",
     showBadge: true,
     bottomText: "Industry-leading placement programs",
