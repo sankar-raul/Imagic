@@ -3,7 +3,7 @@ import { IComment } from "@/types/comment.types";
 import { api } from "@/utils/api";
 
 interface CommentsResponse {
-  comments: IComment[];
+  data: IComment[];
   pagination: {
     currentPage: number;
     totalPages: number;
@@ -47,31 +47,16 @@ const useGetComments = (
         );
 
         // Check if response has pagination structure
-        if (
-          response &&
-          typeof response === "object" &&
-          "comments" in response
-        ) {
-          const data = response as CommentsResponse;
-          if (append) {
-            setComments((prev) => [...prev, ...data.comments]);
-          } else {
-            setComments(data.comments || []);
-          }
-          setCurrentPage(data.pagination.currentPage);
-          setTotalPages(data.pagination.totalPages);
-          setTotalComments(data.pagination.totalComments);
-          setHasMore(data.pagination.currentPage < data.pagination.totalPages);
+        const data = response as CommentsResponse;
+        if (append) {
+          setComments((prev) => [...prev, ...data.data]);
         } else {
-          // Fallback for non-paginated response
-          const commentsList = Array.isArray(response) ? response : [];
-          if (append) {
-            setComments((prev) => [...prev, ...commentsList]);
-          } else {
-            setComments(commentsList);
-          }
-          setHasMore(false);
+          setComments(data.data || []);
         }
+        setCurrentPage(data.pagination.currentPage);
+        setTotalPages(data.pagination.totalPages);
+        setTotalComments(data.pagination.totalComments);
+        setHasMore(data.pagination.currentPage < data.pagination.totalPages);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load comments",

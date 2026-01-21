@@ -47,7 +47,7 @@ export const getBlogComments = async (
       `${INITIAL_rOUTE}/blog/${blogId}?page=${page}&limit=${limit}`,
       {},
     );
-    return response.data;
+    return response;
   } catch (error) {
     console.error("Error fetching blog comments:", error);
     throw error;

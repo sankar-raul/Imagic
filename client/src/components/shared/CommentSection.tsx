@@ -83,9 +83,6 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
     return (
       <motion.div
         key={comment._id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
         className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow"
       >
         <div className="flex items-start gap-4">
@@ -277,7 +274,7 @@ export default function CommentSection({ blogId }: CommentSectionProps) {
             <button
               onClick={loadMore}
               disabled={isLoadingMore}
-              className="px-8 py-3 bg-yellow-300 hover:bg-yellow-400 disabled:bg-gray-300 text-neutral-900 font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 md:cursor-pointer"
+              className="px-8 py-3 bg-neutral-900 hover:bg-neutral-800 text-white disabled:bg-gray-300 font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 md:cursor-pointer"
             >
               {isLoadingMore ? (
                 <>

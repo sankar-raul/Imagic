@@ -182,15 +182,13 @@ export default function BlogDetails() {
               )}
             </div>
 
-            <DemoClassSection id={"enrollnow"} minimal={true} />
-
             {/* Blog Navigation */}
             <BlogNavigation prevSlug={prevSlug} nextSlug={nextSlug} />
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-6 space-y-6">
+          <div className="lg:col-span-1 overflow-hidden">
+            <div className="bg-white rounded-lg p-6 space-y-6 overflow-hidden">
               {/* Preview Image */}
               <div className="relative mb-6 rounded-lg overflow-hidden bg-gray-100">
                 <img
@@ -290,6 +288,7 @@ export default function BlogDetails() {
         </div>
         <TestimonialsSection />
       </motion.div>
+      <DemoClassSection />
     </div>
   );
 }
