@@ -6,6 +6,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import useGetAllBlogs from "@/hooks/blog/useGetAllBlogs";
 import { BlogCardSkeleton } from "@/components/shared/skeletons";
 import useCustomScroll from "@/hooks/global/useCustomScroll";
+import DemoClassSection from "@/components/shared/demoClassSection/DemoClassSection";
 
 const Blogs = () => {
   const { blogs, isLoading, isLoadingMore, hasMore, loadMore } = useGetAllBlogs(
@@ -168,6 +169,7 @@ const Blogs = () => {
           )}
         </div>
       </section>
+      <DemoClassSection />
     </div>
   );
 };
