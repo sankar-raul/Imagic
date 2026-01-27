@@ -8,11 +8,11 @@ interface StudentWorkFormData {
   studentName: string;
   videoUrl: string;
   thumbnailUrl: string;
-  courseName: string;
+  courseId: string;
 }
 
 export default function AddStudentWork() {
-  const { studentWorkFormFields, isLoading } = useStudentWorkFormFields();
+  const { studentWorkFormFields } = useStudentWorkFormFields();
   const { addStudentWork } = useAddStudentWork();
   const [formData, setFormData] = useState<Partial<StudentWorkFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,7 +25,7 @@ export default function AddStudentWork() {
     e.preventDefault();
     
     // Validate all required fields
-    const requiredFields = ['title', 'studentName', 'thumbnailUrl', 'courseName'];
+    const requiredFields = ['title', 'studentName', 'thumbnailUrl', 'courseId'];
     const missingFields = requiredFields.filter(field => !formData[field as keyof StudentWorkFormData]);
     
     if (missingFields.length > 0) {
@@ -95,10 +95,10 @@ export default function AddStudentWork() {
                     <span className="text-sm text-gray-900">{formData.studentName}</span>
                   </div>
                 )}
-                {formData.courseName && (
+                {formData.courseId && (
                   <div>
                     <span className="text-sm font-medium text-gray-600">Course Name: </span>
-                    <span className="text-sm text-gray-900">{formData.courseName}</span>
+                    <span className="text-sm text-gray-900">{formData.courseId}</span>
                   </div>
                 )}
                 {formData.videoUrl && (

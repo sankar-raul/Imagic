@@ -6,7 +6,7 @@ const studentWorkSchema = new Schema<IStudentWork>({
     studentName: { type: String, required: true },
     videoUrl: { type: String },
     thumbnailUrl: { type: String, required: true },
-    courseName: { type: String, required: true },
+    courseId: { type: String, required: true },
 })
 
 export default studentWorkSchema;

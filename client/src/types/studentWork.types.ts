@@ -4,5 +4,5 @@ export interface IStudentWork {
     studentName: string;
     videoUrl: string;
     thumbnailUrl: string;
-    courseName: string;
+    courseId: string;
 }

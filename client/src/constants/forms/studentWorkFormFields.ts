@@ -21,14 +21,14 @@ export const useStudentWorkFormFields = () => {
       required: true
     },
     {
-      name: 'courseName',
+      name: 'courseId',
       label: 'Course Name',
       type: 'select',
       placeholder: 'Select a course',
       required: true,
-      options: courses?.map(course => ({
+      options: courses?.filter(course => course._id).map(course => ({
         label: course.title,
-        value: course.slug
+        value: course._id!
       })) || []
     },
     {
