@@ -57,10 +57,10 @@ export default function Header() {
         width: isScrolled ? "100%" : "max-content",
       }}
       transition={{ duration: 0.5 }}
-      className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-2 sm:py-3 px-3 sm:px-6 md:px-12 lg:px-16 gap-2 sm:gap-4 z-50 shadow-sm ${
+      className={`sticky top-0 flex justify-between min-w-full lg:min-w-max lg:w-max lg:mx-auto items-center will-change-auto py-2 sm:py-3 px-3 sm:px-6 md:px-12 lg:px-16 gap-2 sm:gap-4 z-50  ${
         !isScrolled
-          ? "lg:bg-white/90 lg:backdrop-blur-2xl lg:rounded-full lg:translate-y-2"
-          : ""
+          ? "lg:bg-white/90 lg:backdrop-blur-2xl shadow-none lg:rounded-full lg:translate-y-2"
+          : "shadow-sm shadow-neutral-500/10"
       } bg-white`}
     >
       <Logo src={navData.logo} alt={navData.logoAlt} />

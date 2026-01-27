@@ -56,7 +56,7 @@ export default function FeatureSection() {
         initial={{ opacity: 0, y: 200, rotate: -2 }}
         whileInView={{ opacity: 1, y: 0, rotate: 0 }}
         transition={{ duration: 0.6 }}
-        viewport={{ once: true, amount: 0.6 }}
+        viewport={{ once: true }}
         className="mx-auto w-full max-w-7xl"
       >
         <div className="relative mx-auto mb-12 max-w-2xl sm:text-center">
