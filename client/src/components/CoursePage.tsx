@@ -17,7 +17,6 @@ import useGetCourseById from "../hooks/course/useGetCourseById";
 import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
 import Testimonial from "./pages/testimonial/Testimonial";
-import TestimonialsSection from "./ReviewsSection";
 import CourseTestimonial from "./shared/testimonial/CourseTestimonial";
 
 export default function CoursePage() {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://imagic.net.in/sitemap.xml
+Disallow: /dashboard/

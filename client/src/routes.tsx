@@ -47,6 +47,7 @@ import DashboardHome from "@/components/pages/dashboard/DashboardHome";
 import ShowAllCourse from "@/components/pages/allCourse/ShowAllCourse";
 import NotFound from "@/components/pages/notFound/NotFound";
 import EditCourse from "@/components/pages/dashboard/course/EditCourse";
+import StudentWorkDetails from "./components/pages/studentwork/StudentWorkDetails";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -90,6 +91,7 @@ const routes = createBrowserRouter(
         </Route>
         <Route path="student-work">
           <Route index element={<StudentWork />} />
+          <Route path=":id" element={<StudentWorkDetails />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

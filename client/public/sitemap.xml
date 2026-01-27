@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://yourdomain.com/</loc>
+    <loc>https://imagic.net.in/</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/about</loc>
+    <loc>https://imagic.net.in/about</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/contact</loc>
+    <loc>https://imagic.net.in/contact</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/whyimagic/{id}</loc>
+    <loc>https://imagic.net.in/whyimagic/{id}</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/placements</loc>
+    <loc>https://imagic.net.in/placements</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/course</loc>
+    <loc>https://imagic.net.in/course</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/course/{id}</loc>
+    <loc>https://imagic.net.in/course/{id}</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/news-events</loc>
+    <loc>https://imagic.net.in/news-events</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/news-events/{newsDetails}</loc>
+    <loc>https://imagic.net.in/news-events/{newsDetails}</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/vacancies</loc>
+    <loc>https://imagic.net.in/vacancies</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/vacancies/{slug}</loc>
+    <loc>https://imagic.net.in/vacancies/{slug}</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/testimonial</loc>
+    <loc>https://imagic.net.in/testimonial</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/showcase</loc>
+    <loc>https://imagic.net.in/showcase</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/blogs</loc>
+    <loc>https://imagic.net.in/blogs</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/blogs/{id}</loc>
+    <loc>https://imagic.net.in/blogs/{id}</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/animation-institute-franchise</loc>
+    <loc>https://imagic.net.in/animation-institute-franchise</loc>
   </url>
   <url>
-    <loc>https://yourdomain.com/student-work</loc>
+    <loc>https://imagic.net.in/student-work</loc>
   </url>
 </urlset>
