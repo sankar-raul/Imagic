@@ -28,7 +28,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, alt }) => {
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring", damping: 25 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-3xl min-h-1/2 bg-black rounded-lg overflow-hidden flex flex-col items-center"
+          className="relative w-full max-w-3xl min-h-1/2 rounded-lg overflow-hidden flex flex-col items-center"
         >
           <button
             onClick={onClose}
