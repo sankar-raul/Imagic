@@ -1,11 +1,18 @@
 import CourseCard from "@/components/shared/CourseCard";
 import CourseCardSkeleton from "@/components/shared/skeletons/CourseCardSkeleton";
 import useGetAllCourse from "@/hooks/course/useGetAllCourse";
+import useCustomScroll from "@/hooks/global/useCustomScroll";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 
 const ShowAllCourse = () => {
   const { courses, isLoading } = useGetAllCourse();
   const navigate = useNavigate();
+  const { scrollToTop } = useCustomScroll();
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <section className="flex justify-center" id="course">
       <div className="py-16 px-4 md:px-10 lg:px-20 max-w-7xl">

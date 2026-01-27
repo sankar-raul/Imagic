@@ -117,7 +117,7 @@ const routes = createBrowserRouter(
           <Route path="demo-class">
             <Route index element={<AllEntries />} />
           </Route>
-          <Route path="Placement">
+          <Route path="placement">
             <Route index element={<AllPlacements />} />
             <Route path="add" element={<AddPlacement />} />
             <Route path="edit/:id" element={<EditPlacement />} />

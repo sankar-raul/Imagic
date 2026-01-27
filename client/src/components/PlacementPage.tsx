@@ -7,6 +7,7 @@ import PageHeader from "@/components/shared/PageHeader";
 import EmptyState from "@/components/shared/EmptyState";
 import useCustomScroll from "@/hooks/global/useCustomScroll";
 import { useEffect } from "react";
+import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 
 export default function PlacementPage() {
   const {
@@ -78,6 +79,7 @@ export default function PlacementPage() {
           </>
         )}
       </div>
+      <DemoClassSection />
     </div>
   );
 }

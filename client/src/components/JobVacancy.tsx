@@ -3,6 +3,7 @@ import JobCard from "./ui/jobvacancy/JobCard";
 import { Link } from "react-router";
 import useGetAllJobVacancy from "@/hooks/jobVacancy/useGetAllJobVacancy";
 import useCustomScroll from "@/hooks/global/useCustomScroll";
+import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 function JobVacancy() {
   const { isLoading, jobVacancy } = useGetAllJobVacancy();
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +24,7 @@ function JobVacancy() {
   const currentData = jobVacancy.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center flex-col items-center">
       <div className="container my-25">
         <div className="flex justify-center">
           <span className="bg-white/30 rounded-xl p-2 border border-neutral-100 mb-5 text-blue-600">
@@ -93,6 +94,7 @@ function JobVacancy() {
           </button>
         </div>
       </div>
+      <DemoClassSection />
     </div>
   );
 }
