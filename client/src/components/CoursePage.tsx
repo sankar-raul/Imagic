@@ -17,6 +17,7 @@ import useGetCourseById from "../hooks/course/useGetCourseById";
 import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
 import CourseTestimonial from "./shared/testimonial/CourseTestimonial";
+import StudentWorkCard from "./shared/StudentWorkCard";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -163,7 +164,6 @@ export default function CoursePage() {
                       {courseData.title} Overview
                     </h2>
                   </div>
-
                   <div className="grid gap-4">
                     <HtmlRenderer content={courseData.course_overview} />
                   </div>
@@ -278,7 +278,7 @@ export default function CoursePage() {
             </div>
             {/* Student Works Section */}
             <div className="mt-8">
-              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <div className="w-1 h-6 bg-blue-400 rounded-full"></div>
                 Student Works
               </h3>
@@ -298,37 +298,7 @@ export default function CoursePage() {
                     }}
                   >
                     {studentWorks.map((work) => (
-                      <div
-                        key={work._id}
-                        style={{
-                          border: "1px solid #eee",
-                          margin: 8,
-                          padding: 16,
-                          borderRadius: 8,
-                        }}
-                      >
-                        <img
-                          src={work.thumbnailUrl}
-                          alt={work.title}
-                          style={{
-                            width: "100%",
-                            maxWidth: 320,
-                            borderRadius: 8,
-                          }}
-                        />
-                        <h3>{work.title}</h3>
-                        <p>By: {work.studentName}</p>
-                        <p>Course: {work.courseName}</p>
-                        {work.videoUrl && (
-                          <a
-                            href={work.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Watch Video
-                          </a>
-                        )}
-                      </div>
+                      <StudentWorkCard key={work._id} work={work} />
                     ))}
                   </div>
                 ) : (
