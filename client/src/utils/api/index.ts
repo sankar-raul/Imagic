@@ -53,6 +53,7 @@ import {
   deleteStudentWork,
   getAllStudentWorks,
   getStudentWorkById,
+  getStudentWorksByCourseId,
   updateStudentWork,
 } from "./studentWork/studentWork";
 import { login as authLogin } from "./auth/auth";
@@ -124,6 +125,7 @@ export const api = {
     deleteStudentWork,
     getStudentWorkById,
     updateStudentWork,
+    getStudentWorksByCourseId,
   },
   auth: {
     login: authLogin,

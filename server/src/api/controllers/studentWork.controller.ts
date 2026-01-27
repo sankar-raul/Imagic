@@ -94,3 +94,38 @@ export const deleteStudentWork = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+
+export const getStudentWorksByCourseId = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { course_id } = req.params;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const [works, total] = await Promise.all([
+      studentWork.find({ courseId: course_id }).skip(skip).limit(limit),
+      studentWork.countDocuments({ courseId: course_id }),
+    ]);
+
+    if (works.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No student works found for this course" });
+    }
+
+    res.status(200).json({
+      data: works,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
