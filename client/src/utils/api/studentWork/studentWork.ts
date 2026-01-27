@@ -1,6 +1,18 @@
 import { deleteRequest, get, post, put } from "../apiMethod";
-
 const INITIAL_ROUTE = "/student-works";
+
+// Get student works by course id with pagination
+export const getStudentWorksByCourseId = async (
+  courseId: string,
+  filter?: { page?: number; limit?: number },
+) => {
+  try {
+    const response = await get(`/student-works/course/${courseId}`, filter);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getAllStudentWorks = async (filter?: {
   page?: number;

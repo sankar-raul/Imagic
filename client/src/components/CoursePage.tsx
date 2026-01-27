@@ -1,3 +1,4 @@
+import useGetStudentWorksByCourseId from "@/hooks/studentWork/useGetStudentWorksByCourseId";
 import { useState, useEffect } from "react";
 import {
   Star,
@@ -10,19 +11,19 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import AccordionItem from "./ui/coursePage/Accordian";
-import TestimonialSection from "./TestimonialSection";
 import { useParams } from "react-router";
 import DemoClassSection from "./shared/demoClassSection/DemoClassSection";
 import useGetCourseById from "../hooks/course/useGetCourseById";
 import { CoursePageSkeleton, CourseNotFound } from "./shared/skeletons";
 import HtmlRenderer from "./shared/ui/HtmlRenderer";
-import Testimonial from "./pages/testimonial/Testimonial";
 import CourseTestimonial from "./shared/testimonial/CourseTestimonial";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState("overview");
   const { id: slug } = useParams();
   const { courseData, isLoading } = useGetCourseById(slug);
+  const { studentWorks, isLoading: isStudentWorksLoading } =
+    useGetStudentWorksByCourseId(courseData?._id || "");
 
   // Scroll to top when component mounts
   const scrollToTop = () => {
@@ -31,7 +32,9 @@ export default function CoursePage() {
       behavior: "smooth",
     });
   };
-
+  useEffect(() => {
+    console.log(studentWorks);
+  }, [studentWorks]);
   useEffect(() => {
     scrollToTop();
   }, [slug]);
@@ -113,11 +116,9 @@ export default function CoursePage() {
                   Advanced
                 </span> */}
               </div>
-
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                 {courseData.title}
               </h1>
-
               <div className="flex items-center gap-6 flex-wrap text-sm text-gray-600">
                 <div className="flex items-center gap-1">
                   <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -183,7 +184,7 @@ export default function CoursePage() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg p-6 sticky top-4">
+            <div className="bg-white rounded-lg p-6 top-4">
               {/* Preview Image */}
               <div className="relative mb-6 rounded-lg overflow-hidden bg-gray-100">
                 <img
@@ -273,6 +274,68 @@ export default function CoursePage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+            {/* Student Works Section */}
+            <div className="mt-8">
+              <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="w-1 h-6 bg-blue-400 rounded-full"></div>
+                Student Works
+              </h3>
+              {/* Replace with your actual StudentWorks component or logic */}
+              {/* Example: <StudentWorks courseId={slug} /> */}
+              <div className="space-y-3">
+                {/* Placeholder for student works, replace with fetched data */}
+                {isStudentWorksLoading ? (
+                  <p>Loading student works...</p>
+                ) : studentWorks?.length > 0 ? (
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(320px, 1fr))",
+                      gap: 16,
+                    }}
+                  >
+                    {studentWorks.map((work) => (
+                      <div
+                        key={work._id}
+                        style={{
+                          border: "1px solid #eee",
+                          margin: 8,
+                          padding: 16,
+                          borderRadius: 8,
+                        }}
+                      >
+                        <img
+                          src={work.thumbnailUrl}
+                          alt={work.title}
+                          style={{
+                            width: "100%",
+                            maxWidth: 320,
+                            borderRadius: 8,
+                          }}
+                        />
+                        <h3>{work.title}</h3>
+                        <p>By: {work.studentName}</p>
+                        <p>Course: {work.courseName}</p>
+                        {work.videoUrl && (
+                          <a
+                            href={work.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Watch Video
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-3 rounded-lg bg-gray-50 text-gray-700">
+                    No student works to display yet.
+                  </div>
+                )}
               </div>
             </div>
           </div>
