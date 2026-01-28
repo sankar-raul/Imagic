@@ -50,6 +50,7 @@ import EditCourse from "@/components/pages/dashboard/course/EditCourse";
 import StudentWorkDetails from "./components/pages/studentwork/StudentWorkDetails";
 import VerifiedStudent from "./components/pages/dashboard/student/verifiedStudents";
 import PendingStudent from "./components/pages/dashboard/student/pendingStudent";
+import Register from "./components/pages/student/auth/Register";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -96,7 +97,7 @@ const routes = createBrowserRouter(
           <Route path=":id" element={<StudentWorkDetails />} />
         </Route>
         <Route path="student"> 
-          <Route path="register" element={<div>Student Register Page</div>} />
+          <Route path="register" element={<Register />} />
           <Route path="login" element={<div>Student Login Page</div>} />
         </Route>
         <Route path="*" element={<NotFound />} />

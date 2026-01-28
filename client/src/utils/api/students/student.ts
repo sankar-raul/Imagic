@@ -1,6 +1,16 @@
-import { get, put } from "../apiMethod";
+import { get, post, put } from "../apiMethod";
 
 const INITIAL_ROUTE = "/students";
+
+export const registerStudent = async (studentData: any) => {
+  try {
+    const response = await post(INITIAL_ROUTE + "/register", studentData);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getAllVerifiedStudents = async () => {
   try {
     const response = await get(INITIAL_ROUTE + "/verified");

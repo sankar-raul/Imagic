@@ -66,6 +66,7 @@ import {
 import {
   getAllPendingStudents,
   getAllVerifiedStudents,
+  registerStudent,
   verifyStudent,
 } from "./students/student";
 import { requestOtp, verifyOtp } from "./otp/otp.api";
@@ -149,6 +150,7 @@ export const api = {
   student: {
     getAllPendingStudents,
     getAllVerifiedStudents,
+    registerStudent,
     verifyStudent,
   },
 };
