@@ -1,19 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router';
-import DynamicForm from '../../../shared/form/DynamicForm';
-import RichTextEditor from '../../../shared/RichTextEditor';
+import { useState, useEffect } from "react";
+import { Plus, ChevronDown, ChevronUp } from "lucide-react";
+import { useNavigate, useParams } from "react-router";
+import DynamicForm from "../../../shared/form/DynamicForm";
+import RichTextEditor from "../../../shared/RichTextEditor";
 import {
   basicInfoFields,
   courseDetailsFields,
   syllabusFields,
   reviewFields,
-} from '../../../../constants/forms/courseFormFields';
-import { Icourse, ISyllabusSection, IcourseReview, IcourseDetails } from '@/types/course.types';
-import useUpdateCourse from '@/hooks/course/useUpdateCourse';
-import useGetCourseById from '@/hooks/course/useGetCourseById';
+} from "../../../../constants/forms/courseFormFields";
+import {
+  Icourse,
+  ISyllabusSection,
+  IcourseReview,
+  IcourseDetails,
+} from "@/types/course.types";
+import useUpdateCourse from "@/hooks/course/useUpdateCourse";
+import useGetCourseById from "@/hooks/course/useGetCourseById";
 
-type SectionKey = 'basic' | 'details' | 'syllabus' | 'reviews';
+type SectionKey = "basic" | "details" | "syllabus" | "reviews";
 
 interface SectionHeaderProps {
   title: string;
@@ -26,7 +31,9 @@ export default function EditCourse() {
   const { courseData, isLoading: loadingCourse } = useGetCourseById(slug);
   const { updateCourse, isLoading: updating } = useUpdateCourse();
 
-  const [expandedSections, setExpandedSections] = useState<Record<SectionKey, boolean>>({
+  const [expandedSections, setExpandedSections] = useState<
+    Record<SectionKey, boolean>
+  >({
     basic: true,
     details: true,
     syllabus: false,
@@ -40,60 +47,72 @@ export default function EditCourse() {
   }
 
   const [basicInfo, setBasicInfo] = useState<BasicInfo>({
-    title: '',
-    slug: '',
-    short_description: ''
+    title: "",
+    slug: "",
+    short_description: "",
   });
-  const [overview, setOverview] = useState('');
-  const [courseDetails, setCourseDetails] = useState<IcourseDetails>({} as IcourseDetails);
-  const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>([]);
+  const [overview, setOverview] = useState("");
+  const [courseDetails, setCourseDetails] = useState<IcourseDetails>(
+    {} as IcourseDetails,
+  );
+  const [syllabusModules, setSyllabusModules] = useState<ISyllabusSection[]>(
+    [],
+  );
   const [reviews, setReviews] = useState<IcourseReview[]>([]);
 
   // Temporary state for adding new items
-  const [currentSyllabus, setCurrentSyllabus] = useState<Partial<ISyllabusSection>>({});
-  const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>({});
+  const [currentSyllabus, setCurrentSyllabus] = useState<
+    Partial<ISyllabusSection>
+  >({});
+  const [currentReview, setCurrentReview] = useState<Partial<IcourseReview>>(
+    {},
+  );
 
   // Load course data when available
   useEffect(() => {
     if (courseData) {
       setBasicInfo({
-        title: courseData.title || '',
-        slug: courseData.slug || '',
-        short_description: courseData.short_description || ''
+        title: courseData.title || "",
+        slug: courseData.slug || "",
+        short_description: courseData.short_description || "",
       });
-      setOverview(courseData.course_overview || '');
-      
+      setOverview(courseData.course_overview || "");
+
       // Convert date to yyyy-MM-dd format for HTML date input
       const courseDetailsWithFormattedDate = {
         ...courseData.courseDetails,
-        start_on: courseData.courseDetails?.start_on 
-          ? new Date(courseData.courseDetails.start_on).toISOString().split('T')[0]
-          : ''
+        start_on: courseData.courseDetails?.start_on
+          ? new Date(courseData.courseDetails.start_on)
+              .toISOString()
+              .split("T")[0]
+          : "",
       };
-      
+
       setCourseDetails(courseDetailsWithFormattedDate as any);
       setSyllabusModules(courseData.courseSyllabus || []);
-      
+
       // Format review dates if they exist
-      const formattedReviews = (courseData.reviews || []).map(review => ({
+      const formattedReviews = (courseData.reviews || []).map((review) => ({
         ...review,
-        date: review.date ? new Date(review.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+        date: review.date
+          ? new Date(review.date).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
       }));
-      
+
       setReviews(formattedReviews as any);
     }
   }, [courseData]);
 
   const toggleSection = (section: SectionKey) => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
   const handleSubmit = async () => {
     if (!slug) {
-      alert('Course slug is missing');
+      alert("Course slug is missing");
       return;
     }
 
@@ -108,34 +127,34 @@ export default function EditCourse() {
     };
 
     try {
-      await updateCourse(slug, updatedCourseData);
-      alert('Course updated successfully!');
-      navigate('/dashboard/course');
+      await updateCourse(courseData?._id!, updatedCourseData);
+      alert("Course updated successfully!");
+      navigate("/dashboard/course");
     } catch (error) {
-      console.error('Error updating course:', error);
-      alert('Failed to update course. Please try again.');
+      console.error("Error updating course:", error);
+      alert("Failed to update course. Please try again.");
     }
   };
 
   const handleFieldChange = (section: string) => (name: string, value: any) => {
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      if (parent === 'courseDetails') {
-        setCourseDetails(prev => ({ ...prev, [child]: value }));
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      if (parent === "courseDetails") {
+        setCourseDetails((prev) => ({ ...prev, [child]: value }));
       }
     } else {
       switch (section) {
-        case 'basic':
-          setBasicInfo(prev => ({ ...prev, [name]: value }));
+        case "basic":
+          setBasicInfo((prev) => ({ ...prev, [name]: value }));
           break;
-        case 'details':
-          setCourseDetails(prev => ({ ...prev, [name]: value }));
+        case "details":
+          setCourseDetails((prev) => ({ ...prev, [name]: value }));
           break;
-        case 'syllabus':
-          setCurrentSyllabus(prev => ({ ...prev, [name]: value }));
+        case "syllabus":
+          setCurrentSyllabus((prev) => ({ ...prev, [name]: value }));
           break;
-        case 'review':
-          setCurrentReview(prev => ({ ...prev, [name]: value }));
+        case "review":
+          setCurrentReview((prev) => ({ ...prev, [name]: value }));
           break;
       }
     }
@@ -143,33 +162,40 @@ export default function EditCourse() {
 
   const addModule = () => {
     if (currentSyllabus.title && currentSyllabus.description) {
-      setSyllabusModules(prev => [...prev, currentSyllabus as ISyllabusSection]);
+      setSyllabusModules((prev) => [
+        ...prev,
+        currentSyllabus as ISyllabusSection,
+      ]);
       setCurrentSyllabus({});
     }
   };
 
   const removeModule = (index: number) => {
-    setSyllabusModules(prev => prev.filter((_, i) => i !== index));
+    setSyllabusModules((prev) => prev.filter((_, i) => i !== index));
   };
 
   const addReview = () => {
     if (currentReview.name && currentReview.rating) {
-      setReviews(prev => [...prev, currentReview as IcourseReview]);
+      setReviews((prev) => [...prev, currentReview as IcourseReview]);
       setCurrentReview({});
     }
   };
 
   const removeReview = (index: number) => {
-    setReviews(prev => prev.filter((_, i) => i !== index));
+    setReviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const SectionHeader = ({ title, section }: SectionHeaderProps) => (
-    <div 
+    <div
       onClick={() => toggleSection(section)}
       className="flex items-center justify-between p-4 bg-blue-300/10 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors"
     >
       <h2 className="text-lg font-normal text-gray-800">{title}</h2>
-      {expandedSections[section] ? <ChevronUp className="text-gray-600" /> : <ChevronDown className="text-gray-600" />}
+      {expandedSections[section] ? (
+        <ChevronUp className="text-gray-600" />
+      ) : (
+        <ChevronDown className="text-gray-600" />
+      )}
     </div>
   );
 
@@ -186,10 +212,14 @@ export default function EditCourse() {
       <div className="min-h-screen p-6 w-full">
         <div className="max-w-4xl mx-auto">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Course Not Found</h3>
-            <p className="text-gray-600 mb-4">The course you're looking for doesn't exist.</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Course Not Found
+            </h3>
+            <p className="text-gray-600 mb-4">
+              The course you're looking for doesn't exist.
+            </p>
             <button
-              onClick={() => navigate('/dashboard/course')}
+              onClick={() => navigate("/dashboard/course")}
               className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
             >
               Back to Courses
@@ -205,7 +235,9 @@ export default function EditCourse() {
       <div className="w-full">
         <div className="w-full">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Course</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Edit Course
+            </h1>
             <p className="text-gray-600">Update course details</p>
           </div>
 
@@ -217,12 +249,14 @@ export default function EditCourse() {
                 <div className="p-4 bg-gray-50 rounded-lg space-y-6">
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
                     <DynamicForm
-                      fields={basicInfoFields.filter(f => f.name !== 'course_overview')}
+                      fields={basicInfoFields.filter(
+                        (f) => f.name !== "course_overview",
+                      )}
                       values={basicInfo}
-                      onChange={handleFieldChange('basic')}
+                      onChange={handleFieldChange("basic")}
                     />
                   </div>
-                  
+
                   <RichTextEditor
                     value={overview}
                     onChange={setOverview}
@@ -238,11 +272,13 @@ export default function EditCourse() {
               {expandedSections.details && (
                 <div className="p-4 bg-gray-50 rounded-lg space-y-6">
                   <div className="bg-white p-4 rounded-lg border border-gray-200">
-                    <h3 className="text-md font-semibold text-gray-800 mb-4">Basic Course Information</h3>
+                    <h3 className="text-md font-semibold text-gray-800 mb-4">
+                      Basic Course Information
+                    </h3>
                     <DynamicForm
                       fields={courseDetailsFields}
                       values={courseDetails}
-                      onChange={handleFieldChange('details')}
+                      onChange={handleFieldChange("details")}
                     />
                   </div>
                 </div>
@@ -256,12 +292,19 @@ export default function EditCourse() {
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
                   {syllabusModules.length > 0 && (
                     <div className="space-y-2 mb-4">
-                      <h3 className="font-medium text-gray-700">Added Modules: {syllabusModules.length}</h3>
+                      <h3 className="font-medium text-gray-700">
+                        Added Modules: {syllabusModules.length}
+                      </h3>
                       {syllabusModules.map((module, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start">
+                        <div
+                          key={index}
+                          className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start"
+                        >
                           <div>
                             <p className="font-medium">{module.title}</p>
-                            <p className="text-sm text-gray-600">{module.description}</p>
+                            <p className="text-sm text-gray-600">
+                              {module.description}
+                            </p>
                           </div>
                           <button
                             onClick={() => removeModule(index)}
@@ -277,7 +320,7 @@ export default function EditCourse() {
                     <DynamicForm
                       fields={syllabusFields[0].fields || []}
                       values={currentSyllabus}
-                      onChange={handleFieldChange('syllabus')}
+                      onChange={handleFieldChange("syllabus")}
                     />
                   </div>
                   <button
@@ -299,12 +342,21 @@ export default function EditCourse() {
                 <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
                   {reviews.length > 0 && (
                     <div className="space-y-2 mb-4">
-                      <h3 className="font-medium text-gray-700">Added Reviews: {reviews.length}</h3>
+                      <h3 className="font-medium text-gray-700">
+                        Added Reviews: {reviews.length}
+                      </h3>
                       {reviews.map((review, index) => (
-                        <div key={index} className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start">
+                        <div
+                          key={index}
+                          className="bg-white p-3 rounded border border-gray-200 flex justify-between items-start"
+                        >
                           <div>
-                            <p className="font-medium">{review.name} - {review.rating}★</p>
-                            <p className="text-sm text-gray-600">{review.comment}</p>
+                            <p className="font-medium">
+                              {review.name} - {review.rating}★
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {review.comment}
+                            </p>
                           </div>
                           <button
                             onClick={() => removeReview(index)}
@@ -320,7 +372,7 @@ export default function EditCourse() {
                     <DynamicForm
                       fields={reviewFields[0].fields || []}
                       values={currentReview}
-                      onChange={handleFieldChange('review')}
+                      onChange={handleFieldChange("review")}
                     />
                   </div>
                   <button
@@ -342,11 +394,11 @@ export default function EditCourse() {
                 disabled={updating}
                 className="flex-1 px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition font-semibold shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {updating ? 'Updating...' : 'Update Course'}
+                {updating ? "Updating..." : "Update Course"}
               </button>
               <button
                 type="button"
-                onClick={() => navigate('/dashboard/course')}
+                onClick={() => navigate("/dashboard/course")}
                 disabled={updating}
                 className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               >

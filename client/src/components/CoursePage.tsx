@@ -277,7 +277,7 @@ export default function CoursePage() {
               </div>
             </div>
             {/* Student Works Section */}
-            <div className="mt-8">
+            <div className="my-8">
               <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <div className="w-1 h-6 bg-blue-400 rounded-full"></div>
                 Student Works
