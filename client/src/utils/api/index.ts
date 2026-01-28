@@ -142,4 +142,13 @@ export const api = {
     likeComment,
     deleteComment,
   },
+  otp: {
+    requestOtp,
+    verifyOtp,
+  },
+  student: {
+    getAllPendingStudents,
+    getAllVerifiedStudents,
+    verifyStudent,
+  },
 };

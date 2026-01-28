@@ -46,7 +46,6 @@ const useGetAllBlogs = ({
       const totalPagesCalc = Math.ceil((response?.total || 0) / limit);
       setTotalPages(totalPagesCalc);
       setCurrentPage(pageNum);
-      console.log(response);
       setHasMore(pageNum < totalPagesCalc);
     } catch (error) {
       console.error("Error fetching blogs:", error);
