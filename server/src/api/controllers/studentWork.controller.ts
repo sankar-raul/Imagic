@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import Course from "../../models/course/course.model";
 import studentWork from "../../models/studentWork/studentWork.model";
 
 export const addStudentWork = async (req: Request, res: Response) => {
@@ -7,7 +8,6 @@ export const addStudentWork = async (req: Request, res: Response) => {
     if (
       !studentWorkData.title ||
       !studentWorkData.studentName ||
-      !studentWorkData.videoUrl ||
       !studentWorkData.thumbnailUrl ||
       !studentWorkData.courseId
     ) {
@@ -105,10 +105,32 @@ export const getStudentWorksByCourseId = async (
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
 
+    // Fetch works and total count for the course
     const [works, total] = await Promise.all([
       studentWork.find({ courseId: course_id }).skip(skip).limit(limit),
       studentWork.countDocuments({ courseId: course_id }),
     ]);
+
+    // Fetch course name from Course model
+    // Assuming you have a Course model imported as 'Course'
+    // and the course name field is 'name'
+    // import Course from "../../models/course/course.model";
+    let courseName = "";
+    let category = "";
+    if (works.length > 0) {
+      // Get course name only if there are works
+      const course = await Course.findById(course_id).select(
+        "title courseDetails.category",
+      );
+      courseName = course ? course.title : "";
+      category = course ? course.courseDetails.category : "";
+    }
+    // Add courseName to each work
+    const worksWithCourseName = works.map((work: any) => ({
+      ...work.toObject(),
+      courseName,
+      category,
+    }));
 
     if (works.length === 0) {
       return res
@@ -117,7 +139,7 @@ export const getStudentWorksByCourseId = async (
     }
 
     res.status(200).json({
-      data: works,
+      data: worksWithCourseName,
       pagination: {
         total,
         page,

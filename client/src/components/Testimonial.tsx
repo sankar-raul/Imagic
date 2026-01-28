@@ -80,7 +80,7 @@ const PlacementsColumn = (props: {
                       </footer>
                     </blockquote>
                   </motion.li>
-                )
+                ),
               )}
             </React.Fragment>
           )),
@@ -97,7 +97,7 @@ export const PlacementsSection = () => {
   const firstColumn = placements.slice(0, Math.ceil(placements.length / 3));
   const secondColumn = placements.slice(
     Math.ceil(placements.length / 3),
-    Math.ceil((placements.length * 2) / 3)
+    Math.ceil((placements.length * 2) / 3),
   );
   const thirdColumn = placements.slice(Math.ceil((placements.length * 2) / 3));
 
@@ -155,7 +155,7 @@ export const PlacementsSection = () => {
         </div>
 
         <div
-          className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[740px] overflow-hidden"
+          className="flex justify-center gap-6 mt-10 mask-[linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[740px] overflow-hidden"
           role="region"
           aria-label="Scrolling Placements"
         >
