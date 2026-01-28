@@ -95,6 +95,10 @@ const routes = createBrowserRouter(
           <Route index element={<StudentWork />} />
           <Route path=":id" element={<StudentWorkDetails />} />
         </Route>
+        <Route path="student"> 
+          <Route path="register" element={<div>Student Register Page</div>} />
+          <Route path="login" element={<div>Student Login Page</div>} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="dashboard">
