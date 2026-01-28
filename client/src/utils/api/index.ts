@@ -63,6 +63,7 @@ import {
   getBlogComments,
   likeComment,
 } from "./comment/comment";
+import { getAllPendingStudents, getAllVerifiedStudents, verifyStudent } from "./students/student";
 
 export const api = {
   course: {
@@ -135,5 +136,10 @@ export const api = {
     commentOnBlogPost,
     likeComment,
     deleteComment,
+  },
+  student: {
+    getAllVerifiedStudents,
+    getAllPendingStudents,
+    verifyStudent,
   },
 };

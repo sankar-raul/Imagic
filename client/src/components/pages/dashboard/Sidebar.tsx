@@ -50,6 +50,10 @@ function Sidebar() {
         { label: 'All Job Vacancies', path: '/dashboard/job-vacancy' },
         { label: 'Add New Job Vacancy', path: '/dashboard/job-vacancy/add' },
       ]},
+      {  label: 'Students', submenu: [
+        { label: 'Pending Students', path: '/dashboard/students/pending-students' },
+        { label: 'Verified Students', path: '/dashboard/students/verified-students' },
+      ]},
   ];
 
   const toggleSubmenu = (index: number) => {

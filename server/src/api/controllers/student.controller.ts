@@ -1,32 +1,70 @@
 import { Request, Response } from "express";
 import student from "../../models/student/student.model";
-export const signup = async (req: Request, res: Response) => {
+export const getAllVerifiendStudents = async (req: Request, res: Response) => {
   try {
-    const { name, email, course } = req.body;
+    const { page = 1, limit = 10 } = req.query;
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
 
-    if (!name || !email || !course ) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-    const existingStudent = await student.findOne({ email });
-    if (existingStudent) {
-      return res.status(409).json({ message: "Email already in use" });
-    }
-    const newStudent = await student.create({ name, email, course });
+    const students = await student.find({ isVerified: true })
+      .skip(skip)
+      .limit(limitNumber)
+      .select("-password");
+    const totalStudents = await student.countDocuments({ isVerified: true });
 
-    res.status(201).json({ message: "Student registered successfully", data: newStudent });
-    } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
-  }
-};
-
-export const getAllStudents = async (req: Request, res: Response) => {
-  try {
-    const students = await student.find();
-    if (students.length === 0) {
-      return res.status(404).json({ message: "No students found" });
-    }
-    res.status(200).json({ data: students });
+    res.status(200).json({
+      data: students,
+      pagination: {
+        total: totalStudents,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalStudents / limitNumber),
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }
 };
+
+export const getPendingVerificationStudents = async (req: Request, res: Response) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+    const students = await student.find({ isVerified: false })
+      .skip(skip)
+      .limit(limitNumber)
+      .select("-password");
+    const totalStudents = await student.countDocuments({ isVerified: false });
+    res.status(200).json({
+      data: students,
+      pagination: {
+        total: totalStudents,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalStudents / limitNumber),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+export const verifyStudent = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const studentToVerify = (await student.findById(id).select("-password"));
+    if (!studentToVerify) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    studentToVerify.isVerified = true;
+    await studentToVerify.save();
+    res.status(200).json({ message: "Student verified successfully", data: studentToVerify });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+    

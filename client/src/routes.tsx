@@ -48,6 +48,8 @@ import ShowAllCourse from "@/components/pages/allCourse/ShowAllCourse";
 import NotFound from "@/components/pages/notFound/NotFound";
 import EditCourse from "@/components/pages/dashboard/course/EditCourse";
 import StudentWorkDetails from "./components/pages/studentwork/StudentWorkDetails";
+import VerifiedStudent from "./components/pages/dashboard/student/verifiedStudents";
+import PendingStudent from "./components/pages/dashboard/student/pendingStudent";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -145,6 +147,11 @@ const routes = createBrowserRouter(
             <Route index element={<AllJobVacancy />} />
             <Route path="add" element={<AddJobVacancy />} />
             <Route path="edit/:id" element={<EditJobVacancy />} />
+          </Route>
+          <Route path="students">
+            <Route path="pending-students" element={<PendingStudent />} />
+            <Route path="verified-students" element={<VerifiedStudent />} />
+
           </Route>
         </Route>
       </Route>
