@@ -4,6 +4,8 @@ import formImage from "@/assets/images/demoClass.png";
 import { motion } from "framer-motion";
 import useSubmitDemoClass from "@/hooks/demoClass/useDemoClass";
 import useGetAvailableCourses from "@/hooks/course/useGetAvailableCourses";
+import useOtp from "@/hooks/otp/useOtp";
+import { useToast } from "@/contexts/ToastContext";
 
 interface DemoClassFormProps {
   minimal?: boolean;
@@ -15,7 +17,7 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
 }) => {
   const { courses } = useGetAvailableCourses();
   const { isLoading, submitDemoClassForm } = useSubmitDemoClass();
-
+  const { showError, showSuccess } = useToast();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -24,6 +26,15 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // OTP state
+  const { requestOtp, verifyOtp, verifyError: otpError } = useOtp();
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpMessage, setOtpMessage] = useState("");
+  const [isOtpSendError, setIsOtpSendError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -39,10 +50,10 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
         formData.fullName &&
         formData.email &&
         formData.phoneNumber &&
-        formData.courseInterested
+        formData.courseInterested &&
+        otpVerified
       ) {
-        const response = await submitDemoClassForm(formData);
-        console.log(response);
+        await submitDemoClassForm(formData);
         setSubmitted(true);
         setFormData({
           fullName: "",
@@ -50,12 +61,51 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
           phoneNumber: "",
           courseInterested: "",
         });
+        setOtp("");
+        setOtpSent(false);
+        setOtpVerified(false);
+        setOtpMessage("");
         setIsSubmitting(false);
+        showSuccess("Application submitted successfully!");
       }
     } catch (error) {
+      showError("Error submitting form. Please try again.");
       console.error("Error submitting form:", error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // OTP handlers
+  const handleSendOtp = async () => {
+    setOtpLoading(true);
+    setOtpMessage("");
+    try {
+      await requestOtp(formData.phoneNumber);
+      setOtpSent(true);
+      setIsOtpSendError(false);
+      setOtpMessage("OTP sent to your phone number.");
+      showSuccess("OTP sent to your phone number.");
+    } catch (e) {
+      setIsOtpSendError(true);
+      setOtpMessage("Failed to send OTP. Please try again.");
+      showError("Failed to send OTP. Please try again.");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    setOtpLoading(true);
+    try {
+      await verifyOtp(formData.phoneNumber, otp);
+      setOtpVerified(true);
+      setOtpMessage("Phone number verified!");
+      showSuccess("Phone number verified!");
+    } catch (e) {
+      showError("Invalid OTP. Please try again.");
+    } finally {
+      setOtpLoading(false);
     }
   };
 
@@ -129,14 +179,76 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
                 <label className="block text-xs font-medium text-gray-600 mb-1.5 ml-1">
                   Phone number
                 </label>
-                <input
-                  type="tel"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  placeholder="+91 00000-00000"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="tel"
+                    disabled={otpVerified}
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setOtpSent(false);
+                      setOtpVerified(false);
+                      setOtp("");
+                      setOtpMessage("");
+                    }}
+                    placeholder="+910000000000"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
+                  />
+                  <button
+                    type="button"
+                    className={
+                      "bg-yellow-500 text-white whitespace-nowrap px-4 py-2 rounded-xl font-semibold disabled:opacity-60 " +
+                      (otpVerified ? "bg-green-500!" : "")
+                    }
+                    onClick={handleSendOtp}
+                    disabled={
+                      otpLoading ||
+                      !formData.phoneNumber ||
+                      otpSent ||
+                      otpVerified
+                    }
+                  >
+                    {otpLoading && !otpSent
+                      ? "Sending..."
+                      : otpVerified
+                        ? "Verified"
+                        : otpSent
+                          ? "Sent"
+                          : "Send OTP"}
+                  </button>
+                </div>
+                {otpMessage && (
+                  <p
+                    className={`text-xs mt-1 ${otpVerified ? "text-green-600" : isOtpSendError ? "text-red-600" : "text-neutral-600"}`}
+                  >
+                    {otpMessage}
+                  </p>
+                )}
+                {otpSent && !otpVerified && (
+                  <div className="mt-2 flex gap-2">
+                    <input
+                      type="number"
+                      maxLength={6}
+                      minLength={6}
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      placeholder="Enter OTP"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
+                    />
+                    <button
+                      type="button"
+                      className="bg-green-600 whitespace-nowrap text-white px-4 py-2 rounded-xl font-semibold disabled:opacity-60"
+                      onClick={handleVerifyOtp}
+                      disabled={otpLoading || !otp}
+                    >
+                      {otpLoading ? "Verifying..." : "Verify OTP"}
+                    </button>
+                  </div>
+                )}
+                {otpError && (
+                  <p className="text-xs text-red-600 mt-1">{otpError}</p>
+                )}
               </div>
 
               <div>
@@ -151,7 +263,7 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
                 >
                   <option value="">Select a course</option>
                   {courses.map((course) => (
-                    <option key={course._id} value={course.slug}>
+                    <option key={course._id} value={course._id}>
                       {course.title}
                     </option>
                   ))}
@@ -159,7 +271,7 @@ const DemoClassSection: FC<DemoClassFormProps> = ({
               </div>
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !otpVerified}
                 className="w-full bg-neutral-900 text-white font-semibold py-3.5 px-6 rounded-xl hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-90 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? (

@@ -96,7 +96,7 @@
   }
 
   .animate-scroll-left-fast {
-    animation: scroll-left 10s linear infinite;
+    animation: scroll-left 80s linear infinite;
   }
 
   .animate-scroll-left-fast:hover {

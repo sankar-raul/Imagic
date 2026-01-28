@@ -63,6 +63,7 @@ import {
   getBlogComments,
   likeComment,
 } from "./comment/comment";
+import { requestOtp, verifyOtp } from "./otp/otp.api";
 
 export const api = {
   course: {
@@ -135,5 +136,9 @@ export const api = {
     commentOnBlogPost,
     likeComment,
     deleteComment,
+  },
+  otp: {
+    verifyOtp,
+    requestOtp,
   },
 };
