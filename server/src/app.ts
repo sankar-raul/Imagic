@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 
 import authRoutes from "./api/routes/auth.route";
+import studentAuthRoutes from "./api/routes/studentAuth.route";
 import blogRoutes from "./api/routes/blog.route";
 import commentRoutes from "./api/routes/comment.route";
 import courseRoutes from "./api/routes/course.route";
@@ -15,6 +16,7 @@ import placementRoutes from "./api/routes/placement.route";
 import studentWorkRoutes from "./api/routes/studentWork.route";
 import testimonialRoutes from "./api/routes/testimonial.route";
 import uploadRoutes from "./api/routes/upload.route";
+import studentRoutes from "./api/routes/student.routes";
 
 const app = express();
 const DEV_MODE = "true";
@@ -38,6 +40,7 @@ app.use(helmet());
 
 // Authentication routes
 app.use("/api/auth", authRoutes);
+app.use("/api/student-auth", studentAuthRoutes);
 
 app.use("/api/courses", courseRoutes);
 app.use("/api/jobs", jobRutes);
@@ -52,6 +55,7 @@ app.use("/api/student-works", studentWorkRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/otp", otpRoutes);
 
+app.use("/api/students", studentRoutes);
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
