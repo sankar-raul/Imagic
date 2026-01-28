@@ -225,10 +225,9 @@ export default function BlogDetails() {
               </div>
 
               {/* CTA Buttons */}
-              <a
+              <p
                 onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById("enrollnow");
+                  const element = document.getElementById("democlass");
                   if (element) {
                     const yOffset = -80; // Adjust this value to control offset
                     const y =
@@ -242,7 +241,7 @@ export default function BlogDetails() {
                 <button className="w-full bg-black/90 md:cursor-pointer hover:bg-black text-white font-semibold py-3 rounded-lg mb-3 transition-colors">
                   Enroll Now
                 </button>
-              </a>
+              </p>
 
               {/* <button 
                 onClick={() => setIsFavorite(!isFavorite)}

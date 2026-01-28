@@ -63,7 +63,12 @@ import {
   getBlogComments,
   likeComment,
 } from "./comment/comment";
-import { getAllPendingStudents, getAllVerifiedStudents, verifyStudent } from "./students/student";
+import {
+  getAllPendingStudents,
+  getAllVerifiedStudents,
+  verifyStudent,
+} from "./students/student";
+import { requestOtp, verifyOtp } from "./otp/otp.api";
 
 export const api = {
   course: {
@@ -136,10 +141,5 @@ export const api = {
     commentOnBlogPost,
     likeComment,
     deleteComment,
-  },
-  student: {
-    getAllVerifiedStudents,
-    getAllPendingStudents,
-    verifyStudent,
   },
 };

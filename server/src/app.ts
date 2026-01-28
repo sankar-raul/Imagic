@@ -5,16 +5,17 @@ import helmet from "helmet";
 import authRoutes from "./api/routes/auth.route";
 import studentAuthRoutes from "./api/routes/studentAuth.route";
 import blogRoutes from "./api/routes/blog.route";
+import commentRoutes from "./api/routes/comment.route";
 import courseRoutes from "./api/routes/course.route";
 import demoClassRoutes from "./api/routes/demoClass.route";
 import jobRutes from "./api/routes/job.route";
 import newsRoutes from "./api/routes/news.route";
 import newsletterRoutes from "./api/routes/newsletter.route";
+import otpRoutes from "./api/routes/otp.route";
 import placementRoutes from "./api/routes/placement.route";
 import studentWorkRoutes from "./api/routes/studentWork.route";
 import testimonialRoutes from "./api/routes/testimonial.route";
 import uploadRoutes from "./api/routes/upload.route";
-import commentRoutes from "./api/routes/comment.route";
 import studentRoutes from "./api/routes/student.routes";
 
 const app = express();
@@ -30,7 +31,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,6 +53,8 @@ app.use("/api/news", newsRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/student-works", studentWorkRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/otp", otpRoutes);
+
 app.use("/api/students", studentRoutes);
 app.get("/", (req, res) => {
   res.send("Server is running");
