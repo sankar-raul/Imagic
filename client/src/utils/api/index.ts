@@ -17,6 +17,7 @@ import {
   deleteCourse,
   getAllCourses,
   getCourseById,
+  updateCourse,
 } from "./course/course";
 import {
   createJob,
@@ -78,6 +79,7 @@ export const api = {
     getCourseById,
     deleteCourse,
     availableCourses,
+    updateCourse,
   },
   demoClass: {
     applyDemoClass,
